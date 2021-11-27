@@ -1,0 +1,138 @@
+
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
+
+
+<div class="row page-titles mx-0 mt-5 mb-4">
+    <div class="col-sm-6 p-md-0">
+        <div class="welcome-text">
+            <h4>Edit Product</h4>
+            {{!-- <span class="ml-1">Datatable</span> --}}
+        </div>
+    </div>
+
+</div>
+
+<div class="shadow">
+
+
+    <form class="" action="/admin/edit-product/{{product._id}}" method="post" onsubmit="return submitForm(this);" enctype="multipart/form-data" id="editProduct"  >
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputEmail4">Product Name</label>
+                <input type="text" class="form-control" id="inputEmail4" name="Name" value="{{product.Name}}">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputPassword4">Number of Stock</label>
+                <input type="number" class="form-control" id="inputPassword4" name="Stock" value="{{product.Stock}}"  onkeydown="return event.keyCode !==69">
+            </div>
+        </div>
+        <div class="form-row">
+
+            <div class="form-group col-md-6">
+                <label for="inputAddress">About Product</label>
+                <input type="text" class="form-control" id="inputAddress" placeholder="Write about product.."
+                    name="Discription" value="{{product.Discription}}">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputState">Product Brand</label>
+                <select id="inputState" class="form-control" name="Brand" >
+                    <option selected>{{product.Brand}}</option>
+                    {{#each brand}}
+                    <option >{{this.Name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputState">Main Category</label>
+                <select id="inputState" class="form-control" name="Mcategory">
+                    <option selected value="{{product.Mcategory}}">{{product.Mcategory}}</option>
+                    {{#each categories}}
+                    <option >{{this.Name}}</option>
+                    {{/each}}
+
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputState">Sub Category</label>
+                <select id="inputState" class="form-control" name="Scategory">
+                    <option value="{{product.Scategory}}">{{product.Scategory}}</option>
+              {{#each categories}}
+                    <option>{{this.Scategory}}</option>
+                {{/each}}
+                </select>
+            </div>
+
+
+            <div class="form-row col-12">
+                <div class="col-6">
+                    <label for="inputState">Size</label>
+                    <input type="number" class="form-control" id="inputp " name="Size" value="{{product.Size}}"  onkeydown="return event.keyCode !==69"> 
+                </div>
+               
+             <div class="form-group col-md-6">
+                <label for="inputZip">Price</label>
+                <input type="number" class="form-control" id="inputZip" name="Price" value="{{product.Price}}"  onkeydown="return event.keyCode !==69">
+            </div>
+            </div>
+           
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="exampleFormControlFile1">Image 1</label>
+                <input type="file" class="form-control-file"  name="image1" onchange="viewimage1(event)">
+                <img src="/product-images/{{product._id}}a.jpg" style="height: 100px;width: 100px;" id="img1">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="exampleFormControlFile1">Image 2</label>
+                <input type="file" class="form-control-file"  name="image2"  onchange="viewimage2(event)">
+                 <img src="/product-images/{{product._id}}b.jpg" style="height: 100px;width: 100px;" id="img2">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="exampleFormControlFile1">Image 3</label>
+                <input type="file" class="form-control-file"  name="image3"  onchange="viewimage3(event)">
+                 <img src="/product-images/{{product._id}}c.jpg" style="height: 100px;width: 100px;" id="img3">
+            </div>
+
+        </div>
+        <div class="col-12 text-center mt-5">
+            <button type="submit" class="btn btn-primary">Add Product</button>
+        </div>
+
+    </form>
+</div>
+
+
+<script>
+    
+function viewimage1(event){
+    
+  
+    document.getElementById('img1').src=URL.createObjectURL(event.target.files[0])
+}
+function viewimage2(event){
+
+    document.getElementById('img2').src=URL.createObjectURL(event.target.files[0])
+
+    
+}
+function viewimage3(event){
+
+ 
+    document.getElementById('img3').src=URL.createObjectURL(event.target.files[0])
+
+
+
+}
+
+</script>
+
+<style>
+.error{
+    color: red;
+}
+</style>

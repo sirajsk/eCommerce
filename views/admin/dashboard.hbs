@@ -1,0 +1,186 @@
+
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+    <!-- Datatable -->
+    <link href="/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+    <!-- Custom Stylesheet -->
+    <link href="/css/style.css" rel="stylesheet">
+
+{{!-- -------------------------------------------------------------------------------- --}}
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+ <div class="row page-titles mx-0 shadow">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>DASHBOARD</h4>
+                   
+                </div>
+            </div>
+
+        </div>
+
+<div class="row  col-12">
+
+    <div class="col-6">
+        <h2 class="text-center">Order details</h2>
+        <canvas id="myChart" style="width:100%;max-width:500px"></canvas>
+
+        <script>
+            var xValues = [ "Spain", "USA", "Argentina","India"];
+            var yValues = [  44, 24, 10,20];
+            var barColors = [
+                "#b91d47",
+                "#00aba9",
+                "#2b5797",
+                "#e8c3b9",
+                "#1e7145"
+            ];
+
+            new Chart("myChart", {
+                type: "doughnut",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "World Wide Wine Production 2018"
+                    }
+                }
+            });
+        </script>
+    </div>
+
+    <div class="col-6">
+         <h2 class="text-center"> Details</h2>
+        <canvas id="chart2" style="width:100%;max-width:600px"></canvas>
+
+        <script>
+            var xValues = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150];
+            var yValues = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15];
+
+            new Chart("chart2", {
+                type: "line",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        fill: false,
+                        lineTension: 0,
+                        backgroundColor: "rgba(0,0,255,1.0)",
+                        borderColor: "rgba(0,0,255,0.1)",
+                        data: yValues
+                    }]
+                },
+                options: {
+                    legend: { display: false },
+                    scales: {
+                        yAxes: [{ ticks: { min: 6, max: 16 } }],
+                    }
+                }
+            });
+        </script>
+
+
+    </div>
+    <div class="col-12 mt-5">
+
+{{!-- ------------------------------------------------------------------------------------------------ --}}
+
+
+  
+        <div class="row page-titles mx-0 shadow  ">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>ALL USERS</h4>
+                   
+                </div>
+            </div>
+
+        </div>
+    <!-- row -->
+
+
+    <div class="row">
+
+        <div class="col-12">
+            <div class="card">
+
+                <div class="card-body shadow">
+                    <div class="table-responsive">
+                        <table id="example2" class="display " style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Mobile</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each AllUsers}}
+                                <tr>
+                                    <td>{{this.name}}</td>
+                                    <td>{{this.email}}</td>
+                                    <td>{{this.mobile}}</td>
+                                   {{#if this.status}}
+                                     <td>Active</td>
+                                      {{else}}
+                                     <td>Blocked</td>
+                                     {{/if}}
+                                    <td>
+                                        {{!-- <button type="button" class="btn btn-primary">Edit</button> --}}
+                                        {{#if this.status}}
+                                        <a href="/admin/block-user/{{this._id}}"  type="button" class="btn btn-danger" name="{{this.name}}">Block</a>
+                                        {{else}}
+                                         <a href="/admin/unblock-user/{{this._id}}" name="{{this.name}}" style="width: 80px;" class="btn btn-success">Unblock</a> 
+                                         {{/if}}
+                                    </td>
+
+                                </tr>
+                                {{/each}}
+                               
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{{!-- ------------------------------------------------------------------------------------------------ --}}
+
+    </div>
+
+
+
+</div>
+
+
+
+    <script src="/vendor/global/global.min.js"></script>
+    <script src="/js/quixnav-init.js"></script>
+    <script src="/js/custom.min.js"></script>
+
+
+
+    <!-- Datatable -->
+    <script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/js/plugins-init/datatables.init.js"></script>
+

@@ -1,0 +1,163 @@
+<div class="row page-titles mx-0 mt-5 mb-4">
+    <div class="col-sm-6 p-md-0">
+        <div class="welcome-text">
+            <h4>Add New Product</h4>
+        </div>
+    </div>
+</div>
+<div class="shadow">
+    <form class="" action="/admin/add-product" method="post" enctype="multipart/form-data" id="addproduct">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputEmail4">Product Name</label>
+                <input type="text" class="form-control" id="inputEmail4" name="Name">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputPassword4">Number of Stock</label>
+                <input type="number" class="form-control" id="inputPassword4" name="Stock"
+                    onkeydown="return event.keyCode !==69">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputAddress">About Product</label>
+                <input type="text" class="form-control" id="inputAddress" placeholder="Write about product.."
+                    name="Discription">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputState">Product Brand</label>
+                <select id="inputState" class="form-control" name="Brand" placeholder="choose.." style='color:gray'
+                    oninput='style.color="black"'>
+                    <option value="">Choose...</option>
+                    {{#each brands}}
+                    <option>{{this.Name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputState">Main Category</label>
+                <select id="inputState" class="form-control" name="Mcategory" style='color:gray'
+                    oninput='style.color="black"'>
+                    <option value="">Choose...</option>
+                    {{#each categories}}
+                    <option>{{this.category}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputState">Sub Category</label>
+                <select id="inputState" class="form-control" name="Scategory">
+                    <option value="">Choose...</option>
+                    {{#each categories}}
+                    <option>{{this.Scategory}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="form-row col-12">
+                <div class="col-6">
+                    <label for="inputState">Size</label>
+                    <input type="number" class="form-control" id="inputp " name="Size"
+                        onkeydown="return event.keyCode !==69">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputZip">Price</label>
+                    <input type="number" class="form-control" id="inputZip" name="Price"
+                        onkeydown="return event.keyCode !==69">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-6">
+                <label for="">IMAGE 1</label>
+                <img src="" alt="" style="width: 100px; height:auto" id="imgviewP1">
+                <input type="file" name="image1" id="F1" class="form-control" onchange="return fileValidation2()">
+                <div class="col-12">
+                    <div id="Image1" style="width: 500px; height: 500px; display: none;"></div>
+                    <button class="btn btn-primary mt-3" type="button" style="display: none;" id="crop1">Crop</button>
+                </div>
+            </div>
+            <div class="form-group col-6">
+                <label for="">IMAGE 2</label>
+                <img src="" alt="" style="width: 100px; height:auto" id="imgviewP2">
+                <input type="file" name="image2" id="F2" class="form-control" onchange="return fileValidation3()">
+                <div class="col-12">
+                    <div id="Image2" style="width: 500px; height: 500px; display: none;"></div>
+                    <button class="btn btn-primary mt-3" type="button" style="display: none;" id="crop2">Crop</button>
+                </div>
+            </div>
+            <div class="form-group col-6">
+                <label for="">IMAGE 3</label>
+                <img src="" alt="" style="width: 100px; height:auto" id="imgviewP3">
+                <input type="file" name="image3" id="F3" class="form-control" onchange="return fileValidation4()">
+                <div class="col-12">
+                    <div id="Image3" style="width: 500px; height: 500px; display: none;"></div>
+                    <button class="btn btn-primary mt-3" type="button" style="display: none;" id="crop3">Crop</button>
+                </div>
+            </div>
+        </div>
+        {{#if proExist}}
+        <h3 class="text-center" style="color: red;">Product Already Exist</h3>
+        {{/if}}
+        <div class="col-12 text-center mt-5">
+            <button id="Confirm1" type="submit" class="btn btn-primary">Add Product</button><br>
+        </div>
+    </form>
+</div>
+<script>
+    function viewMainImage(event) {
+
+        document.getElementById('imgviewP1').src = URL.createObjectURL(event.target.files[0])
+        let file = event.target.files[0].name
+        let extension = file.split('.').pop()
+        if (extension == 'jpeg' || extension == 'png' || extension == 'jpg') {
+            $('#imgviewP1').show()
+            $('#sub').show()
+            $('#errMsg').hide()
+
+        }
+        else {
+            $('#sub').hide()
+            $('#errMsg').show()
+        }
+    }
+    function viewImage1(event) {
+
+        document.getElementById('imgviewP2').src = URL.createObjectURL(event.target.files[0])
+        let file = event.target.files[0].name
+        let extension = file.split('.').pop()
+        if (extension == 'jpeg' || extension == 'png' || extension == 'jpg') {
+            $('#imgview2').show()
+            $('#sub').show()
+            $('#errMsg').hide()
+
+        }
+        else {
+            $('#sub').hide()
+            $('#errMsg').show()
+        }
+    }
+    function viewImage2(event) {
+
+        document.getElementById('imgviewP3').src = URL.createObjectURL(event.target.files[0])
+        let file = event.target.files[0].name
+        let extension = file.split('.').pop()
+        if (extension == 'jpeg' || extension == 'png' || extension == 'jpg') {
+            $('#imgview3').show()
+            $('#sub').show()
+            $('#errMsg').hide()
+
+        }
+        else {
+            $('#sub').hide()
+            $('#errMsg').show()
+        }
+    }
+</script>
+
+<style>
+    .error {
+        color: red;
+    }
+</style>

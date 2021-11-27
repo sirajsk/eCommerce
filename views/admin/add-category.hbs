@@ -1,0 +1,35 @@
+<form action="/admin/add-category" method="post" id="addCategory">
+    <div class="col-md-12 mb-3 ">
+
+        <div class="form-group col-md-6">
+            <label for="inputEmail4">Category Name</label>
+            <input type="text" class="form-control   " name="Name">
+        </div>
+         <div class="form-group col-md-6">
+            <label for="inputEmail4">Sub Category</label>
+            <input type="text" class="form-control   " name="Sname">
+        </div>
+        <div class="row">
+            {{!-- <div class="form-group col-6">
+                <label for="exampleFormControlFile1">Brand Image</label>
+                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+            </div> --}}
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary">Add Category</button>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+</form>
+
+
+<style>
+.error{
+    color: red;
+}
+</style>

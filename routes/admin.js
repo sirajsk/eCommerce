@@ -1,0 +1,355 @@
+const { response } = require('express');
+var express = require('express');
+var router = express.Router();
+var adminHelper = require('../helpers/admin-helpers')
+var fs = require('fs')
+
+/* GET users listing. */
+
+const verifyAdminLogin = (req, res, next) => {
+  if (req.session.adminloggedIn) {
+    next()
+  } else {
+    res.redirect('/admin/login')
+  }
+}
+// admin basic start
+router.get('/', function (req, res, next) {
+  if (req.session.adminloggedIn) {
+
+    res.render('admin/dashboard', { admin: true })
+
+  } else {
+    res.redirect('/admin/login')
+  }
+
+
+});
+router.get('/login', function (req, res, next) {
+
+  if (req.session.adminloggedIn) {
+
+    res.redirect('/admin')
+  }
+  else {
+    res.render('admin/admin-login', { admin: true, login: true, "loginErr": req.session.loggedInErr })
+    req.session.loggedInErr = false
+  }
+
+
+});
+router.post('/login', function (req, res, next) {
+  adminHelper.adminLogin(req.body).then((responseAdmin) => {
+    if (responseAdmin.status) {
+      req.session.admin = responseAdmin.admin
+      req.session.adminloggedIn = true
+      res.redirect('/admin')
+    } else {
+      req.session.loggedInErr = true
+      res.redirect('/admin/login')
+    }
+  })
+
+});
+
+// admin basic end
+
+// product management start
+router.get('/product-management', function (req, res, next) {
+
+  res.render('admin/product-management', { admin: true })
+});
+router.get('/add-product', verifyAdminLogin, async function (req, res, next) {
+
+  let brands = await adminHelper.getAllbrands()
+  let categories = await adminHelper.categoryDetailes()
+  res.render('admin/add-product', { admin: true, brands, categories, "proExist": req.session.proExist })
+  req.session.proExist = false
+});
+
+router.post('/add-product', function (req, res, next) {
+
+  adminHelper.addProduct(req.body).then((id) => {
+    let image1 = req.files.image1
+    let image2 = req.files.image2
+    let image3 = req.files.image3
+
+
+    image1.mv('public/product-images/' + id + 'a.jpg')
+    image2.mv('public/product-images/' + id + 'b.jpg')
+    image3.mv('public/product-images/' + id + 'c.jpg')
+
+    res.redirect('/admin/view-products')
+
+  }).catch((err) => {
+    console.log(err);
+    if (err.code == 11000) {
+      req.session.proExist = true
+      res.redirect('/admin/add-product')
+    }
+  })
+
+});
+
+router.get('/view-products', function (req, res, next) {
+  adminHelper.getAllProducts().then((products) => {
+
+
+
+    res.render('admin/view-products', { admin: true, products })
+  })
+
+
+});
+
+router.get('/delete-product/:id', (req, res) => {
+  let productid = req.params.id
+
+  adminHelper.deleteProduct(productid).then((response) => {
+    fs.unlinkSync('public/product-images/' + productid + 'b.jpg')
+    fs.unlinkSync('public/product-images/' + productid + 'c.jpg')
+    fs.unlinkSync('public/product-images/' + productid + 'a.jpg')
+
+
+    res.redirect('/admin/view-products')
+  })
+
+
+})
+router.get('/edit-product/:id', async (req, res) => {
+  let categories = await adminHelper.categoryDetailes()
+  let brand = await adminHelper.getAllbrands()
+  console.log(categories, brand);
+  adminHelper.productDetail(req.params.id).then((product) => {
+
+    console.log(product, 'prod');
+    res.render('admin/edit-product', { admin: true, categories, brand, product })
+    console.log('ok');
+  })
+})
+
+// product management end
+
+// users start
+
+router.get('/view-users', async function (req, res, next) {
+
+  let AllUsers = await adminHelper.getAllUsers()
+
+  res.render('admin/view-users', { admin: true, AllUsers })
+});
+
+router.get('/block-user/:id', (req, res) => {
+  let id = req.params.id
+  adminHelper.blockUser(id).then((response) => {
+    console.log('djffdfgjhfdhgfd');
+    res.redirect('/admin/view-users')
+  })
+
+})
+router.get('/unblock-user/:id', (req, res) => {
+  let id = req.params.id
+
+
+  adminHelper.unblockUser(id).then((response) => {
+    res.redirect('/admin/view-users')
+  })
+
+})
+router.get('/blocked-users', function (req, res, next) {
+  adminHelper.getBlockedUsers().then((blockedUsers) => {
+
+
+    res.render('admin/blocked-users', { admin: true, blockedUsers })
+  })
+
+});
+router.get('/unblock/:id', (req, res) => {
+  let id = req.params.id
+
+
+  adminHelper.unblockUser(id).then((response) => {
+    res.redirect('/admin/blocked-users')
+  })
+
+})
+
+
+
+
+
+// users end
+
+// brand management start
+router.get('/view-brand', async function (req, res) {
+  adminHelper.getAllbrands().then((brands) => {
+
+
+
+    res.render('admin/view-brand', { admin: true, brands })
+  })
+
+
+
+});
+
+router.get('/add-brand', function (req, res, next) {
+
+  res.render('admin/add-brand', { admin: true })
+});
+
+router.post('/add-brand', function (req, res, next) {
+  console.log(req.body);
+  console.log(req.files.Image);
+
+  adminHelper.addBrand(req.body).then((id) => {
+    // alert('sk')
+    //  console.log(response);
+    let image = req.files.image1
+    image.mv('public/brand-images/' + id + '.jpg', (err, done) => {
+      if (!err) {
+        res.redirect('/admin/view-brand')
+      }
+      else {
+        res.redirect('/admin/add-brand')
+      }
+    })
+  })
+
+});
+
+router.get('/delete-brand/:id', (req, res) => {
+
+  let proId = req.params.id
+  adminHelper.deleteBrand(proId).then(response)
+  res.redirect('/admin/view-brand')
+});
+
+
+// brand management over
+
+
+
+
+
+// category management
+
+router.get('/view-category', function (req, res, next) {
+  adminHelper.categoryDetailes().then((categories) => {
+    // console.log(categories);
+    res.render('admin/view-category', { admin: true, categories })
+  })
+
+
+});
+router.get('/add-category', function (req, res, next) {
+
+  res.render('admin/add-category', { admin: true })
+});
+router.post('/add-category', function (req, res, next) {
+
+  adminHelper.addCategory(req.body).then((response) => {
+    // console.log(req.body);
+  })
+
+  res.redirect('/admin/view-category')
+});
+router.get('/delete-category/:id', (req, res) => {
+
+  let CaId = req.params.id
+  adminHelper.deleteCategory(CaId).then(response)
+  res.redirect('/admin/view-category')
+});
+router.get('/logout', (req, res) => {
+  req.session.admin = null
+  req.session.adminloggedIn = false
+  res.redirect('/admin/login')
+})
+// category management over
+
+module.exports = router;
+
+
+// update check
+
+router.post('/edit-product/:id', verifyAdminLogin, (req, res) => {
+  let id = req.params.id
+  adminHelper.updateProduct(id, req.body)
+
+  console.log(req.body);
+  res.redirect('/admin/view-products')
+  if (req.files.image1) {
+    let image1 = req.files.image1
+    image1.mv('public/product-images/' + id + 'a.jpg')
+  }
+  if (req.files.image2) {
+    let image2 = req.files.image2
+    image2.mv('public/product-images/' + id + 'b.jpg')
+  }
+  if (req.files.image3) {
+    let image3 = req.files.image3
+
+    image3.mv('public/product-images/' + id + 'c.jpg')
+  }
+})
+router.get('/edit-brand/:id', verifyAdminLogin, async (req, res) => {
+  let brandId = req.params.id
+  let brand = await adminHelper.BrandDetailes(brandId)
+  res.render('admin/edit-brand', { admin: true, brand })
+})
+router.post('/edit-brand/:id', verifyAdminLogin, (req, res) => {
+  let id = req.params.id
+  let imageA = req.files.Image
+
+  adminHelper.updateBrand(id, req.body).then((response) => {
+    console.log(response);
+    // alert('sdjhdgshfgsdhf')
+    if (req.files.Image) {
+      imageA.mv('public/brand-images/' + id + '.jpg')
+    }
+
+    res.redirect('/admin/view-brand')
+  })
+
+  // }
+})
+
+router.get('/orders', verifyAdminLogin, async (req, res) => {
+  let ordersList = await adminHelper.getAllOrders()
+  console.log(ordersList);
+  res.render('admin/all-orders', { admin: true, ordersList })
+})
+
+router.get('/singleOrder/:id', (req, res) => {
+  let oId = req.params.id
+  adminHelper.getOrderProducts(oId).then((products) => {
+    console.log(products);
+    res.render('admin/single-order', { products, admin: true })
+  })
+})
+
+
+router.get('/placed/:id', (req, res) => {
+  status = 'Placed'
+  adminHelper.changeOrderStatus(req.params.id, status).then(() => {
+    res.redirect('/admin/orders')
+  })
+})
+router.get('/shipped/:id', (req, res) => {
+  status = 'Shipped'
+  adminHelper.changeOrderStatus(req.params.id, status).then(() => {
+    res.redirect('/admin/orders')
+  })
+})
+router.get('/delivered/:id', (req, res) => {
+  status = 'Delivered'
+  adminHelper.changeOrderStatus(req.params.id, status).then(() => {
+    res.redirect('/admin/orders')
+  })
+})
+router.get('/cancelled/:id', (req, res) => {
+  status = 'Cancelled'
+  adminHelper.changeOrderStatus(req.params.id, status).then(() => {
+    res.redirect('/admin/orders')
+  })
+})

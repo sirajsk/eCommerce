@@ -1,0 +1,106 @@
+<div class="half">
+    <div class="bg order-1 order-md-2" style="background-image: url('/adminLogin/images/bg_1.jpg');"></div>
+    <ol class="breadcrumb">
+        <li class="pr-3"><a href="/admin" style="text-decoration: none;">Home</a></li>
+        <li class="active">All Orders</li>
+    </ol>
+    <div class="contents order-2 order-md-1">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-md-12">
+                    <table class="table table-hover" id="adminTable">
+                        <thead>
+                            <tr>
+                               
+                                <th scope="col">Date</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Address</th>
+
+                                <th scope="col">Amount</th>
+                                {{!-- <th scope="col">Discount</th>
+                                <th scope="col">Payment</th> --}}
+
+                                <th scope="col">Status</th>
+                               
+                                {{!-- <th scope="col">Items</th> --}}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each ordersList}}
+                            <tr>
+                                
+                                <td>{{this.Date}}</td>
+                                <td>{{this.Time}}</td>
+                                <td>{{this.User}}</td>
+                                <td>{{this.deliveryDetails.FirstName}},{{this.deliveryDetails.House}}<br>{{this.deliveryDetails.Town}},PIN:{{this.deliveryDetails.PIN}}<br>PH:{{this.deliveryDetails.Mobile}}
+                                </td>
+
+                                <td>{{this.Total}}</td>
+                                {{!-- <td>{{this.Discount}}</td>
+                                <td>{{this.PaymentMethod}}</td> --}}
+                                <td id="{{this._id}}" style="display: none;">{{this.Status}}</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-dark dropdown-toggle p-1" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false" style="height: 2em;width:7em"
+                                            onclick="statusChecker('{{this._id}}')">
+                                            {{this.Status}}
+                                        </button>
+
+                                        <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="/admin/placed/{{this._id}}"
+                                                style="text-decoration: none;" id="{{this._id}}placed">Placed</a>
+                                            <a class="dropdown-item" href="/admin/shipped/{{this._id}}"
+                                                style="text-decoration: none;" id="{{this._id}}ship">Shipped</a>
+                                            <a class="dropdown-item" href="/admin/delivered/{{this._id}}"
+                                                style="text-decoration: none;" id="{{this._id}}deliver">Delivered</a>
+                                            <a class="dropdown-item" href="/admin/cancelled/{{this._id}}"
+                                                style="text-decoration: none;" id="{{this._id}}cancel">Cancelled</a>
+                                        </div>
+                                    </div>
+                                </td>
+                                {{!-- <td><a class="btn btn-secondary text-white"
+                                        style="width: 125px;height:auto;text-decoration:none"
+                                        href="/admin/singleOrder/{{this._id}}">View Product</a></td> --}}
+
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+<script>
+    function statusChecker(orderId) {
+        console.log("llog", orderId)
+        let status = document.getElementById(orderId).innerHTML
+        console.log('ja', status)
+        if (status === 'Placed') {
+            console.log("Placed")
+            document.getElementById(orderId + 'placed').style.display = "none";
+
+        }else if (status === 'Shipped') {
+            console.log("Shipped")
+            document.getElementById(orderId + 'placed').style.display = "none";
+
+        } else if (status === 'Delivered') {
+            document.getElementById(orderId + 'placed').style.display = "none";
+            document.getElementById(orderId + 'ship').style.display = "none";
+            document.getElementById(orderId + 'cancel').style.display = "none";
+
+        } else if (status === 'Cancelled') {
+            document.getElementById(orderId + 'placed').style.display = "none";
+            document.getElementById(orderId + 'ship').style.display = "none";
+            document.getElementById(orderId + 'deliver').style.display = "none";
+        }
+    }
+</script>

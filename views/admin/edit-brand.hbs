@@ -1,0 +1,79 @@
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+<!-- Datatable -->
+<link href="/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+<!-- Custom Stylesheet -->
+<link href="/css/style.css" rel="stylesheet">
+
+
+<div class="row page-titles mx-0 mt-3 mb-4 shadow">
+    <div class="col-sm-6 p-md-0">
+        <div class="welcome-text">
+            <h4>Add New Brand</h4>
+            {{!-- <span class="ml-1">Datatable</span> --}}
+        </div>
+    </div>
+
+</div>
+
+
+{{!-- <div class="text-center">
+    <h2>Brand Management</h2>
+</div> --}}
+
+
+<form action="/admin/edit-brand/{{brand._id}}" method="post" class="shadow" enctype="multipart/form-data" id="addbrand">
+    <div class="col-md-12 mb-3 ">
+
+        <div class="form-group col-md-6">
+            <label for="inputEmail4">Brand Name</label>
+            <input type="text" class="form-control   " id="inputEmail4" name="Name" value="{{brand.Name}}">
+        </div>
+        <div class="row">
+            <div class="form-group col-6">
+                <label for="exampleFormControlFile1">Brand Image</label>
+                <input type="file" class="form-control-file" id="exampleFormControlFile1"name="Image"  onchange="EditBrandImg(event)">
+                <img src="/brand-images/{{brand._id}}.jpg" id="brandImg"  style="height: 100px; width: 100px;">
+            </div>
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary">Edit Brand</button>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+</form>
+
+<script src="/vendor/global/global.min.js"></script>
+<script src="/js/quixnav-init.js"></script>
+<script src="/js/custom.min.js"></script>
+
+
+
+<!-- Datatable -->
+<script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/js/plugins-init/datatables.init.js"></script>
+
+<script>
+    function EditBrandImg(event){
+        document.getElementById('brandImg').src=URL.createObjectURL(event.target.files[0])
+    }
+</script>
+<style>
+.error{
+    color: red;
+}
+</style>    

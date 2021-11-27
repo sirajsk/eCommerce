@@ -1,0 +1,390 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<style>
+		body {
+			margin-top: 20px;
+			background: #fff
+		}
+
+		.link-p {
+			display: block;
+			min-height: 250px;
+			height: auto;
+			width: 100%;
+			max-width: 100%;
+			margin-right: auto;
+			margin-left: auto;
+		}
+
+		/* TABLES */
+		.table {
+			border-collapse: separate;
+		}
+
+		.table-hover>tbody>tr:hover>td,
+		.table-hover>tbody>tr:hover>th {
+			background-color: #eee;
+		}
+
+		.table thead>tr>th {
+			border-bottom: 1px solid #C2C2C2;
+			padding-bottom: 0;
+		}
+
+		.table tbody>tr>td {
+			font-size: 0.875em;
+			background: #f5f5f5;
+			border-top: 10px solid #fff;
+			vertical-align: middle;
+			padding: 12px 8px;
+		}
+
+		.table tbody>tr>td:first-child,
+		.table thead>tr>th:first-child {
+			padding-left: 20px;
+		}
+
+		.table thead>tr>th span {
+			border-bottom: 2px solid #C2C2C2;
+			display: inline-block;
+			padding: 0 5px;
+			padding-bottom: 5px;
+			font-weight: normal;
+		}
+
+		.table thead>tr>th>a span {
+			color: #344644;
+		}
+
+		.table thead>tr>th>a span:after {
+			content: "\f0dc";
+			font-family: FontAwesome;
+			font-style: normal;
+			font-weight: normal;
+			text-decoration: inherit;
+			margin-left: 5px;
+			font-size: 0.75em;
+		}
+
+		.table thead>tr>th>a.asc span:after {
+			content: "\f0dd";
+		}
+
+		.table thead>tr>th>a.desc span:after {
+			content: "\f0de";
+		}
+
+		.table thead>tr>th>a:hover span {
+			text-decoration: none;
+			color: #2bb6a3;
+			border-color: #2bb6a3;
+		}
+
+		.table.table-hover tbody>tr>td {
+			-webkit-transition: background-color 0.15s ease-in-out 0s;
+			transition: background-color 0.15s ease-in-out 0s;
+		}
+
+		.table tbody tr td .call-type {
+			display: block;
+			font-size: 0.75em;
+			text-align: center;
+		}
+
+		.table tbody tr td .first-line {
+			line-height: 1.5;
+			font-weight: 400;
+			font-size: 1.125em;
+		}
+
+		.table tbody tr td .first-line span {
+			font-size: 0.875em;
+			color: #969696;
+			font-weight: 300;
+		}
+
+		.table tbody tr td .second-line {
+			font-size: 0.875em;
+			line-height: 1.2;
+		}
+
+		.table a.table-link {
+			margin: 0 5px;
+			font-size: 1.125em;
+		}
+
+		.table a.table-link:hover {
+			text-decoration: none;
+			color: #2aa493;
+		}
+
+		.table a.table-link.danger {
+			color: #fe635f;
+		}
+
+		.table a.table-link.danger:hover {
+			color: #dd504c;
+		}
+
+		.table-products tbody>tr>td {
+			background: none;
+			border: none;
+			border-bottom: 1px solid #ebebeb;
+			-webkit-transition: background-color 0.15s ease-in-out 0s;
+			transition: background-color 0.15s ease-in-out 0s;
+			position: relative;
+		}
+
+		.table-products tbody>tr:hover>td {
+			text-decoration: none;
+			background-color: #f6f6f6;
+		}
+
+		.table-products .name {
+			display: block;
+			font-weight: 600;
+			padding-bottom: 7px;
+		}
+
+		.table-products .price {
+			display: block;
+			text-decoration: none;
+			width: 50%;
+			float: left;
+			font-size: 0.875em;
+		}
+
+		.table-products .price>i {
+			color: #8dc859;
+		}
+
+		.table-products .warranty {
+			display: block;
+			text-decoration: none;
+			width: 50%;
+			float: left;
+			font-size: 0.875em;
+		}
+
+		.table-products .warranty>i {
+			color: #f1c40f;
+		}
+
+		.table tbody>tr.table-line-fb>td {
+			background-color: #9daccb;
+			color: #262525;
+		}
+
+		.table tbody>tr.table-line-twitter>td {
+			background-color: #9fccff;
+			color: #262525;
+		}
+
+		.table tbody>tr.table-line-plus>td {
+			background-color: #eea59c;
+			color: #262525;
+		}
+
+		.table-stats .status-social-icon {
+			font-size: 1.9em;
+			vertical-align: bottom;
+		}
+
+		.table-stats .table-line-fb .status-social-icon {
+			color: #556484;
+		}
+
+		.table-stats .table-line-twitter .status-social-icon {
+			color: #5885b8;
+		}
+
+		.table-stats .table-line-plus .status-social-icon {
+			color: #a75d54;
+		}
+</style>
+	<div class="container bootdey" style="margin-top: 10rem;">
+		<div class="row bootstrap snippets">
+			<!-- Cart -->
+			<div class="col-lg-9 col-md-9 col-sm-12">
+				<div class="col-lg-12 col-sm-12 mb-3">
+					<h3 class="title">SHOPPING CART</h3>
+				</div>
+				<div class="col-lg-12 col-sm-12 hero-feature">
+					<div class="table-responsive shadow-sm">
+						<table class="table table-bordered tbl-cart">
+							<thead>
+								<tr>
+									<th class="hidden-xs">Image</th>
+									<th>Product Name</th>
+
+									<th class="td-qty">Quantity</th>
+									<th> Price</th>
+									<th>Sub Total</th>
+									<th>Remove</th>
+									
+								</tr>
+							</thead>
+							<tbody>
+
+								{{#each products}}
+								<tr>
+									<td class="hidden-xs">
+										<a href="/product-detail/{{this._id}}">
+											<img src="/product-images/{{this.product._id}}a.jpg"
+												alt="Age Of Wisdom Tan Graphic Tee" title="" width="47" height="47">
+										</a>
+									</td>
+									<td><href="/product-detail/{{this._id}}">{{this.product.Name}}</a>
+									</td>
+
+
+									<td>
+										<div class="input-group bootstrap-touchspin">
+											<button class="btn btn-default bootstrap-touchspin-down"type="button" style="border-radius: 10px; border: solid #dddd;"
+											
+											 onclick="ChangeQty('{{this._id}}','{{this.product._id}}','{{../user._id}}',-1)">-</button>
+
+											<span class="text-center pt-2" id="{{this.product._id}}" style="border-radius: 10px; border: solid #dddd; width: 2rem;" >{{this.qty}}</span>
+											<button class="btn btn-default bootstrap-touchspin-up"type="button" style="border-radius: 10px; border: solid #dddd;"
+											onclick="ChangeQty('{{this._id}}','{{this.product._id}}','{{../user._id}}',1)">+</button>			
+										</div>
+									</td>
+
+									<td class="price">{{this.product.Price}}</td>
+									<td></td>
+									<td class="text-center  ">
+										<button onclick="deleteProCart('{{this._id}}','{{this.product._id}}')" class="remove_cart 	" rel="2">
+											<i class="fa fa-trash-o "></i>
+										</button>
+									</td>
+									
+								</tr>
+
+								{{/each}}
+
+								
+
+							</tbody>
+						</table>
+					</div>
+					<div class="btn-group btns-cart mt-4 ">
+						<a href="/" type="button" class="btn btn-primary"><i class="fa fa-arrow-circle-left"></i>
+							Continue Shopping</a>
+
+						<a href="/checkout" type="button" class="btn btn-primary ml-3">Checkout <i
+								class="fa fa-arrow-circle-right"></i></a>
+					</div>
+
+				</div>
+			</div>
+			<!-- End Cart -->
+
+			<div class="col-lg-3 col-md-3 col-sm-12 ">
+				<!-- Best Seller -->
+				<div class="col-lg-12 col-md-12 col-sm-12 hidden-xs shadow-lg"
+					style="background-color: seashell !important;">
+					<div class="no-padding">
+						<h3 class="title pt-3 pb-5">CART TOTAL</h3>
+					</div>
+					<div class="thumbnail col-lg-12 col-md-12 col-sm-6 text-center">
+
+						<div class="caption prod-caption" style="text-align: left;">
+							{{#each products}}
+							<p><strong href="#">{{product.Name}} </strong> :  Rs:  {{product.Price}}</p>
+							<p></p>
+							{{/each}}
+							<div class="btn-group pb-5">
+								<a href="#" class="btn btn-default"><h4>Total:<span id="total">{{totals}}</span></h4></a>
+							</div>
+							<p></p>
+						</div>
+					</div>
+
+				</div>
+				<!-- End Best Seller -->
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<!-- Back to top -->
+	<div class="btn-back-to-top" id="myBtn">
+		<span class="symbol-btn-back-to-top">
+			<i class="zmdi zmdi-chevron-up"></i>
+		</span>
+	</div>
+
+
+
+</div>
+
+
+
+<script>
+	function ChangeQty(cartId, proId, userId, count) {
+		console.log('jsdfjhsgdfs')
+		let qty = parseInt(document.getElementById(proId).innerHTML)
+
+		count = parseInt(count)
+
+
+		$.ajax({
+			url: '/change-product-quantity',
+			data: {
+				user: userId,
+				cart: cartId,
+				product: proId,
+				count: count,
+				qty: qty
+			},
+			method: 'post',
+			success: (response) => {
+				if (response.removeProduct) {
+
+					alert("Product Removed From Cart")
+					location.reload()
+				} else {
+
+
+					document.getElementById(proId).innerHTML = qty + count
+					document.getElementById('total').innerHTML =response.total
+
+
+				}
+
+			}
+		})
+	}
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+	function deleteProCart(cart, prodId, proId) {
+		$.ajax({
+			url: '/delete-cart-item',
+			data: {
+				cartId: cart,
+				proId: prodId
+
+			},
+			method: 'post',
+			success: (response) => {
+				if (response.removeProduct) {
+					console.log("hello ew")
+					alert("Product Removed")
+
+					location.reload()
+					document.getElementById(proId + 'row').hidden = true
+
+
+				}
+				if (response.cartEmpty) {
+					alert("The item has been removed")
+					location.reload()
+				}
+			}
+		})
+	}
+</script>

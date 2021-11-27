@@ -1,0 +1,21 @@
+<div class="container  " style="margin-top: 10rem;">
+  <div class="row">
+  {{#each orders}}
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Delivery Address:</h5>
+          <p class="card-text">{{this.deliveryDetails.FirstName}} {{this.deliveryDetails.LastName}} <br>
+            {{this.deliveryDetails.House}} <br>
+            {{this.deliveryDetails.Town}},{{this.deliveryDetails.PIN}} <br>
+            {{this.deliveryDetails.Mobile}} <br></p>
+
+          <div class=""> <small style="color: black;"> Order Status: 
+            </small><span style="color: black;"> {{this.Status}}</span></div>
+          <a class="btn btn-primary mt-2" href="/singleOrder/{{this._id}}">View products</a>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+</div>
+  </div>
