@@ -414,12 +414,14 @@ router.post('/place-order', async (req, res) => {
   userHelper.placeOrder(req.body, products, total).then((orderId) => {
     if (req.body['Payment'] == 'COD') {
       res.json({ codSuccess: true })
-    } else {
+    } else if(req.body['Payment'] == 'Razorpay') {
       userHelper.generateRazorpay(orderId, total).then((response) => {
 
         res.json(response)
 
       })
+    }else{
+      res.redirect('/')
     }
 
 
@@ -498,26 +500,26 @@ router.get('/userProfile', async (req, res) => {
 
 
 })
-// router.get('/edit-U-Add/:id',async(req,res)=>{
-//   user=req.session.user
-//   userId=req.session.user._id
-//   id=req.params.id
-//  address= await userHelper.singleAddress(userId,id)
+router.get('/edit-U-Add/:id',async(req,res)=>{
+  user=req.session.user
+  userId=req.session.user._id
+  id=req.params.id
+ address= await userHelper.singleAddress(userId,id)
  
-//   res.render('users/editUserAdd',{Isuser:true,address,user})
-// })
+  res.render('users/editUserAdd',{Isuser:true,address,user})
+})
 
-// router.post('/edit-U-Add/:id',async(req,res)=>{
+router.post('/edit-U-Add/:id',async(req,res)=>{
 
-//   userId=req.session.user._id
+  userId=req.session.user._id
 
-//   id=req.params.id
+  id=req.params.id
 
-//   userHelper.updateAddress(id,req.body,userId)
+  userHelper.updateAddress(id,req.body,userId)
 
-//   res.redirect('/userProfile')
+  res.redirect('/userProfile')
 
 
-// })
+})
 
 module.exports = router;

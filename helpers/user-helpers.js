@@ -371,7 +371,7 @@ module.exports = {
 
         return new Promise(async (resolve, reject) => {
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(details.User) })
-            // details._id = objectId()
+            details._id = objectId()
             if (user.address) {
                 db.get().collection(collection.USER_COLLECTION).updateOne({ _id: objectId(details.User) }, {
                     $push: {
@@ -549,42 +549,42 @@ module.exports = {
 
         })
     },
-    // singleAddress: (userId, aId) => {
+    singleAddress: (userId, aId) => {
 
-    //     return new Promise((resolve, reject) => {
-    //         user = db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userId) }).then(() => {
+        return new Promise((resolve, reject) => {
+            user = db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userId) }).then(() => {
 
-    //             if (user) {
-    //                 db.get().collection(collection.USER_COLLECTION).findOne({ address: { $elemMatch: { _id: objectId(aId) } } }).then((address) => {
-    //                     resolve(address.address[0])
-    //                 })
-    //             }
+                if (user) {
+                    db.get().collection(collection.USER_COLLECTION).findOne({ address: { $elemMatch: { _id: objectId(aId) } } }).then((address) => {
+                        resolve(address.address[0])
+                    })
+                }
 
-    //         })
+            })
 
-    //     })
-    // },
-    // updateAddress: (aId, AddData, userId) => {
-    //     return new Promise((resolve, reject) => {
-    //         user = db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userId) }).then(() => {
-    //             if (user) {
-    //                 db.get().collection(collection.USER_COLLECTION).updateOne({ address: { $elemMatch: { _id: objectId(aId) } } }, {
-    //                     $set: {
-    //                         "address.$.FirstName": AddData.FirstName,
-    //                         "address.$.LastName": AddData.LastName,
-    //                         "address.$.House": AddData.House,
-    //                        "address.$.Street": AddData.Street,
-    //                        "address.$.Town": AddData.Town,
-    //                         "address.$.PIN": AddData.PIN
+        })
+    },
+    updateAddress: (aId, AddData, userId) => {
+        return new Promise((resolve, reject) => {
+            user = db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userId) }).then(() => {
+                if (user) {
+                    db.get().collection(collection.USER_COLLECTION).updateOne({ address: { $elemMatch: { _id: objectId(aId) } } }, {
+                        $set: {
+                            "address.$.FirstName": AddData.FirstName,
+                            "address.$.LastName": AddData.LastName,
+                            "address.$.House": AddData.House,
+                           "address.$.Street": AddData.Street,
+                           "address.$.Town": AddData.Town,
+                            "address.$.PIN": AddData.PIN
 
-    //                     }
-    //                 }).then((resp) => {
-    //                     resolve(resp)
-    //                 })
-    //             }
-    //         })
-    //     })
-    // }
+                        }
+                    }).then((resp) => {
+                        resolve(resp)
+                    })
+                }
+            })
+        })
+    }
 
 
 
