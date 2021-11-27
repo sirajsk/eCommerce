@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session=require('express-session')
 var fileUpload=require('express-fileupload')
+require('dotenv').config()
 
 
 var userRouter = require('./routes/user');

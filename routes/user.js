@@ -6,9 +6,9 @@ const { response } = require('express');
 const adminHelpers = require('../helpers/admin-helpers');
 
 
-const serviceSID = "VAf4cb97f480577890d0cfc246509bbab2"
-const accountSID = "AC0da257780152397b87b74ca29388d715"
-const authTockon = "5e3d53f501bbe2f917aa79616b092c43"
+const serviceSID = process.env.serviceSID
+const accountSID = process.env.accountSID
+const authTockon = process.env.authTockon
 
 const client = require('twilio')(accountSID, authTockon)
 
