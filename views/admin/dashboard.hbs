@@ -172,8 +172,8 @@
         <canvas id="chart2" style="width:100%;max-width:600px"></canvas>
 
         <script>
-            var xValues = ["Pending","Placed","shipped","Delivered"];
-            var yValues = [7, 8, 8, 9];
+            var xValues = ["Pending","Placed","shipped","Delivered","sss"];
+            var yValues = [{{OrderStatus}}];
 
             new Chart("chart2", {
                 type: "bar",
@@ -190,7 +190,7 @@
                 options: {
                     legend: { display: false },
                     scales: {
-                        yAxes: [{ ticks: { min: 6, max: 16 } }],
+                        yAxes: [{ ticks: { min: 0, max: 10 } }],
                     },
                    title: {
                         display: true,
@@ -259,8 +259,6 @@
                                        
                                         <td>{{this.Mcategory}}</td>
                                         
-                                        
-                                       
                                         <td>
                                             {{this.Price}}
                                         </td>

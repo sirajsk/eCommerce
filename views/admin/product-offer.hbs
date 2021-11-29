@@ -1,0 +1,238 @@
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+<!-- Datatable -->
+<link href="/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+<!-- Custom Stylesheet -->
+<link href="/css/style.css" rel="stylesheet">
+<link href="/css/crop.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://foliotek.github.io/Croppie/croppie.css">
+<link rel="stylesheet" href="https://maxccroppie.cssdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{{!-- ----------------------------------------------- --}}
+
+
+<div class="row page-titles mx-0 mt-3 mb-4 shadow">
+    <div class="col-sm-6 p-md-0">
+        <div class="welcome-text">
+            <h4>ALL PRODUCT OFFER</h4>
+            
+        </div>
+    </div>
+
+</div>
+
+
+
+<div class="row">
+
+    <div class="col-12">
+        <div class="card">
+            {{!-- <div class="card-header">
+                <h4 class="card-title">Datatable</h4>
+            </div> --}}
+            <div class="card-body shadow">
+                <div class="table-responsive">
+                    <table id="example2" class="display" style="width:100%;color: black;">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Percentage</th>
+                                <th></th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each getProductOffer}}
+                            <tr>
+                                <td>
+                                    {{this.Name}}
+                                </td>
+                                <td> {{this.StartDate}}</td>
+                                <td>{{this.EndDate}}</td>
+                                <td>{{this.Percentage}}</td>
+                                <td></td>
+                                <td>
+                                    <a type="button" class="btn btn-primary">Edit</a>
+                                    <a type="button" class="btn btn-danger">Delete</a>
+                                </td>
+                            </tr>
+
+                            {{/each}}
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{{!-- -------------------------------------------------- --}}
+
+
+
+<div class="row page-titles mx-0  mb-4 shadow mt-5">
+    <div class="col-sm-6 p-md-0">
+        <div class="welcome-text">
+            <h4>PRODUCT OFFER</h4>
+
+        </div>
+    </div>
+
+</div>
+
+
+{{!-- <div class="text-center">
+    <h2>Brand Management</h2>
+</div> --}}
+
+
+<form action="/admin/product-offer " method="post" class="shadow" enctype="multipart/form-data" id="addBanner">
+
+
+    <div class="row form-group col-md-12 mb-4">
+        <div class="col-6">
+            <label for="inputEmail4"> Name</label>
+            <select type="text" class="form-control" id="proSelect" name="Name"
+                style="padding: 0% !important; height: 36px;">
+                <option value="">Choose</option>
+                {{#each Products}}
+                <option>{{this.Name}}</option>
+                {{/each}}
+
+            </select>
+        </div>
+        <div class="col-6">
+            <label for="inputEmail4">Start Date</label>
+            <input type="date" class="form-control" id="str" name="StartDate">
+        </div>
+        <div class="col-6 mt-3">
+            <label for="inputEmail4">End Date</label>
+            <input type="date" class="form-control" id="exp" name="EndDate">
+        </div>
+        <div class="col-6 mt-3">
+            <label for="inputEmail4">Percentage</label>
+            <img src="" alt="" style="width: 100px; height:auto" id="Percentage">
+            <input type="number" class="form-control" id="imgview1" name="Percentage">
+        </div>
+
+
+        <div class="col-12 text-center mt-5">
+            <button id="prosub" type="submit" class="btn btn-primary">Add OFFER </button>
+        </div>
+
+    </div>
+
+
+</form>
+
+<script src="/vendor/global/global.min.js"></script>
+<script src="/js/quixnav-init.js"></script>
+<script src="/js/custom.min.js"></script>
+
+
+
+
+<!-- Datatable -->
+<script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/js/plugins-init/datatables.init.js"></script>
+
+{{!-- <script>
+    function viewBrandImage(event) {
+
+        document.getElementById('imgview1').src = URL.createObjectURL(event.target.files[0])
+        let file = event.target.files[0].name
+        let extension = file.split('.').pop()
+        if (extension == 'jpeg' || extension == 'png' || extension == 'jpg') {
+            $('#imgview1').show()
+            $('#sub').show()
+            $('#errMsg').hide()
+
+        }
+        else {
+            $('#sub').hide()
+            $('#errMsg').show()
+        }
+    }
+</script> --}}
+{{!--
+<script src="/javascripts/crop.js"></script> --}}
+<style>
+    .error {
+        color: red;
+    }
+</style>
+
+
+<script>
+    $("#proSelect").select2({
+        placeholder: "Select A Product",
+        allowClear: true
+    });
+</script>
+<script>
+    $(document).ready(function () {
+
+        $('#str').blur(function () {
+            let date = document.getElementById('str').value
+            console.log(date)
+            let today = new Date()
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+            console.log(today)
+            if (date < today) {
+                $('#prosub').hide()
+                Swal.fire('Choose a valid Date')
+            } else {
+                $('#prosub').show()
+            }
+        })
+        $('#exp').blur(function () {
+            let date = document.getElementById('exp').value
+            let strDate = document.getElementById('str').value
+
+            console.log(date)
+            let today = new Date()
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+            console.log(today)
+            if (date < today) {
+                $('#prosub').hide()
+                Swal.fire('Choose a valid Date')
+            } else if (strDate > date) {
+                $('#prosub').hide()
+                Swal.fire('Choose a valid Date')
+            }
+            else {
+                $('#prosub').show()
+            }
+        })
+    })
+</script>

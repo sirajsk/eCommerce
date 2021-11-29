@@ -364,6 +364,8 @@ router.get('/product-detail/:id', async (req, res) => {
   let AllProducts = await adminHelper.getAllProducts()
   cartCount = await userHelper.getCartCount(userId)
 
+ 
+
   res.render('users/product-detailes', { Isuser: true, product, AllProducts, user, cartCount })
 })
 
@@ -601,5 +603,13 @@ router.post('/edit-U-Add/:id', async (req, res) => {
 
 
 })
+router.get('/change-address',(req,res)=>{
+  
+  res.render('users/change-Address',{Isuser:true })
+})
+router.post('/change-address',(req,res)=>{
 
+
+  res.redirect('/userProfile')
+})
 module.exports = router;

@@ -457,6 +457,54 @@ module.exports = {
 
         })
 
+    },
+    CategoryOffer:((data)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.CATEGORY_OFFER).insertOne(data)
+            resolve()
+        })
+    }),
+    getCategoryOffer:()=>{
+        return new Promise(async(resolve,reject)=>{
+            Coffer=await db.get().collection(collection.CATEGORY_OFFER).find().toArray()
+                resolve(Coffer)
+           
+
+        })
+    },
+    ProductOffer:((data)=>{
+        console.log(data);
+        return new Promise(async(resolve,reject)=>{
+            let product=await db.get().collection(collection.PRODUCT_COLLECTION).findOne({Name:data.Name}) 
+            console.log(product);
+            data.Percentage=parseInt(data.Percentage)
+            let ActualPrice=product.Price
+            let newPrice=(((product.Price)*(data.Percentage))/100)
+            newPrice=newPrice.toFixed()
+
+            db.get().collection(collection.PRODUCT_OFFER).insertOne(data).then((response)=>{
+                db.get().collection(collection.PRODUCT_COLLECTION).updateOne({Name:data.Name},
+                    {
+                        $set:{
+                            proOffer:true,
+                            Percentage:data.Percentage,
+                            Price:(ActualPrice - newPrice),
+                            ActualPrice:ActualPrice
+                        }
+                    }).then(()=>{
+                        resolve()
+                    })
+            })
+           
+        })
+    }),
+    getProductOffer:()=>{
+        return new Promise(async(resolve,reject)=>{
+            Poffer=await db.get().collection(collection.PRODUCT_OFFER).find().toArray()
+                resolve(Poffer)
+           
+
+        })
     }
     
 

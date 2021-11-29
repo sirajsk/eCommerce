@@ -26,10 +26,14 @@ router.get('/', async function (req, res, next) {
   let AllMethods=await adminHelper.AllMethods()
   let OrderStatus=await adminHelper.OrderStatus()
 
+  console.log(AllMethods);
+
+  console.log(OrderStatus);
+
 
 
    
-    res.render('admin/dashboard', { admin: true ,userCount,productCount,Profite,latestProduct,latestOrders,AllMethods})
+    res.render('admin/dashboard', { admin: true ,userCount,productCount,Profite,latestProduct,latestOrders,AllMethods,OrderStatus})
 
   } else {
     res.redirect('/admin/login')
@@ -390,3 +394,23 @@ router.post('/add-banner',(req,res)=>{
   
 })
 
+router.get('/category-offer',async(req,res)=>{
+ let  CategoryOffer=await adminHelper.getCategoryOffer()
+  let categories = await adminHelper.categoryDetailes()
+  res.render('admin/category-offer',{admin:true,categories,CategoryOffer})
+})
+
+router.post('/category-offer',(req,res)=>{
+  adminHelper.CategoryOffer(req.body)
+  console.log(req.body);
+  res.redirect('/admin/category-offer')
+})
+router.get('/product-offer',async(req,res)=>{
+  let getProductOffer=await adminHelper.getProductOffer()
+  let Products=await adminHelper.getAllProducts()
+  res.render('admin/product-offer',{admin:true,getProductOffer,Products})
+})
+router.post('/product-offer',(req,res)=>{
+  adminHelper.ProductOffer(req.body)
+  res.redirect('/admin/product-offer')
+})
