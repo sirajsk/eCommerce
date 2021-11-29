@@ -288,6 +288,178 @@ module.exports = {
             })
         })
     },
+    addBanner: (data) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.BANNER_COLLECTION).insertOne(data).then((response) => {
+                console.log(response);
+                resolve(response.insertedId.toString())
+            })
+        })
+
+    },
+    getAllbanner: () => {
+        return new Promise(async (resolve, reject) => {
+            let banners = await db.get().collection(collection.BANNER_COLLECTION).find().toArray()
+            resolve(banners)
+        })
+    },
+    getUserCount:()=>{
+       
+        return new Promise(async(resolve,reject)=>{
+            let UCount=await db.get().collection(collection.USER_COLLECTION).count()
+               
+                resolve(UCount)
+          
+            
+        })
+    },
+    getProductCount:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let Pcount=await db.get().collection(collection.PRODUCT_COLLECTION).count()
+            resolve(Pcount)
+        })
+
+    },
+    getProfite:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let total=await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $match: {
+                       Status:'Delivered'
+                    }
+                },
+                {
+                    $group:{
+                        _id:null,
+                        total:{$sum:'$Total'}
+                    }
+                }
+            ]).toArray()
+           
+            resolve(total[0].total)
+        })
+    },
+    latestProduct:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let latestProduct=await db.get().collection(collection.PRODUCT_COLLECTION).find().sort({$natural:-1}).limit(5).toArray()
+           
+            resolve(latestProduct)
+        })
+    },
+    latestOrders:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let latestOrders=await db.get().collection(collection.ORDER_COLLECTION).find().sort({$natural:-1}).limit(5).toArray()
+           
+            resolve(latestOrders)
+        })
+    },
+    AllMethods:()=>{
+        let Methods=[]
+        return new Promise(async(resolve,reject)=>{
+            let CodProduct=await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $match:{
+                        PaymentMethod:'COD'
+                    }
+                }
+            ]).toArray()
+            let CODlen=CodProduct.length
+            Methods.push(CODlen)
+
+            let PaypalProduct=await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $match:{
+                        PaymentMethod:'Paypal'
+                    }
+                }
+            ]).toArray()
+            let PayPallen=PaypalProduct.length
+            Methods.push(PayPallen)
+
+            let RazorpayProduct=await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $match:{
+                        PaymentMethod:'Razorpay'
+                    }
+                }
+            ]).toArray()
+            let Razorpaylen=RazorpayProduct.length
+            Methods.push(Razorpaylen)
+
+            resolve(Methods)
+
+
+
+
+
+        })
+    },
+    OrderStatus:()=>{
+
+        let status=[]
+        return new Promise(async(resolve,reject)=>{
+            let Pending=await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $match:{
+                        Status:'Pending'
+                    }
+                }
+            ]).toArray()
+            let Pendinglen=Pending.length
+            status.push(Pendinglen)
+
+            let Placed=await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $match:{
+                        Status:'Placed'
+                    }
+                }
+            ]).toArray()
+            let Placedlen=Placed.length
+            status.push(Placedlen)
+
+            let Shipped=await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $match:{
+                        Status:'Shipped'
+                    }
+                }
+            ]).toArray()
+            let Shippedlen=Shipped.length
+            status.push(Shippedlen)
+
+
+            let Delivered=await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $match:{
+                        Status:'Delivered'
+                    }
+                }
+            ]).toArray()
+            let Deliveredlen=Delivered.length
+            status.push(Deliveredlen)
+
+            let Cancelled=await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $match:{
+                        Status:'Cancelled'
+                    }
+                }
+            ]).toArray()
+            let Cancelledlen=Cancelled.length
+            status.push(Cancelledlen)
+
+            resolve(status)
+
+
+
+
+
+        })
+
+    }
+    
+
     
     
 }

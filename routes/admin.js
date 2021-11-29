@@ -14,10 +14,22 @@ const verifyAdminLogin = (req, res, next) => {
   }
 }
 // admin basic start
-router.get('/', function (req, res, next) {
+router.get('/', async function (req, res, next) {
   if (req.session.adminloggedIn) {
 
-    res.render('admin/dashboard', { admin: true })
+   let userCount= await adminHelper.getUserCount()
+   let productCount=await adminHelper.getProductCount()
+   let Profite=await adminHelper.getProfite()
+   let latestProduct=await adminHelper.latestProduct()
+   let latestOrders=await adminHelper.latestOrders()
+
+  let AllMethods=await adminHelper.AllMethods()
+  let OrderStatus=await adminHelper.OrderStatus()
+
+
+
+   
+    res.render('admin/dashboard', { admin: true ,userCount,productCount,Profite,latestProduct,latestOrders,AllMethods})
 
   } else {
     res.redirect('/admin/login')
@@ -32,7 +44,7 @@ router.get('/login', function (req, res, next) {
     res.redirect('/admin')
   }
   else {
-    res.render('admin/admin-login', { admin: true, login: true, "loginErr": req.session.loggedInErr })
+    res.render('admin/admin-login', { admin: true, login: true, "loginErr": req.session.loggedInErr})
     req.session.loggedInErr = false
   }
 
@@ -353,3 +365,28 @@ router.get('/cancelled/:id', (req, res) => {
     res.redirect('/admin/orders')
   })
 })
+router.get('/banner-management',async (req,res)=>{
+  banner=await adminHelper.getAllbanner()
+  res.render('admin/banner-management',{admin:true,banner})
+})
+router.get('/add-Banner', (req,res)=>{
+  
+  res.render('admin/add-banner',{admin:true})
+
+})
+router.post('/add-banner',(req,res)=>{
+  adminHelper.addBanner(req.body).then((id)=>{
+    console.log(req.files);
+    let image=req.files.Image1
+    image.mv('public/banner/' + id + '.jpg', (err, done) => {
+      if (!err) {
+        res.redirect('/admin/banner-management')
+      }
+      else {
+        res.redirect('/admin/add-banner')
+      }
+    })
+  })
+  
+})
+

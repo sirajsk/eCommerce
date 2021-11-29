@@ -270,13 +270,15 @@
 
 				if (response.codSuccess) {
 
-
 					location.href = "/order-success"
-				} else {
+				} else if(response.razorpay) {
 
+					alert(response)
+					razorpayPayment(response.resp)
+					
 
-					razorpayPayment(response)
-
+				}else{
+					location.href=response.url
 				}
 
 
@@ -287,17 +289,15 @@
 	})
 
 	function razorpayPayment(order) {
-
-
-
+		console.log(order)
 		var options = {
 
 			"key": 'rzp_test_zWnKlXAtmeUJqs', // Enter the Key ID generated from the Dashboard
-			"amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+			"amount":order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
 			"currency": "INR",
 			"name": "E-BUY",
 			"description": "Test Transaction",
-			"image": "https://example.com/your_logo",
+			{{!-- "image": "https://example.com/your_logo", --}}
 			"order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
 			"handler": function (response) {
 				verifyPayment(response, order)

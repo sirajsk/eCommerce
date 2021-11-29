@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,9 +32,9 @@
     <!-- row -->
 
 
-<div>
-    <a href="/admin/add-category" class="btn btn-success mb-3 shadow-sm">Add New Category</a>
-</div>
+    <div>
+        <a href="/admin/add-category" class="btn btn-success mb-3 shadow-sm">Add New Category</a>
+    </div>
 
     <div class="row ">
 
@@ -46,7 +43,7 @@
 
                 <div class="card-body shadow">
                     <div class="table-responsive">
-                        <table id="example2" class="display " style="width:100%">
+                        <table id="example2" class="display " style="width:100%;color: black;">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -57,38 +54,39 @@
 
                                 </tr>
                             </thead>
-                            <tbody>  {{#each categories}}
+                            <tbody> {{#each categories}}
                                 <tr>
                                     <td>1</td>
                                     <td>{{this.category}}</td>
                                     <td>
-                                        
-                                  <ul>
-                                        {{#each Scategory}}
-                                        <li>
-                                            {{this}}
-                                        </li>
 
-                                        {{/each}}
-                                  </ul>
-                                        
-                                        
-                                        </td>
-                                        {{!-- <td>{{this.Scategory}}</td> --}}
+                                        <ul>
+                                            {{#each Scategory}}
+                                            <li>
+                                                {{this}}
+                                            </li>
+
+                                            {{/each}}
+                                        </ul>
+
+
+                                    </td>
+                                    {{!-- <td>{{this.Scategory}}</td> --}}
                                     {{!-- <td>61</td> --}}
                                     <td>
                                         <a type="button" class="btn btn-primary">Edit</a>
-                                        <a type="button" class="btn btn-danger" href="/admin/delete-category/{{this._id}}" name="{{this.category}}"
-                        onclick="deleteCategory(event)" >Delete</a>
+                                        <a type="button" class="btn btn-danger"
+                                            href="/admin/delete-category/{{this._id}}" name="{{this.category}}"
+                                            onclick="deleteCategory(event)">Delete</a>
                                     </td>
 
                                 </tr>
 
 
-                                
-{{/each}}
-                              
-                               
+
+                                {{/each}}
+
+
                             </tbody>
 
                         </table>

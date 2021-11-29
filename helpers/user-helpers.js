@@ -549,20 +549,52 @@ module.exports = {
 
         })
     },
-    singleAddress: (userId, aId) => {
+    // singleAddress: (userId, aId) => {
 
-        return new Promise((resolve, reject) => {
-            user = db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userId) }).then(() => {
+    //     return new Promise((resolve, reject) => {
+    //         user = db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userId) }).then(() => {
 
-                if (user) {
-                    db.get().collection(collection.USER_COLLECTION).findOne({ address: { $elemMatch: { _id: objectId(aId) } } }).then((address) => {
-                        resolve(address.address[0])
-                    })
-                }
+    //             if (user) {
+    //                 db.get().collection(collection.USER_COLLECTION).findOne({ address: { $elemMatch: { _id: objectId(aId) } } }).then((address) => {
+    //                     resolve(address.address[0])
+    //                 })
+    //             }
 
-            })
+    //         })
 
+    //     })
+    // },
+    singleAddress:(userId,aId)=>{
+        return new Promise(async(resolve,reject)=>{
+            user=await db.get().collection(collection.USER_COLLECTION).aggregate([
+                {
+                    $match:{
+                        _id:objectId(userId)
+                    },
+                    
+                },
+                {
+                    $unwind:"$address"
+
+                },
+                {
+                    $match:{
+                        "address._id":objectId(aId)
+                    }
+                },
+                {
+                    $project:{
+                        address:1,
+                        _id:0
+                    }
+                },
+
+            ]).toArray()
+            console.log(user);
+            resolve(user)
         })
+           
+       
     },
     updateAddress: (aId, AddData, userId) => {
         return new Promise((resolve, reject) => {

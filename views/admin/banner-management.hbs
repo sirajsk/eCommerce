@@ -13,8 +13,8 @@
 <div class="row page-titles mx-0 mt-3 mb-4 shadow">
     <div class="col-sm-6 p-md-0">
         <div class="welcome-text">
-            <h4>All Brand</h4>
-            {{!-- <span class="ml-1">Datatable</span> --}}
+            <h4>All Banners</h4>
+          
         </div>
     </div>
 
@@ -22,46 +22,44 @@
 
 
 <div>
-    <a href="/admin/add-brand" class="btn btn-success mb-3 shadow">Add New Brand</a>
+    <a href="/admin/add-Banner" class="btn btn-success mb-3 shadow">Add New Banner</a>
 </div>
 <div class="row">
 
     <div class="col-12">
         <div class="card">
-            {{!-- <div class="card-header">
-                <h4 class="card-title">Datatable</h4>
-            </div> --}}
+           
             <div class="card-body shadow" >
                 <div class="table-responsive">
                     <table id="example2" class="display" style="width:100%;color: black;">
                         <thead>
                             <tr>
-                                <th>Brand Logo</th>
-                                <th>Brand Name</th>
-                                <th>No Of Item</th>
-                                <th ></th>
+                                <th>Banner Logo</th>
+                                <th>Banner Name</th>
+                                <th>Banner Discription</th>
+                                <th >Root</th>
                                 <th></th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{#each brands}}
+                            {{#each  banner}}
                             <tr>
                                 <td>
-                                    <img style="width: 50px; height: 50px;" src="/brand-images/{{this._id}}.jpg">
+                                    <img style="width: 50px; height: 50px;" src="/banner/{{this._id}}.jpg" >
                                 </td>
                                 <td>{{this.Name}}</td>
-                                <td>2</td>
-                                <td></td>
+                                <td>{{this.Discription}}</td>
+                                <td>{{this.Action}}</td>
                                 <td></td>
                                  <td>
-                                        <a type="button" class="btn btn-primary" href="/admin/edit-brand/{{this._id}}">Edit</a>
-                                        <a type="button" class="btn btn-danger" href="/admin/delete-brand/{{this._id}}" name="{{this.brand}}"
-                    onclick="deleteBrand(event)">Delete</a>
+                                        <a type="button" class="btn btn-primary" >Edit</a>
+                                        <a type="button" class="btn btn-danger"  name="">Delete</a>
+                                           
                                     </td>
                             </tr>
-
-                           {{/each}}
+                            {{/each}}
+                          
                         </tbody>
                       
                     </table>

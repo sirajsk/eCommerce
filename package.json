@@ -22,6 +22,7 @@
     "mongodb": "^4.1.4",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.15",
+    "paypal-rest-sdk": "^1.8.1",
     "razorpay": "^2.8.0",
     "twilio": "^3.71.1"
   }

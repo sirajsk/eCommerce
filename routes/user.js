@@ -4,6 +4,7 @@ var userHelper = require('../helpers/user-helpers')
 var adminHelper = require('../helpers/admin-helpers');
 const { response } = require('express');
 const adminHelpers = require('../helpers/admin-helpers');
+var paypal = require('paypal-rest-sdk');
 
 
 const serviceSID = process.env.serviceSID
@@ -11,6 +12,12 @@ const accountSID = process.env.accountSID
 const authTockon = process.env.authTockon
 
 const client = require('twilio')(accountSID, authTockon)
+
+paypal.configure({
+  'mode': 'sandbox', //sandbox or live
+  'client_id': process.env.client_id,
+  'client_secret': process.env.client_secret
+});
 
 
 /* GET home page. */
@@ -39,11 +46,14 @@ router.get('/', async function (req, res, next) {
     cartCount = await userHelper.getCartCount(req.session.user._id)
   }
 
-  adminHelper.getAllProducts().then((products) => {
+  
+  adminHelper.getAllProducts().then(async(products) => {
+
+    banner= await adminHelper.getAllbanner()
+    console.log(banner);
 
 
-
-    res.render('users/user-home', { user, products, Isuser: true, cartCount });
+    res.render('users/user-home', { user, products, Isuser: true, cartCount ,banner});
   })
 
 
@@ -214,7 +224,7 @@ router.get('/cart', async function (req, res) {
     let id = req.session.user._id
     let user = req.session.user
     // let Subtotal=await userHelper.getSubTotal(id)
-    let totals = await userHelper.getTotalAmount(id)                                       
+    let totals = await userHelper.getTotalAmount(id)
 
 
 
@@ -407,26 +417,96 @@ router.post('/addNewAddress', (req, res) => {
 
 })
 router.post('/place-order', async (req, res) => {
-  // console.log('ldhfjsgdfjgsdjfgsdgfjsdhgfjhsdgshdfsdhjfg');
   let id = req.session.user._id
   let products = await userHelper.getCartProductList(id)
   let total = await userHelper.getTotalAmount(id)
+    
+ console.log(req.session.total,'session');
   userHelper.placeOrder(req.body, products, total).then((orderId) => {
     if (req.body['Payment'] == 'COD') {
       res.json({ codSuccess: true })
-    } else if(req.body['Payment'] == 'Razorpay') {
-      userHelper.generateRazorpay(orderId, total).then((response) => {
-
-        res.json(response)
-
+    } else if (req.body['Payment'] == 'Razorpay') {
+      userHelper.generateRazorpay(orderId, total).then((resp) => {
+        res.json({resp, razorpay: true })
       })
-    }else{
-      res.redirect('/')
+    } else {
+      val=total/74
+      total=val.toFixed(2)
+      req.session.total=total
+      console.log(total);
+      var create_payment_json = {
+        "intent": "sale",
+        "payer": {
+          "payment_method": "paypal"
+        },
+        "redirect_urls": {
+          "return_url": "http://localhost:3000/success",
+          "cancel_url": "http://localhost:3000/cancelled"
+        },
+        "transactions": [{
+          "item_list": {
+            "items": [{
+              "name": "E-BUY",
+              "sku": "007",
+              "price": total,
+              "currency": "USD",
+              "quantity": 1
+            }]
+          },
+          "amount": {
+            "currency": "USD",
+            "total": total
+          },
+          "description": "PAY LESS WEAR MORE"
+        }]
+      };
+
+      paypal.payment.create(create_payment_json, function (error, payment) {
+        if (error) {
+          throw error;
+        } else {
+          for (let i = 0; i < payment.links.length; i++) {
+            if (payment.links[i].rel === 'approval_url') {
+              url = payment.links[i].href
+              console.log(url);
+              res.json({ url })
+            }
+          }
+        }
+      });
     }
-
-
   })
 })
+
+router.get('/success',(req,res)=>{
+  let val=req.session.total
+  console.log(req.query);
+  const paymentId=req.query.paymentId
+  const payerId=req.query.PayerID
+
+  const   execute_payment_json={
+    "payer_id":payerId,
+    "transactions":[{
+      "amount":{
+        "currency":"USD",
+        "total":val
+      }
+    }]
+  }
+  paypal.payment.execute(paymentId,execute_payment_json,function(error,payment){
+    if(error){
+      throw error;
+    }else{
+      let id=req.session.user._id
+      userHelper.changePaymentStatus(req.session.orderId).then(()=>{
+        res.redirect('/order-success')
+      })
+    }
+  }) 
+
+})
+ 
+
 router.get('/order-success', (req, res) => {
   res.render('users/order-success', { Isuser: true })
 })
@@ -447,10 +527,10 @@ router.get('/orders', async (req, res) => {
   })
 
 
-})                                                  
+})
 router.get('/singleOrder/:id', async (req, res) => {
   let user = req.session.user
-  let oId = req.params.id                                              
+  let oId = req.params.id
 
   let cartCount = null
   if (req.session.user) {
@@ -478,12 +558,12 @@ router.post('/verify-payment', (req, res) => {
 })
 router.get('/userProfile', async (req, res) => {
   id = req.session.user._id
-  
+
   user = await userHelper.userProfile(id)
   let status = await userHelper.addressChecker(id)
   var address = null
   if (status.address) {
-   
+
 
     let addr = await userHelper.getUserAddress(id)
 
@@ -493,29 +573,29 @@ router.get('/userProfile', async (req, res) => {
 
     res.render('users/userProfile', { Isuser: true, user, address })
 
-  }else{
+  } else {
     res.render('users/userProfile', { Isuser: true, user })
   }
 
 
 
 })
-router.get('/edit-U-Add/:id',async(req,res)=>{
-  user=req.session.user
-  userId=req.session.user._id
-  id=req.params.id
- address= await userHelper.singleAddress(userId,id)
- 
-  res.render('users/editUserAdd',{Isuser:true,address,user})
+router.get('/edit-U-Add/:id', async (req, res) => {
+  user = req.session.user
+  userId = req.session.user._id
+  id = req.params.id
+  address = await userHelper.singleAddress(userId, id)
+
+  res.render('users/editUserAdd', { Isuser: true, address, user })
 })
 
-router.post('/edit-U-Add/:id',async(req,res)=>{
+router.post('/edit-U-Add/:id', async (req, res) => {
 
-  userId=req.session.user._id
+  userId = req.session.user._id
 
-  id=req.params.id
+  id = req.params.id
 
-  userHelper.updateAddress(id,req.body,userId)
+  userHelper.updateAddress(id, req.body, userId)
 
   res.redirect('/userProfile')
 

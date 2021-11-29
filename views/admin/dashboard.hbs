@@ -1,42 +1,145 @@
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
-    <!-- Datatable -->
-    <link href="/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
-    <!-- Custom Stylesheet -->
-    <link href="/css/style.css" rel="stylesheet">
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+<!-- Datatable -->
+<link href="/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+<!-- Custom Stylesheet -->
+<link href="/css/style.css" rel="stylesheet">
 
 {{!-- -------------------------------------------------------------------------------- --}}
 
+<style>
+    body{margin-top:20px;}
+
+.p-xl {
+  padding: 40px;
+}
+
+.lazur-bg {
+  background-color: #ffffff;
+  color: #1d1b1b;
+}
+
+.red-bg {
+  background-color: #ffffff;
+  color: #1d1b1b;
+}
+
+.navy-bg {
+  background-color: #ffffff;
+  color: #1d1b1b;
+}
+
+.yellow-bg {
+  background-color: #ffffff;
+  color: #1d1b1b;
+}
+
+.widget {
+  border-radius: 5px;
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16), 0 2px 10px rgba(0, 0, 0, 0.12);
+}
+
+.widget h2, .widget h3 {
+  margin-top: 5px;
+  margin-bottom: 0;
+  border-bottom:1px dotted white;
+}
+
+.m-t-md {
+  margin-top: 20px;
+}
+</style>
 
 
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
- <div class="row page-titles mx-0 shadow">
-            <div class="col-sm-6 p-md-0">
-                <div class="welcome-text">
-                    <h4>DASHBOARD</h4>
-                   
-                </div>
-            </div>
+<div class="row page-titles mx-0 shadow">
+    <div class="col-sm-6 p-md-0">
+        <div class="welcome-text">
+            <h4>DASHBOARD</h4>
 
         </div>
+    </div>
+
+</div>
+<div class="container bootstrap snippets bootdey mb-5">
+    <div class="row">
+		<div class="col-md-4">
+            <div class="widget lazur-bg p-xl">
+                <h3>Total Users</h3>
+                <div class=" row list-unstyled m-t-md">
+                    <div>
+                       <i class="fas fa-users fa-3x ml-3"></i>
+                    </div>
+                    <div>
+                         <h2 class="ml-3" style="width: 50px; height: 50px;">{{userCount}}</h2>
+                    </div>
+                       
+                        
+                    
+                   
+                </div>
+            </div>   
+		</div>
+		<div class="col-md-4">
+            <div class="widget red-bg p-xl">
+                <h3>Revenew</h3>
+                <div class=" row list-unstyled m-t-md">
+                    <div>
+                        <i class="fas fa-pound-sign fa-3x ml-3"></i>
+                    </div>
+                    <div>
+                         <h2 class="ml-3" style="width: 50px; height: 50px; "> {{Profite}}</h2>
+                    </div>
+                       
+                      
+                    
+                    
+                </div>
+            </div>   
+		</div>
+
+        <div class="col-md-4">
+            <div class="widget yellow-bg p-xl">
+                <h3>Total Product</h3>
+                <div class=" row list-unstyled m-t-md">
+                    <div>
+                        <i class="fab fa-product-hunt fa-3x ml-3"></i>
+                           
+                    </div>
+                    <div>
+
+                    
+                        <h2 class="ml-3" style="width: 50px; height: 50px; "> {{productCount}}</h2>
+                        </div>
+                    
+                   
+                </div>
+            </div>   
+		</div>
+		
+	</div>
+    
+</div>
 
 <div class="row  col-12">
 
     <div class="col-6">
         <h2 class="text-center">Order details</h2>
-        <canvas id="myChart" style="width:100%;max-width:500px"></canvas>
+        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
 
         <script>
-            var xValues = [ "Spain", "USA", "Argentina","India"];
-            var yValues = [  44, 24, 10,20];
+            var xValues = ["COD", "Paypal", "Razorpay"];
+            var yValues = [{{AllMethods}}];
             var barColors = [
                 "#b91d47",
                 "#00aba9",
@@ -57,7 +160,7 @@
                 options: {
                     title: {
                         display: true,
-                        text: "World Wide Wine Production 2018"
+                        text: "Payment Methods"
                     }
                 }
             });
@@ -65,15 +168,15 @@
     </div>
 
     <div class="col-6">
-         <h2 class="text-center"> Details</h2>
+        <h2 class="text-center"> Details</h2>
         <canvas id="chart2" style="width:100%;max-width:600px"></canvas>
 
         <script>
-            var xValues = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150];
-            var yValues = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15];
+            var xValues = ["Pending","Placed","shipped","Delivered"];
+            var yValues = [7, 8, 8, 9];
 
             new Chart("chart2", {
-                type: "line",
+                type: "bar",
                 data: {
                     labels: xValues,
                     datasets: [{
@@ -88,85 +191,161 @@
                     legend: { display: false },
                     scales: {
                         yAxes: [{ ticks: { min: 6, max: 16 } }],
+                    },
+                   title: {
+                        display: true,
+                        text: "Payment Methods"
                     }
-                }
+
+                },
+                
+
             });
         </script>
 
 
     </div>
+
+
+    
+
+
+
+
+
     <div class="col-12 mt-5">
 
-{{!-- ------------------------------------------------------------------------------------------------ --}}
+        {{!-- ------------------------------------------------------------------------------------------------ --}}
 
 
-  
+
         <div class="row page-titles mx-0 shadow  ">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>ALL USERS</h4>
-                   
+                    <h4>LATEST PRODUCT</h4>
+
                 </div>
             </div>
 
         </div>
-    <!-- row -->
+        <!-- row -->
 
 
-    <div class="row">
 
-        <div class="col-12">
-            <div class="card">
+        <div class="row">
 
-                <div class="card-body shadow">
-                    <div class="table-responsive">
-                        <table id="example2" class="display " style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Mobile</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+            <div class="col-12">
+                <div class="card">
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{#each AllUsers}}
-                                <tr>
-                                    <td>{{this.name}}</td>
-                                    <td>{{this.email}}</td>
-                                    <td>{{this.mobile}}</td>
-                                   {{#if this.status}}
-                                     <td>Active</td>
-                                      {{else}}
-                                     <td>Blocked</td>
-                                     {{/if}}
-                                    <td>
-                                        {{!-- <button type="button" class="btn btn-primary">Edit</button> --}}
-                                        {{#if this.status}}
-                                        <a href="/admin/block-user/{{this._id}}"  type="button" class="btn btn-danger" name="{{this.name}}">Block</a>
-                                        {{else}}
-                                         <a href="/admin/unblock-user/{{this._id}}" name="{{this.name}}" style="width: 80px;" class="btn btn-success">Unblock</a> 
-                                         {{/if}}
-                                    </td>
+                    <div class="card-body shadow">
+                        <div class="table-responsive">
+                            <table id="example2" class="display " style="width:100%;color: black;">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Stock</th>
+                                        <th>Discription</th>
+                                        <th>Mcategory</th>
+                                        <th>Price</th>
 
-                                </tr>
-                                {{/each}}
-                               
-                            </tbody>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each latestProduct}}
+                                    <tr>
+                                        <td>{{this.Name}}</td>
+                                        <td>{{this.Stock}}</td>
+                                        <td>{{this.Discription}}</td>
+                                       
+                                        <td>{{this.Mcategory}}</td>
+                                        
+                                        
+                                       
+                                        <td>
+                                            {{this.Price}}
+                                        </td>
 
-                        </table>
+                                    </tr>
+                                    {{/each}}
+
+                                </tbody>
+
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
+        {{!-- ------------------------------------------------------------------------------------------------ --}}
+
     </div>
 
+    {{!-- ---------------------------------------------------------------------------------------------- --}}
+    <div class="col-12 mt-5">
 
-{{!-- ------------------------------------------------------------------------------------------------ --}}
+        {{!-- ------------------------------------------------------------------------------------------------ --}}
+
+
+
+        <div class="row page-titles mx-0 shadow  ">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>LATEST ORDERS</h4>
+
+                </div>
+            </div>
+
+        </div>
+        <!-- row -->
+
+
+
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-body shadow">
+                        <div class="table-responsive">
+                            <table id="example2" class="display " style="width:100% ; color: black;">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Total</th>
+                                        <th>PaymentMethod</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each latestOrders}}
+                                    <tr>
+                                        <td>{{this.deliveryDetails.FirstName}}</td>
+                                        <td>{{this.Date}}</td>
+                                        <td>{{this.Time}}</td>
+                                        <td>{{this.Total}}</td>
+                                        <td> {{this.PaymentMethod}} </td>
+                                         <td> {{this.Status}}</td>
+                                    </tr>
+                                    {{/each}}
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {{!-- ------------------------------------------------------------------------------------------------ --}}
 
     </div>
+    {{!-- --------------------------------------------------------------------------------------------------- --}}
 
 
 
@@ -174,13 +353,12 @@
 
 
 
-    <script src="/vendor/global/global.min.js"></script>
-    <script src="/js/quixnav-init.js"></script>
-    <script src="/js/custom.min.js"></script>
+<script src="/vendor/global/global.min.js"></script>
+<script src="/js/quixnav-init.js"></script>
+<script src="/js/custom.min.js"></script>
 
 
 
-    <!-- Datatable -->
-    <script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="/js/plugins-init/datatables.init.js"></script>
-
+<!-- Datatable -->
+<script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/js/plugins-init/datatables.init.js"></script>
