@@ -289,8 +289,9 @@ module.exports = {
         })
     },
     addBanner: (data) => {
+        console.log(data)
         return new Promise((resolve, reject) => {
-            db.get().collection(collection.BANNER_COLLECTION).insertOne(data).then((response) => {
+            db.get().collection(collection.BANNER_COLLECTION).insertOne({banner:"One",Name:data.Name,Discription:data.Discription,Action:data.Action}).then((response) => {
                 console.log(response);
                 resolve(response.insertedId.toString())
             })
@@ -300,6 +301,27 @@ module.exports = {
     getAllbanner: () => {
         return new Promise(async (resolve, reject) => {
             let banners = await db.get().collection(collection.BANNER_COLLECTION).find().toArray()
+            resolve(banners)
+        })
+    },
+    getFirstAllbanner: () => {
+        return new Promise(async (resolve, reject) => {
+            let banners = await db.get().collection(collection.BANNER_COLLECTION).find({banner:"One"}).toArray()
+            resolve(banners)
+        })
+    },
+    addSecondBanner:(data)=>{
+
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.BANNER_COLLECTION).insertOne({banner:"Two",Name:data.Name,Discription:data.Discription,Action:data.Action}).then((response) => {
+                console.log(response);
+                resolve(response.insertedId.toString())
+            })
+        })
+    },
+    getSecondAllbanner: () => {
+        return new Promise(async (resolve, reject) => {
+            let banners = await db.get().collection(collection.BANNER_COLLECTION).find({banner:"Two"}).toArray()
             resolve(banners)
         })
     },
@@ -504,6 +526,23 @@ module.exports = {
                 resolve(Poffer)
            
 
+        })
+    },
+    updateUAddress:(AddId,data)=>{
+        console.log(data);
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(AddId)},{
+            
+            $set:{
+                name:data.name,
+                email:data.email,
+                mobile:data.mobile
+            }
+            
+            
+        }).then((response)=>{
+                resolve(response)
+            })
         })
     }
     

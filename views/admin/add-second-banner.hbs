@@ -1,0 +1,103 @@
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+<!-- Datatable -->
+<link href="/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+<!-- Custom Stylesheet -->
+<link href="/css/style.css" rel="stylesheet">
+<link href="/css/crop.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://foliotek.github.io/Croppie/croppie.css">
+<link rel="stylesheet" href="https://maxccroppie.cssdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<div class="row page-titles mx-0 mt-3 mb-4 shadow">
+    <div class="col-sm-6 p-md-0">
+        <div class="welcome-text">
+            <h4>ADD NEW BANNER</h4>
+
+        </div>
+    </div>
+
+</div>
+
+
+{{!-- <div class="text-center">
+    <h2>Brand Management</h2>
+</div> --}}
+
+
+<form action="/admin/add-second-banner" method="post" class="shadow" enctype="multipart/form-data" id="addBanner">
+
+
+    <div class="row form-group col-md-12 mb-4">
+        <div class="col-6">
+            <label for="inputEmail4"> Name</label>
+            <input type="text" class="form-control" id="inputEmail4" name="Name">
+        </div>
+         <div class="col-6">
+            <label for="inputEmail4">Discription</label>
+            <input type="text" class="form-control" id="inputEmail4" name="Discription">
+        </div>
+         <div class="col-6 mt-3">
+            <label for="inputEmail4">Action</label>
+            <input type="text" class="form-control" id="inputEmail4" name="Action">
+        </div>
+         <div class="col-6 mt-3">
+            <label for="inputEmail4">Image1</label>
+             <img src="" alt="" style="width: 100px; height:auto" id="imgview1">
+            <input type="file" class="form-control" id="imgview1" name="Image1">
+        </div>
+         
+
+        <div class="col-12 text-center mt-5" >
+            <button type="su" class="btn btn-primary">Add Banner</button>
+        </div>
+        
+    </div>
+ 
+
+</form>
+
+
+
+<script src="/vendor/global/global.min.js"></script>
+<script src="/js/quixnav-init.js"></script>
+<script src="/js/custom.min.js"></script>
+
+
+
+
+<!-- Datatable -->
+<script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/js/plugins-init/datatables.init.js"></script>
+
+<script>
+    function viewBrandImage(event) {
+
+        document.getElementById('imgview1').src = URL.createObjectURL(event.target.files[0])
+        let file = event.target.files[0].name
+        let extension = file.split('.').pop()
+        if (extension == 'jpeg' || extension == 'png' || extension == 'jpg') {
+            $('#imgview1').show()
+            $('#sub').show()
+            $('#errMsg').hide()
+
+        }
+        else {
+            $('#sub').hide()
+            $('#errMsg').show()
+        }
+    }
+</script>
+{{!--
+<script src="/javascripts/crop.js"></script> --}}
+<style>
+    .error {
+        color: red;
+    }
+</style>

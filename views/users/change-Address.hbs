@@ -1,17 +1,17 @@
 <div class="container col-6  " style="margin-top: 12rem;">
     {{!-- {{#each address}} --}}
-    <form action="/change-address" method="post" class="needs-validation mt-5" novalidate>
+    <form action="/change-address/{{detailes._id}}" method="post" class="needs-validation mt-5" novalidate>
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="firstName">Name</label>
-                <input type="text" class="form-control" id="Name" name="Name" placeholder="" required>
+                <input type="text" class="form-control" id="Name" name="name" placeholder="" value="{{detailes.name}}" required>
                 <div class="invalid-feedback">
                     Valid Name is required.
                 </div>
             </div>
             <div class="col-md-6 mb-3">
                 <label for="lastName">Email</label>
-                <input type="email" class="form-control" id="Email" name="Email" placeholder="" required>
+                <input type="email" class="form-control" id="Email" name="email" placeholder=""  value="{{detailes.email}}" required>
                 <div class="invalid-feedback">
                     Valid Email is required.
                 </div>
@@ -22,7 +22,7 @@
             <label for="House">Mobile</label>
             <div class="input-group">
 
-                <input type="number" class="form-control" id="Mobile" name="Mobile" placeholder="Mobile" required>
+                <input type="number" class="form-control" id="Mobile" name="mobile"  value="{{detailes.mobile}}" placeholder="Mobile" required>
                 <div class="invalid-feedback" style="width: 100%;">
                     Your Mobile No is required.
                 </div>

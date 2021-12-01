@@ -616,7 +616,16 @@ module.exports = {
                 }
             })
         })
-    }
+    },
+    changeAddress:(userId)=>{
+        return new Promise((resolve,reject)=>{
+            user=db.get().collection(collection.USER_COLLECTION).findOne({_id:objectId(userId)}).then((user)=>{
+                resolve(user)
+            })
+           
+        })
+    },
+    
 
 
 

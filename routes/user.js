@@ -5,6 +5,7 @@ var adminHelper = require('../helpers/admin-helpers');
 const { response } = require('express');
 const adminHelpers = require('../helpers/admin-helpers');
 var paypal = require('paypal-rest-sdk');
+const { Db } = require('mongodb');
 
 
 const serviceSID = process.env.serviceSID
@@ -49,11 +50,13 @@ router.get('/', async function (req, res, next) {
   
   adminHelper.getAllProducts().then(async(products) => {
 
-    banner= await adminHelper.getAllbanner()
+    banner= await adminHelper.getFirstAllbanner()
     console.log(banner);
+    banner2= await adminHelper.getSecondAllbanner()
+    console.log(banner2);
 
 
-    res.render('users/user-home', { user, products, Isuser: true, cartCount ,banner});
+    res.render('users/user-home', { user, products, Isuser: true, cartCount ,banner,banner2});
   })
 
 
@@ -603,13 +606,21 @@ router.post('/edit-U-Add/:id', async (req, res) => {
 
 
 })
-router.get('/change-address',(req,res)=>{
+router.get('/change-address',async(req,res)=>{
   
-  res.render('users/change-Address',{Isuser:true })
+  userId=req.session.user._id
+  detailes=await userHelper.changeAddress(userId)
+  console.log(detailes);
+
+  res.render('users/change-Address',{Isuser:true ,detailes})
 })
-router.post('/change-address',(req,res)=>{
+router.post('/change-address/:id',(req,res)=>{
 
+  id=req.params.id
+  adminHelper.updateUAddress(id,req.body).then((response)=>{
+    res.redirect('/userProfile')
+  })
 
-  res.redirect('/userProfile')
+ 
 })
 module.exports = router;

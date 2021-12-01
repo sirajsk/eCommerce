@@ -393,7 +393,25 @@ router.post('/add-banner',(req,res)=>{
   })
   
 })
+router.get('/add-Second-Banner',(req,res)=>{
 
+  res.render('admin/add-second-banner',{admin:true})
+})
+router.post('/add-second-banner',(req,res)=>{
+  adminHelper.addSecondBanner(req.body).then((id)=>{
+    console.log(req.files);
+    let image=req.files.Image1
+    image.mv('public/banner/' + id + '.jpg', (err, done) => {
+      if (!err) {
+        res.redirect('/admin/banner-management')
+      }
+      else {
+        res.redirect('/admin/add-Second-Banner')
+      }
+    })
+  })
+ 
+})
 router.get('/category-offer',async(req,res)=>{
  let  CategoryOffer=await adminHelper.getCategoryOffer()
   let categories = await adminHelper.categoryDetailes()
@@ -413,4 +431,7 @@ router.get('/product-offer',async(req,res)=>{
 router.post('/product-offer',(req,res)=>{
   adminHelper.ProductOffer(req.body)
   res.redirect('/admin/product-offer')
+})
+router.get('/product-report',(req,res)=>{
+  res.render('admin/product-report',{admin:true})
 })
