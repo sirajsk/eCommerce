@@ -62,8 +62,8 @@
                                 <td>{{this.Action}}</td>
                                 <td></td>
                                  <td>
-                                        <a type="button" class="btn btn-primary" >Edit</a>
-                                        <a type="button" class="btn btn-danger"  name="">Delete</a>
+                                        <a href="/admin/edit-banner/{{this._id}}" type="button" class="btn btn-primary" >Edit</a>
+                                        <a href="/admin/delete-banner/{{this._id}}" type="button" class="btn btn-danger" onclick="return confirm('Are You Want To Delete {{this.Name}}?')"  name="">Delete</a>
                                            
                                     </td>
                             </tr>

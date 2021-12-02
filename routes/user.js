@@ -47,16 +47,16 @@ router.get('/', async function (req, res, next) {
     cartCount = await userHelper.getCartCount(req.session.user._id)
   }
 
-  
-  adminHelper.getAllProducts().then(async(products) => {
 
-    banner= await adminHelper.getFirstAllbanner()
+  adminHelper.getAllProducts().then(async (products) => {
+
+    banner = await adminHelper.getFirstAllbanner()
     console.log(banner);
-    banner2= await adminHelper.getSecondAllbanner()
+    banner2 = await adminHelper.getSecondAllbanner()
     console.log(banner2);
 
 
-    res.render('users/user-home', { user, products, Isuser: true, cartCount ,banner,banner2});
+    res.render('users/user-home', { user, products, Isuser: true, cartCount, banner, banner2 });
   })
 
 
@@ -367,7 +367,7 @@ router.get('/product-detail/:id', async (req, res) => {
   let AllProducts = await adminHelper.getAllProducts()
   cartCount = await userHelper.getCartCount(userId)
 
- 
+
 
   res.render('users/product-detailes', { Isuser: true, product, AllProducts, user, cartCount })
 })
@@ -425,19 +425,19 @@ router.post('/place-order', async (req, res) => {
   let id = req.session.user._id
   let products = await userHelper.getCartProductList(id)
   let total = await userHelper.getTotalAmount(id)
-    
- console.log(req.session.total,'session');
+
+  console.log(req.session.total, 'session');
   userHelper.placeOrder(req.body, products, total).then((orderId) => {
     if (req.body['Payment'] == 'COD') {
       res.json({ codSuccess: true })
     } else if (req.body['Payment'] == 'Razorpay') {
       userHelper.generateRazorpay(orderId, total).then((resp) => {
-        res.json({resp, razorpay: true })
+        res.json({ resp, razorpay: true })
       })
     } else {
-      val=total/74
-      total=val.toFixed(2)
-      req.session.total=total
+      val = total / 74
+      total = val.toFixed(2)
+      req.session.total = total
       console.log(total);
       var create_payment_json = {
         "intent": "sale",
@@ -483,37 +483,38 @@ router.post('/place-order', async (req, res) => {
   })
 })
 
-router.get('/success',(req,res)=>{
-  let val=req.session.total
+router.get('/success', (req, res) => {
+  let val = req.session.total
   console.log(req.query);
-  const paymentId=req.query.paymentId
-  const payerId=req.query.PayerID
+  const paymentId = req.query.paymentId
+  const payerId = req.query.PayerID
 
-  const   execute_payment_json={
-    "payer_id":payerId,
-    "transactions":[{
-      "amount":{
-        "currency":"USD",
-        "total":val
+  const execute_payment_json = {
+    "payer_id": payerId,
+    "transactions": [{
+      "amount": {
+        "currency": "USD",
+        "total": val
       }
     }]
   }
-  paypal.payment.execute(paymentId,execute_payment_json,function(error,payment){
-    if(error){
+  paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
+    if (error) {
       throw error;
-    }else{
-      let id=req.session.user._id
-      userHelper.changePaymentStatus(req.session.orderId).then(()=>{
+    } else {
+      let id = req.session.user._id
+      userHelper.changePaymentStatus(req.session.orderId).then(() => {
         res.redirect('/order-success')
       })
     }
-  }) 
+  })
 
 })
- 
+
 
 router.get('/order-success', (req, res) => {
-  res.render('users/order-success', { Isuser: true })
+  let user = req.session.user
+  res.render('users/order-success', { Isuser: true, user })
 })
 router.get('/orders', async (req, res) => {
   let user = req.session.user
@@ -525,10 +526,14 @@ router.get('/orders', async (req, res) => {
     cartCount = await userHelper.getCartCount(Id)
   }
   userHelper.getUserOrders(id).then((orders) => {
-
+    let Deliverd = false
+    console.log(orders);
     let len = orders.length
-
-    res.render('users/user-orders', { Isuser: true, orders, cartCount, user })
+    if (orders.Status === "Delivered") {
+      Deliverd = true
+    }
+      
+    res.render('users/user-orders', { Isuser: true, orders, cartCount, user, Deliverd })
   })
 
 
@@ -606,21 +611,38 @@ router.post('/edit-U-Add/:id', async (req, res) => {
 
 
 })
-router.get('/change-address',async(req,res)=>{
-  
-  userId=req.session.user._id
-  detailes=await userHelper.changeAddress(userId)
+router.get('/change-address', async (req, res) => {
+
+  userId = req.session.user._id
+  detailes = await userHelper.changeAddress(userId)
   console.log(detailes);
 
-  res.render('users/change-Address',{Isuser:true ,detailes})
+  res.render('users/change-Address', { Isuser: true, detailes })
 })
-router.post('/change-address/:id',(req,res)=>{
+router.post('/change-address/:id', (req, res) => {
 
-  id=req.params.id
-  adminHelper.updateUAddress(id,req.body).then((response)=>{
+  id = req.params.id
+  adminHelper.updateUAddress(id, req.body).then((response) => {
     res.redirect('/userProfile')
   })
 
+
+})
+
+router.get('/delete-U-Add/:id',(req,res)=>{
+  id=req.params.id
+  userId=req.session.user._id
+  userHelper.deleteAddress(userId,id).then(()=>{
+    console.log('dsfsdljfkdsfjdsfdskfdsfdskfjdskfdkfdksfjkdsjfkdsjfkdskfdkfdklfjksdjfldsfjd');
+    res.redirect('/userProfile')
+  })
  
+})
+
+router.get('/cancelled/:id', (req, res) => {
+  status = 'Cancelled'
+  adminHelper.changeOrderStatus(req.params.id, status).then(() => {
+    res.redirect('/orders')
+  })
 })
 module.exports = router;

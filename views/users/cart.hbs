@@ -251,7 +251,7 @@
 								<td>
 									<div class="input-group bootstrap-touchspin">
 										<button class="btn btn-default bootstrap-touchspin-down" type="button"
-											style="border-radius: 10px; border: solid #dddd;"
+											style="border-radius: 10px; border: solid #dddd;" id="{{this._id}}a"
 											onclick="ChangeQty('{{this._id}}','{{this.product._id}}','{{../user._id}}',-1)">-</button>
 
 										<span class="text-center pt-2" id="{{this.product._id}}"
@@ -341,7 +341,7 @@
 
 <script>
 	function ChangeQty(cartId, proId, userId, count) {
-		console.log('jsdfjhsgdfs')
+		
 		let qty = parseInt(document.getElementById(proId).innerHTML)
 
 		count = parseInt(count)
@@ -359,9 +359,8 @@
 			method: 'post',
 			success: (response) => {
 				if (response.removeProduct) {
-
-					alert("Product Removed From Cart")
-					location.reload()
+					document.getElementById(proId+'a').disabled = true;
+					
 				} else {
 
 
@@ -380,29 +379,63 @@
 
 <script>
 	function deleteProCart(cart, prodId, proId) {
-		$.ajax({
-			url: '/delete-cart-item',
-			data: {
-				cartId: cart,
-				proId: prodId
-
-			},
-			method: 'post',
-			success: (response) => {
-				if (response.removeProduct) {
-					console.log("hello ew")
-					alert("Product Removed")
-
-					location.reload()
-					document.getElementById(proId + 'row').hidden = true
 
 
-				}
-				if (response.cartEmpty) {
-					alert("The item has been removed")
-					location.reload()
-				}
+
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					url: '/delete-cart-item',
+					data: {
+						cartId: cart,
+						proId: prodId
+
+					},
+					method: 'post',
+					success: (response) => {
+						if (response.removeProduct) {
+
+
+
+							location.reload()
+							document.getElementById(proId + 'row').hidden = true
+
+
+						}
+						if (response.cartEmpty) {
+							alert("The item has been removed")
+							location.reload()
+						}
+					}
+				})
+				Swal.fire(
+					'Deleted!',
+					'Your file has been deleted.',
+					'success'
+				)
 			}
 		})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	}
 </script>

@@ -435,3 +435,28 @@ router.post('/product-offer',(req,res)=>{
 router.get('/product-report',(req,res)=>{
   res.render('admin/product-report',{admin:true})
 })
+router.get('/edit-banner/:id',async(req,res)=>{
+  let id=req.params.id
+  let SingleBanner= await adminHelper.getSingleBanner(id)
+  console.log(SingleBanner);
+  res.render('admin/edit-banner',{admin:true,SingleBanner})
+
+})
+router.post('/edit-banner/:id',(req,res)=>{
+  let id =req.params.id
+  let imageA=req.files.Image1
+  adminHelper.updateBanner(id,req.body).then((response)=>{
+
+    if (req.files.Image1) {
+      imageA.mv('public/banner/' + id + '.jpg')
+    }
+    res.redirect('/admin/banner-management')
+
+  })
+ 
+})
+router.get('/delete-banner/:id',(req,res)=>{
+  let id =req.params.id
+  adminHelper.deleteBanner(id)
+  res.redirect('/admin/banner-management')
+})

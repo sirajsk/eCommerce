@@ -164,14 +164,7 @@ module.exports = {
         // console.log(detailes.qty);
         return new Promise((resolve, reject) => {
             if (detailes.count == -1 && detailes.qty == 1) {
-                db.get().collection(collection.CART_COLLECTIONS)
-                    .updateOne({ _id: objectId(detailes.cart) },
-                        {
-                            $pull: { product: { item: objectId(detailes.product) } }
-                        }).then((response) => {
-                            resolve({ removeProduct: true })
-                        }
-                        )
+                resolve({ removeProduct: true })
             } else {
                 db.get().collection(collection.CART_COLLECTIONS)
                     .updateOne({ _id: objectId(detailes.cart), 'product.item': objectId(detailes.product) },
@@ -412,13 +405,16 @@ module.exports = {
             resolve(address)
         })
     },
-    deleteAddress: (userId) => {
+    deleteAddress: (userId,id) => {
+        console.log(userId,'userId');
+        console.log(id,'proId');
         return new Promise(async (resolve, reject) => {
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userId) })
+            console.log(user);
             if (user.address) {
                 db.get().collection(collection.USER_COLLECTION).updateOne({ _id: objectId(userId) }, {
                     $pull: {
-                        address: { User: userId }
+                        address: {_id:objectId(id)}
                     }
                 }).then(() => {
                     resolve()

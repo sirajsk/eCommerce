@@ -105,9 +105,7 @@ $(document).ready(function(){
             required:true
             
         },
-        Mcategory:{
-            required:true
-        },
+        
         Scategory:{
             required:true
         },
@@ -124,6 +122,12 @@ $(document).ready(function(){
             required:true 
         },
         image3:{
+            required:true
+        },
+        Discription:{
+            required:true
+        },
+        category:{
             required:true
         }
        }
@@ -327,7 +331,7 @@ function fileValidation3() {
         })
         crop_btn.addEventListener('click', () => {
             cropper.getCroppedCanvas().toBlob((blob) => {
-                let fileInputElement = document.getElementById('F1');
+                let fileInputElement = document.getElementById('F2');
                 let file = new File([blob], img_data.name, { type: "image/*", lastModified: new Date().getTime() });
                 let container = new DataTransfer();
 
@@ -380,7 +384,7 @@ function fileValidation4() {
         })
         crop_btn.addEventListener('click', () => {
             cropper.getCroppedCanvas().toBlob((blob) => {
-                let fileInputElement = document.getElementById('F1');
+                let fileInputElement = document.getElementById('F3');
                 let file = new File([blob], img_data.name, { type: "image/*", lastModified: new Date().getTime() });
                 let container = new DataTransfer();
 

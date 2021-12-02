@@ -544,6 +544,35 @@ module.exports = {
                 resolve(response)
             })
         })
+    },
+    getSingleBanner:(bannerID)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.BANNER_COLLECTION).findOne({_id:objectId(bannerID)}).then((Banner)=>{
+                resolve(Banner)
+            })
+
+        })
+    },
+    updateBanner:(bannerId,data)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.BANNER_COLLECTION)
+            .updateOne({_id:objectId(bannerId)},{
+                $set:{
+                    Name:data.Name,
+                    Discription:data.Discription,
+                    Action:data.Action
+                }
+            }).then((response)=>{
+                resolve(response)
+            })
+        })
+    },
+    deleteBanner:(bannerId)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.BANNER_COLLECTION).deleteOne({_id:objectId(bannerId)}).then(()=>{
+                resolve()
+            })
+        })
     }
     
 
