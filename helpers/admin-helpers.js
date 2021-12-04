@@ -573,7 +573,64 @@ module.exports = {
                 resolve()
             })
         })
+    },
+    deleteoffer:(offerId)=>{
+        console.log(offerId);
+        return new Promise(async(resolve,reject)=>{
+
+        let productOffer=await db.get().collection(collection.PRODUCT_OFFER).findOne({_id:objectId(offerId)})
+       
+        let pname=productOffer.Name
+        console.log(pname);
+        let product=await db.get().collection(collection.PRODUCT_COLLECTION).findOne({Name:pname})
+
+        console.log(product);
+            
+                db.get().collection(collection.PRODUCT_OFFER).deleteOne({_id:objectId(offerId)}).then((response)=>{
+                    
+                    db.get().collection(collection.PRODUCT_COLLECTION).updateOne({Name:pname},{
+                        $set:{
+                            Price:product.ActualPrice
+                        },
+                        $unset:{
+                            proOffer:"",
+                            Percentage:"",
+                            ActualPrice:""
+                        }
+                                  
+                    }).then(()=>{
+                        
+                        resolve()
+                    })
+                })
+
+   
+        })
+    },
+    getCategory:(cId)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.CATEGORY_COLLECTION).findOne({_id:objectId(cId)}).then((Category)=>{
+                resolve(Category)
+            })
+        })
+    },
+    updateCategory:(Cid,data)=>{
+       
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.CATEGORY_COLLECTION).updateOne({_id:objectId(Cid)},{
+                $set:{
+                    category:data.Name
+
+                }
+            }).then((response)=>{
+                resolve(response)
+
+            })
+        })
     }
+        
+    
+
     
 
     

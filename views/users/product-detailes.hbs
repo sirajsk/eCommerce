@@ -168,9 +168,13 @@
                                    
 
                                     <button
-                                       onclick="addTocart('{{this._id}}')" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+                                       onclick="addTocart('{{product._id}}')" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
                                         Add to cart
                                     </button>
+                                     <a href="/SingleCheckout/{{product._id}}"
+                                        class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail mt-4" style="text-decoration: none; color:blanchedalmond ;" >
+                                       Buy Now
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -430,7 +434,7 @@
                             <div class="block2-pic hov-img0">
                                 <img src="/product-images/{{this._id}}a.jpg" alt="IMG-PRODUCT">
 
-                                <a href="#"
+                                <a href="/product-detail/{{this._id}}"
                                     class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
                                     Quick View
                                 </a>
@@ -900,3 +904,23 @@
 </script>
 <!--===============================================================================================-->
 <script src="js/main.js"></script>
+
+<script>
+    function addTocart(proId) {
+
+   alert('ddddddddddddd')
+    $.ajax({
+      // console.log(pro);
+      url: "/add-to-cart/" + proId,
+      method: 'get',
+      success: (response) => {
+        if (response.status){
+            let count=$('#cart-count').html()
+            count=parseInt(count)+1
+            $('#cart-count').html(count)
+        }
+       
+      }
+    })
+  }
+</script>

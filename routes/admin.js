@@ -460,3 +460,21 @@ router.get('/delete-banner/:id',(req,res)=>{
   adminHelper.deleteBanner(id)
   res.redirect('/admin/banner-management')
 })
+router.get('/delete-offer/:id',(req,res)=>{
+  offerId=req.params.id
+  adminHelper.deleteoffer(offerId).then((response)=>{
+    res.redirect('/admin/product-offer')
+  })
+})
+router.get('/edit-category/:id',async(req,res)=>{
+  cId=req.params.id
+ let SingleCategory=await adminHelper.getCategory(cId)
+ console.log(SingleCategory);
+ res.render('admin/edit-catogory',{admin:true,SingleCategory})
+})
+router.post('/edit-category/:id',(req,res)=>{
+  Cid=req.params.id
+  adminHelper.updateCategory(Cid,req.body).then((response)=>{
+    res.redirect('/admin/view-category')
+  })
+})

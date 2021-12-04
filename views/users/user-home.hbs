@@ -460,17 +460,21 @@
                         </div>
 
                         <div class="block2-txt-child2 flex-r p-t-3">
-                            <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                            {{!-- <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
                                 <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png"
                                     alt="ICON" />
 
 
 
-                            </a>
-                            <div class="block2-txt-child2 flex-r pt-4">
+                            </a> --}}
+                            <div class="block2-txt-child2 flex-r pt-4 mt-3">
                                 <button onclick="addTocart('{{this._id}}')"
-                                    class=" btn btn-primary stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 mt-2">
+                                    class=" btn btn-primary stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 mt-2 mr-2">
                                     Add to Cart
+                                </button>
+                                 <button onclick="addTowish('{{this._id}}')"
+                                    class=" btn btn-primary stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 mt-2">
+                                    Add to wishlist
                                 </button>
 
                             </div>

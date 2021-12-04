@@ -31,7 +31,7 @@
 </div> --}}
 
 
-<form action="/admin/edit-brand/{{brand._id}}" method="post" class="shadow" enctype="multipart/form-data" id="addbrand">
+<form action="/admin/edit-brand/{{brand._id}}" method="post" class="shadow" enctype="multipart/form-data" id="Editbrand">
     <div class="col-md-12 mb-3 ">
 
         <div class="form-group col-md-6">
@@ -41,7 +41,7 @@
         <div class="row">
             <div class="form-group col-6">
                 <label for="exampleFormControlFile1">Brand Image</label>
-                <input type="file" class="form-control-file" id="exampleFormControlFile1"name="Image"  onchange="EditBrandImg(event)">
+                <input type="file" class="form-control-file" id="exampleFormControlFile1"name="Image"  onchange=" return fileValidationBrand()">
                 <img src="/brand-images/{{brand._id}}.jpg" id="brandImg"  style="height: 100px; width: 100px;">
             </div>
             <div class="col-6">
