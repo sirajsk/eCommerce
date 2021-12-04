@@ -404,7 +404,7 @@ function fileValidation4() {
 function fileValidationBrand() {
     const imagebox = document.getElementById('image-box')
     const crop_btn = document.getElementById('crop-btn')
-    var fileInput = document.getElementById('file1');
+    var fileInput = document.getElementById('Ebrand');
 
     var filePath = fileInput.value;
     var allowedExtensions = /(\.jpg)$/i;
@@ -435,7 +435,7 @@ function fileValidationBrand() {
         })
         crop_btn.addEventListener('click', () => {
             cropper.getCroppedCanvas().toBlob((blob) => {
-                let fileInputElement = document.getElementById('file1');
+                let fileInputElement = document.getElementById('Ebrand');
                 let file = new File([blob], img_data.name, { type: "image/*", lastModified: new Date().getTime() });
                 let container = new DataTransfer();
 

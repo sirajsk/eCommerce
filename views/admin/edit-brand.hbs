@@ -13,6 +13,12 @@
 <link href="/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
 <!-- Custom Stylesheet -->
 <link href="/css/style.css" rel="stylesheet">
+<link href="/css/crop.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://foliotek.github.io/Croppie/croppie.css">
+<link rel="stylesheet" href="https://maxccroppie.cssdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 <div class="row page-titles mx-0 mt-3 mb-4 shadow">
@@ -31,7 +37,7 @@
 </div> --}}
 
 
-<form action="/admin/edit-brand/{{brand._id}}" method="post" class="shadow" enctype="multipart/form-data" id="Editbrand">
+{{!-- <form action="/admin/edit-brand/{{brand._id}}" method="post" class="shadow" enctype="multipart/form-data" id="Editbrand">
     <div class="col-md-12 mb-3 ">
 
         <div class="form-group col-md-6">
@@ -55,7 +61,39 @@
     </div>
 
 
+</form> --}}
+
+
+
+<form action="/admin/edit-brand/{{brand._id}}" method="post" class="shadow" enctype="multipart/form-data" id="Editbrand">
+
+
+    <div class="form-group col-md-6 mb-4">
+        <label for="inputEmail4">Brand Name</label>
+        <input type="text" class="form-control   " id="inputEmail4" name="Name" value="{{brand.Name}}">
+    </div>
+    <div class="">
+        <div class="form-group col-6">
+           
+                <label for="">IMAGE 1</label>
+                <img src="/brand-images/{{brand._id}}.jpg" alt="" style="width: 100px; height:auto" id="imgview1">
+    
+                <input type="file" name="Image" id="Ebrand" class="form-control" onchange=" return fileValidationBrand()">
+                {{!--
+            </div> --}}
+
+            <div class="col-12">
+                <div id="image-box" style="width: 500px; height: 500px; display: none;"></div>
+                <button class="btn btn-primary mt-3" type="button" style="display: none;" id="crop-btn">Crop</button>
+            </div>
+
+        </div>
+        <button id="confirm-btn" type="submit" class="btn btn-primary">Add Brand</button><br>
+
+    </div>
+
 </form>
+
 
 <script src="/vendor/global/global.min.js"></script>
 <script src="/js/quixnav-init.js"></script>

@@ -14,6 +14,14 @@
 <link rel="stylesheet" href="https://foliotek.github.io/Croppie/croppie.css">
 <link rel="stylesheet" href="https://maxccroppie.cssdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
+
+
+
+
+    <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="Stylesheet"
+        type="text/css" />
+
+
 {{!-- ----------------------------------------------- --}}
 
 
@@ -171,7 +179,15 @@
         color: red;
     }
 </style>
-
+    {{!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script language="javascript">
+        $(document).ready(function () {
+            $("#str").datepicker({
+                minDate: 0
+            });
+        });
+    </script> --}}
 
 <script>
     $("#proSelect").select2({
@@ -179,13 +195,16 @@
         allowClear: true
     });
 </script>
+{{!-- <script type="text/javascript">$('#str').datepicker({ minDate: 0 });</script> --}}
 <script>
     $(document).ready(function () {
 
         $('#str').blur(function () {
+
             let date = document.getElementById('str').value
             console.log(date)
             let today = new Date()
+            minDate=Date()
             var dd = today.getDate();
             var mm = today.getMonth() + 1;
 
