@@ -217,7 +217,7 @@ router.post('/verifyMobile', (req, res) => {
 
 // mobile otp end
 
-
+                              
 
 
 
@@ -235,7 +235,13 @@ router.get('/cart', async function (req, res) {
     cartCount = await userHelper.getCartCount(id)
 
     let products = await userHelper.getCartProducts(req.session.user._id)
-    res.render('users/cart', { user, Isuser: true, products, cart: true, totals, cartCount });
+    if(cartCount==0){
+      res.render('users/cart-emptyPage',{user, Isuser: true, products, cart: true, totals, cartCount })
+    }
+    else{
+      res.render('users/cart', { user, Isuser: true, products, cart: true, totals, cartCount });
+    }
+    
 
   } else {
     res.redirect('/login')
@@ -384,7 +390,7 @@ router.get('/product-detail/:id', async (req, res) => {
 
 
 
-  res.render('users/product-detailes', { Isuser: true, product, AllProducts, user, cart:true, cartCount })
+  res.render('users/product-detailes', { Isuser: true, product, AllProducts, user,  cartCount })
 })
 
 
@@ -533,6 +539,10 @@ router.get('/order-success', (req, res) => {
   let userId=req.session.user._id
   userHelper.clearCart(userId)
   res.render('users/order-success', { Isuser: true, user })
+})
+
+router.get('/cancelled',(req,res)=>{
+  res.render('users/cancelled',{Isuser:true})
 })
 router.get('/orders', async (req, res) => {
   let user = req.session.user
@@ -772,4 +782,8 @@ router.get('/wishlist',async(req,res)=>{
   console.log(products);
   res.render('users/wish-list',{Isuser:true,user,products})
 })
+
+// router.get('detail-product/:id',(req,res)=>{
+
+// })
 module.exports = router;

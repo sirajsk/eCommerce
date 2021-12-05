@@ -59,62 +59,6 @@
 
 
 
-
-  {{!-- cart link --}}
-{{!-- 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!--===============================================================================================-->
-  <link rel="icon" type="image/png" href="images/icons/favicon.png" />
-  <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
-  <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-  <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="/fonts/iconic/css/material-design-iconic-font.min.css">
-  <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="/fonts/linearicons-v1.0.0/icon-font.min.css">
-  <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="/vendor/animate/animate.css">
-  <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="/vendor/css-hamburgers/hamburgers.min.css">
-  <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="/vendor/animsition/css/animsition.min.css">
-  <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="/vendor/select2/select2.min.css">
-  <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="//vendor/perfect-scrollbar/perfect-scrollbar.css">
-  <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="/stylesheets/util.css">
-  <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
-  <link rel="stylesheet" type="text/css" href="/stylesheets/home.css">
-
-
-  {{!-- bootstrap link --}}
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
- 
-
-  {{!-- bootstrap link end --}}
-  {{!-- cart link end --}}
-
-
-</head>
-
-<body>
-  {{!-- {{#if admin}}
-  {{>admin-header}}
-  {{else}}
-  {{#if login}}
-  {{>login-header}}
-  {{else}}
-  {{#if signup}}
-  {{>signup-header}}
-  {{else}}
-  {{>user-header}}
-  {{/if}}
-  {{/if}}
-  {{/if}} --}}
   {{#if login}}
   {{>login-header}}
   {{else}}
@@ -135,7 +79,11 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
-
+    	{{!-- <script src='/js/jquery.zoom.js'></script> --}}
+    {{!-- ------------------------------- --}}
+<script src="/js/Nzoom.min.js"></script>
+{{!-- ------------------------------ --}}
+{{!-- <script src="/js/Nzoom1.min.js"></script> --}}
 
 
 
@@ -186,9 +134,9 @@
     });
   </script>
   <!--===============================================================================================-->
-  <script src="vendor/isotope/isotope.pkgd.min.js"></script>
+  <script src="/vendor/isotope/isotope.pkgd.min.js"></script>
   <!--===============================================================================================-->
-  <script src="vendor/sweetalert/sweetalert.min.js"></script>
+  <script src="/sweetalert/sweetalert.min.js"></script>
   <script>
     $('.js-addwish-b2').on('click', function (e) {
       e.preventDefault();
@@ -226,7 +174,7 @@
 
   </script>
   <!--===============================================================================================-->
-  <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+  <script src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
   <script>
     $('.js-pscroll').each(function () {
       $(this).css('position', 'relative');
@@ -244,7 +192,7 @@
   </script>
   <script src="https://kit.fontawesome.com/3df85378b0.js" crossorigin="anonymous"></script>
   <!--===============================================================================================-->
-  <script src="javascripts/main.js"></script>
+  <script src="/javascripts/main.js"></script>
 
 
   {{!-- bootstrap script --}}

@@ -1,4 +1,4 @@
-<!--===============================================================================================-->
+{{!-- <!--===============================================================================================-->
 <link rel="icon" type="image/png" href="images/icons/favicon.png" />
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -28,7 +28,56 @@
 <link rel="stylesheet" type="text/css" href="css/util.css">
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
+<style>
+    .stretch-card>.card {
+        width: 100%;
+        min-width: 100%
+    }
 
+    body {
+        background-color: #f9f9fa
+    }
+
+    .flex {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto
+    }
+
+    @media (max-width:991.98px) {
+        .padding {
+            padding: 1.5rem
+        }
+    }
+
+    @media (max-width:767.98px) {
+        .padding {
+            padding: 1rem
+        }
+    }
+
+    .padding {
+        padding: 3rem
+    }
+
+    .card .card-title {
+        color: #000000;
+        margin-bottom: 0.625rem;
+        text-transform: capitalize;
+        font-size: 0.875rem;
+        font-weight: 500
+    }
+
+    .card .card-description {
+        margin-bottom: .875rem;
+        font-weight: 400;
+        color: #76838f
+    }
+
+    .mainimage {
+        width: 100% !important
+    }
+</style>
 
 
 <!-- Product Detail -->
@@ -47,7 +96,7 @@
                             <div class="slick3 gallery-lb ">
                                 <div class="item-slick3 easyzoom easyzoom--overlay  " data-thumb="/product-images/{{product._id}}a.jpg">
                                     <div class="wrap-pic-w pos-relative">
-                                        <img src="/product-images/{{product._id}}a.jpg" alt="IMG-PRODUCT" id="NZoomImg" data-NZoomscale="2" >
+                                        <img src="/product-images/{{product._id}}a.jpg" alt="IMG-PRODUCT">
 
                                         <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
                                             href="/product-images/{{product._id}}a.jpg">
@@ -58,7 +107,7 @@
 
                                 <div class="item-slick3 " data-thumb="/product-images/{{product._id}}b.jpg">
                                     <div class="wrap-pic-w pos-relative">
-                                        <img src="/product-images/{{product._id}}b.jpg" alt="IMG-PRODUCT" >
+                                        <img src="/product-images/{{product._id}}b.jpg" alt="IMG-PRODUCT">
 
                                         <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
                                             href="/product-images/{{product._id}}b.jpg">
@@ -765,5 +814,4 @@
       }
     })
   }
-</script>
-
+</script> --}}

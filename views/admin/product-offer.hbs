@@ -18,8 +18,7 @@
 
 
 
-    <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="Stylesheet"
-        type="text/css" />
+<link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="Stylesheet" type="text/css" />
 
 
 {{!-- ----------------------------------------------- --}}
@@ -29,7 +28,7 @@
     <div class="col-sm-6 p-md-0">
         <div class="welcome-text">
             <h4>ALL PRODUCT OFFER</h4>
-            
+
         </div>
     </div>
 
@@ -69,7 +68,8 @@
                                 <td></td>
                                 <td>
                                     <a type="button" class="btn btn-primary">Edit</a>
-                                    <a type="button" href="/admin/delete-offer/{{this._id}}"  class="btn btn-danger">Delete</a>
+                                    <a type="button" href="/admin/delete-offer/{{this._id}}"
+                                        class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
 
@@ -110,15 +110,25 @@
     <div class="row form-group col-md-12 mb-4">
         <div class="col-6">
             <label for="inputEmail4"> Name</label>
-            <select type="text" class="form-control" id="proSelect" name="Name"
+            {{!-- <select type="text" class="form-control" id="proSelect" name="Name"
                 style="padding: 0% !important; height: 36px;">
                 <option value="">Choose</option>
                 {{#each Products}}
                 <option>{{this.Name}}</option>
                 {{/each}}
 
-            </select>
+            </select> --}}
+
+            <input type="text" list="browsers" class="form-control" id="proSelect" name="Name"
+                style="padding: 0% !important; height: 36px;" autocomplete = "off" >
+            <datalist id="browsers"  name="Name"   >
+                <option value="">Choose</option>
+                {{#each Products}}
+                <option value="{{this.Name}}">
+                    {{/each}}
+            </datalist>
         </div>
+
         <div class="col-6">
             <label for="inputEmail4">Start Date</label>
             <input type="date" class="form-control" id="str" name="StartDate">
@@ -154,7 +164,8 @@
 <script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
 <script src="/js/plugins-init/datatables.init.js"></script>
 
-{{!-- <script>
+{{!--
+<script>
     function viewBrandImage(event) {
 
         document.getElementById('imgview1').src = URL.createObjectURL(event.target.files[0])
@@ -179,15 +190,16 @@
         color: red;
     }
 </style>
-    {{!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-    <script language="javascript">
-        $(document).ready(function () {
-            $("#str").datepicker({
-                minDate: 0
-            });
+{{!--
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script language="javascript">
+    $(document).ready(function () {
+        $("#str").datepicker({
+            minDate: 0
         });
-    </script> --}}
+    });
+</script> --}}
 
 <script>
     $("#proSelect").select2({
@@ -195,7 +207,8 @@
         allowClear: true
     });
 </script>
-{{!-- <script type="text/javascript">$('#str').datepicker({ minDate: 0 });</script> --}}
+{{!--
+<script type="text/javascript">$('#str').datepicker({ minDate: 0 });</script> --}}
 <script>
     $(document).ready(function () {
 
@@ -204,7 +217,7 @@
             let date = document.getElementById('str').value
             console.log(date)
             let today = new Date()
-            minDate=Date()
+            minDate = Date()
             var dd = today.getDate();
             var mm = today.getMonth() + 1;
 
