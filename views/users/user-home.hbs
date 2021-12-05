@@ -110,7 +110,10 @@
                 <!-- Block2 -->
                 <div class="block2">
                     <div class="block2-pic hov-img0">
-                        <img src="/product-images/{{this._id}}a.jpg" alt="invalid" />
+                        <a href="/product-detail/{{this._id}}"> 
+                            <img src="/product-images/{{this._id}}a.jpg" alt="invalid" />
+                        </a>
+                        
 
                         <a href="/product-detail/{{this._id}}"
                             class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
@@ -129,15 +132,17 @@
 
                             <span class="stext-105 cl3">
                                 RS: {{this.Price}}
-                            </span>
+                            
 
                             {{#if this.proOffer}}
 
-                            <span class="stext-105 cl3" style="color: brown;"><s>
+                             <span class="stext-105 cl3" style="color: brown;"><s>
                                    Rs:  {{this.ActualPrice}}
                             </s>
                                 
                             </span>
+                            </span>
+                           
 
                             {{/if}}
 

@@ -420,7 +420,7 @@ router.get('/category-offer',async(req,res)=>{
 
 router.post('/category-offer',(req,res)=>{
   adminHelper.CategoryOffer(req.body)
-  console.log(req.body);
+  // console.log(req.body);
   res.redirect('/admin/category-offer')
 })
 router.get('/product-offer',async(req,res)=>{
