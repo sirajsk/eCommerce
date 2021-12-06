@@ -432,8 +432,13 @@ router.post('/product-offer',(req,res)=>{
   adminHelper.ProductOffer(req.body)
   res.redirect('/admin/product-offer')
 })
-router.get('/product-report',(req,res)=>{
-  res.render('admin/product-report',{admin:true})
+router.get('/product-report',async(req,res)=>{
+  let Products=await adminHelper.getAllProducts()
+  res.render('admin/product-report',{admin:true,Products})
+})
+router.get('/order-report',async(req,res)=>{
+  Orders=await adminHelper.getAllOrders()
+  res.render('admin/Order-report',{admin:true,Orders})
 })
 router.get('/edit-banner/:id',async(req,res)=>{
   let id=req.params.id

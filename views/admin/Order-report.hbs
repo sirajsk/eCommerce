@@ -1,0 +1,31 @@
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css">
+
+
+<table id="datatable" class="display nowrap" style="width:100%">
+    <thead>
+        <tr>
+            <th>FirstName</th>
+            <th>PaymentMethod</th>
+            <th>Total</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each Orders}}
+        <tr>
+            <td>{{this.deliveryDetails.FirstName}}</td>
+            <td>{{this.PaymentMethod}}</td>
+            <td>{{this.Total}}</td>
+            <td>{{this.Date}}</td>
+            <td>{{this.Time}}</td>
+            <td>{{this.Status}}</td>
+        </tr>
+      {{/each}}
+
+    </tbody>
+   
+</table>
+
