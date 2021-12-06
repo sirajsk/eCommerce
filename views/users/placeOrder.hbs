@@ -269,7 +269,7 @@
 
 
 	})
-
+                     
 	function razorpayPayment(order) {
 		console.log(order)
 		var options = {
@@ -279,7 +279,7 @@
 			"currency": "INR",
 			"name": "E-BUY",
 			"description": "Test Transaction",
-			{ { !-- "image": "https://example.com/your_logo", --} }
+			
 		"order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
 			"handler": function (response) {
 				verifyPayment(response, order)
