@@ -104,7 +104,7 @@
         <div class="row isotope-grid">
 
 
-            {{#each products}}
+            {{#each Women}}
 
             <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
                 <!-- Block2 -->
@@ -172,7 +172,71 @@
 
             {{/each}}
 
+                {{#each Men}}
 
+            	<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item men">
+					<!-- Block2 -->
+				  <div class="block2">
+                    <div class="block2-pic hov-img0">
+                        <a href="/product-detail/{{this._id}}"> 
+                            <img src="/product-images/{{this._id}}a.jpg" alt="invalid" />
+                        </a>
+                        
+
+                        <a href="/product-detail/{{this._id}}"
+                            class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
+                            Quick View
+                        </a>
+
+
+
+                    </div>
+
+                    <div class="block2-txt flex-w flex-t p-t-14">
+                        <div class="block2-txt-child1 flex-col-l">
+                            <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                {{this.Name}}
+                            </a>
+
+                            <span class="stext-105 cl3">
+                                RS: {{this.Price}}
+                            
+
+                            {{#if this.proOffer}}
+
+                             <span class="stext-105 cl3" style="color: brown;"><s>
+                                   Rs:  {{this.ActualPrice}}
+                            </s>
+                                
+                            </span>
+                            </span>
+                           
+
+                            {{/if}}
+
+                        </div>
+
+                        <div class="block2-txt-child2 flex-r p-t-3">
+                          
+                            <div class="block2-txt-child2 flex-r pt-4 mt-3">
+                                <button onclick="addTocart('{{this._id}}')"
+                                    class=" btn btn-primary stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 mt-2 mr-2 " style="color: blanchedalmond;">
+                                    Add to Cart
+                                </button>
+                                 <button onclick="addTowish('{{this._id}}')"
+                                    class=" btn btn-primary stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 mt-2" style="color: blanchedalmond;">
+                                    Add to wishlist
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+				</div>
+
+            {{/each}}
 
 
 

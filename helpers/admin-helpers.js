@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt')
 const objectId = require('mongodb').ObjectId
 const { ObjectId } = require('bson')
 // const { response } = require('express')
+const moment = require('moment')
 
 
 module.exports = {
@@ -121,7 +122,20 @@ module.exports = {
             resolve(products)
         })
     },
-
+    getWomenProduct:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let Wproducts=await db.get().collection(collection.PRODUCT_COLLECTION).find({Mcategory:"Women"}).toArray()
+            console.log(Wproducts,'00000000');
+            resolve(Wproducts)
+        })
+    },
+    getMenProduct:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let Mproducts=await db.get().collection(collection.PRODUCT_COLLECTION).find({Mcategory:"Men"}).toArray()
+            console.log(Mproducts,'00000000');
+            resolve(Mproducts)
+        })
+    },
     deleteProduct: (productid) => {
         return new Promise((resolve, reject) => {
             db.get().collection(collection.PRODUCT_COLLECTION).deleteOne({ _id: objectId(productid) }).then((response) => {
@@ -693,13 +707,7 @@ module.exports = {
 
             })
         })
-    }
-
-
-
-
-
-
+    },
 
 }
 

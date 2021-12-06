@@ -9,5 +9,6 @@ module.exports={
     BANNER_COLLECTION:'Banner',
     CATEGORY_OFFER:'Category Offer',
     PRODUCT_OFFER:'Prpduct_offer',
-    WISH_LIST:"Wishlist"
+    WISH_LIST:"Wishlist",
+    COUPON_OFFER:"Coupon_offer"
 }

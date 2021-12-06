@@ -99,7 +99,7 @@ module.exports = {
         })
     },
     addToWish:(proId,userId)=>{
-        // console.log(proId,'000000000000000000000000000000');
+     
         let proObj={
             
             item:objectId(proId)
@@ -432,11 +432,6 @@ module.exports = {
             db.get().collection(collection.CART_COLLECTIONS).deleteOne({ user: objectId(userId) })
             resolve( )
         })
-
-
-
-
-        
 
     },
     getCartProductList: (userId) => {

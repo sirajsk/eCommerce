@@ -1,0 +1,412 @@
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row breadcrumb_box  align-items-center">
+                    <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-left">
+                        <h4 class="breadcrumb-title">Checkout</h4>
+                    </div>
+                    <div class="col-lg-6  col-md-6 col-sm-12">
+                        <!-- breadcrumb-list start -->
+                        <ul class="breadcrumb-list text-center text-md-right">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active">Checkout</li>
+                        </ul>
+                        <!-- breadcrumb-list end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- breadcrumb-area end -->
+
+<!-- checkout area start -->
+<div class="checkout-area pt-100px pb-100px">
+    <div class="container">
+        <div class="row">
+
+            <div class="billing-info-wrap">
+                <h3>Billing Details</h3>
+                <form action="" id="checkout-form" method="POST">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-row">
+                                <div class=" form-group billing-info mb-4 col-md-6">
+                                    <label for="fname">First Name</label>
+                                    <input type="text" id="fname" name="FirstName" minlength="4" required />
+                                </div>
+
+                                <div class="form-group billing-info mb-4 col-md-6">
+                                    <label for="lname">Last Name</label>
+                                    <input type="text" id="lname" name="LastName" required />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group billing-info mb-4 col-md-12">
+                                    <label for="house">House Name</label>
+                                    <input type="text" id="house" name="House" minlength="4" required />
+                                </div>
+                            </div>
+
+                            <div class="form-row ">
+                                <div class="form-group billing-info mb-4 col-md-12">
+                                    <label for="street">Street Address</label>
+                                    <input class="billing-address" placeholder="street name" id="street" name="Street"
+                                        type="text" required minlength="4" />
+
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group billing-info mb-4 col-md-6">
+                                    <label for="city">Town / City</label>
+                                    <input type="text" id="city" name="Town" required minlength="4" />
+                                </div>
+
+
+
+                                <div class="form-group billing-info mb-4 col-md-6">
+                                    <label for="pin">Postcode / ZIP</label>
+                                    <input type="text" id="pin" name="PIN" required pattern=".{6,6}" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group billing-info mb-4 col-md-6">
+                                    <label for="phone">Phone</label>
+                                    <input type="text" id="phone" name="Mobile" required pattern=".{10,10}" />
+                                </div>
+
+
+
+                                <div class="form-group billing-info mb-4 col-md-6">
+                                    <label for="email">Email Address</label>
+                                    <input type="text" required id="email" name="Email" />
+                                </div>
+                                <input type="text" name="User" value="{{userBtn._id}}" hidden>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-lg-12 mt-md-30px mt-lm-30px ">
+                                <div class="your-order-area">
+                                    <h3>Your order</h3>
+                                    <div class="your-order-wrap gray-bg-4">
+                                        <div class="your-order-product-info">
+                                            <div class="your-order-top">
+                                                <ul>
+                                                    <li>Product</li>
+                                                    <li>Total</li>
+                                                </ul>
+                                            </div>
+                                            <div class="your-order-middle">
+                                                <ul>
+                                                    {{#each items}}
+                                                    <li><span class="order-middle-left">{{this.product.Name}} X
+                                                            {{this.quantity}}</span>
+                                                        <span class="order-price">Rs.{{this.subtotal}}
+                                                        </span>
+                                                    </li>
+                                                    {{/each}}
+
+                                                </ul>
+                                            </div>
+                                            <div class="your-order-bottom">
+                                                <div class="discount-code">
+                                                    <p>Enter your coupon code if you have one.</p>
+                                                    <input type="text" class="form-control" name="Coupon"
+                                                        id="couponInput" />
+                                                    <input type="text" id="couponTotal" name="Total" value="{{total}}" hidden>
+                                                    <a  id="couponBtn" onclick="couponApply()"
+                                                        class="btn bg-success text-white text-center pt-2 mt-2"
+                                                        style="width: 100%;text-decoration: none;">Apply Coupon</a>
+                                                    <p class="text-center text-danger" style="display: none;"
+                                                        id="couponUsed">This Coupon has
+                                                        been Used</p>
+                                                    <p class="text-center text-danger" style="display: none;"
+                                                        id="couponInvalid">This Coupon is
+                                                        invalid</p>
+                                                    <p class="text-center text-success" style="display: none;"
+                                                        id="couponSuccess">Coupon Applied
+                                                        Successfully</p>
+                                                    <p class="text-center text-warning" style="display: none;"
+                                                        id="couponExpired">Sorry!!! Your
+                                                        Coupon has been Expired</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="your-order-total">
+                                                <ul>
+                                                    <li class="order-total">Total</li>
+                                                    <li>Rs.<span id="totalOriginal">{{total}}</span></li>
+                                                </ul>
+                                                <ul>
+                                                    <li class="order-middle-left" id="discountLabel"
+                                                        style="display: none;">Coupon Applied</li>
+                                                    <li class="order-price"><input type="text" name="Discount"
+                                                            style="display: none;" readonly id="discount"></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="payment-method">
+                                            <div class="payment-accordion element-mrg">
+                                                <div id="faq" class="panel-group">
+                                                    <input type="radio" name="Payment" value="COD"
+                                                        style="width:5%;height:auto" checked>Cash on Delivery<br>
+                                                    <input type="radio" name="Payment" value="Online Payment"
+                                                        style="width:5%;height:auto">Online Payment<br>
+                                                    <input type="radio" name="Payment" value="Paypal"
+                                                        style="width:5%;height:auto">Paypal
+                                                    <div id="paypal-payment-button"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="Place-order mt-25">
+                                        <button class="btn btn-primary btn-hover" id="submit" type="submit"
+                                            style="width: 100%;" href="#">Place Order</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+            <div class="col-md-6"></div>
+            <div class="col-md-6 pt-3">
+
+            </div>
+
+        </div>
+        <div class="row">
+            {{#each address}}
+            <div class="col-md-3 mt-5 alert border-warning mr-2 card" style="cursor: pointer;">
+
+                <div class="col-md-12"
+                    onclick="hai('{{this.FirstName}}','{{this.LastName}}','{{this.House}}','{{this.Street}}','{{this.Town}}','{{this.PIN}}','{{this.Mobile}}','{{this.Email}}')">
+
+                    <h6 class="">{{this.FirstName}} {{this.LastName}}</h6>
+                    <p class="">{{this.House}},{{this.Town}} - {{this.PIN}}<br>Ph : {{this.Mobile}}</p>
+
+
+                </div>
+
+            </div>
+            {{/each}}
+            <div class="col-md-2 pt-5">
+                <a href="/addNewAddress" class="btn btn-warning pt-3"
+                    style="text-decoration: none;width:100%;margin-top:30px;">Add New Address</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+</div>
+<script>
+    function hai(fname, lname, house, street, town, pin, mobile, email) {
+        alert("Address Form Filled")
+        document.getElementById('fname').value = fname
+        document.getElementById('lname').value = lname
+        document.getElementById('house').value = house
+        document.getElementById('street').value = street
+        document.getElementById('city').value = town
+        document.getElementById('pin').value = pin
+        document.getElementById('phone').value = mobile
+        document.getElementById('email').value = email
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script
+    src="https://www.paypal.com/sdk/js?client-id=AVH4zvU5seJDDc1AizTEk60_DaAdig8d4FWLNJ3bsVj1ZGL9rCt9y09lWPaEdvoP2F30-D5-eAG-cufL&disable-funding=credit,card"></script>
+
+<script>
+    function viewImage1(event) {
+        document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[0])
+    }
+    function viewImage2(event) {
+        document.getElementById('imgView2').src = URL.createObjectURL(event.target.files[0])
+    }
+    function viewImage3(event) {
+        document.getElementById('imgView3').src = URL.createObjectURL(event.target.files[0])
+    }
+</script>
+
+<script>
+    function couponApply()
+    {
+        let couponCode = document.getElementById('couponInput').value
+        let couponTotal = document.getElementById('couponTotal').value
+        $.ajax({
+            url: '/couponSubmit',
+            data: {
+                Coupon:couponCode,
+                Total:couponTotal
+            },
+            method: 'post',
+            success: (response) => {
+                console.log(response)
+
+                if (response.couponSuccess) {
+                    let oldTotal = parseInt(document.getElementById('totalOriginal').innerHTML)
+                    let discount = oldTotal - parseInt(response.total)
+                    document.getElementById('couponInput').readOnly = true
+                    document.getElementById('discount').value = discount
+                    $('#discount').show()
+                    $('#discountLabel').show()
+                    document.getElementById('totalOriginal').innerHTML = response.total
+                    $('#couponSuccess').show()
+                    $('#couponUsed').hide()
+                    $('#couponInvalid').hide()
+                    $('#couponExpired').hide()
+                }
+
+                if (response.couponUsed) {
+                    $('#couponUsed').show()
+                    $('#couponSuccess').hide()
+                    $('#couponInvalid').hide()
+                    $('#couponExpired').hide()
+                    $('#discount').hide()
+                    $('#discountLabel').hide()
+                }
+                if (response.invalidCoupon) {
+                    $('#couponInvalid').show()
+                    $('#couponSuccess').hide()
+                    $('#couponUsed').hide()
+                    $('#couponExpired').hide()
+                    $('#discount').hide()
+                    $('#discountLabel').hide()
+                }
+                if (response.couponExpired) {
+                    $('#couponExpired').show()
+                    $('#couponSuccess').hide()
+                    $('#couponInvalid').hide()
+                    $('#couponUsed').hide()
+                    $('#discount').hide()
+                    $('#discountLabel').hide()
+
+                }
+
+            }
+        })
+    }
+</script>
+<script>
+    $('#checkout-form').submit((e) => {
+        e.preventDefault()
+        $.ajax({
+            url: '/place-order',
+            method: 'post',
+            data: $('#checkout-form').serialize(),
+            success: (response) => {
+                if (response.codSuccess) {
+                    location.href = "orderSuccess"
+                } else if (response.paypal) {
+                    console.log("response coming")
+                    paypal.Buttons({
+                        createOrder: function (data, actions) {
+                            return actions.order.create({
+                                purchase_units: [{
+                                    amount: {
+                                        value: response.total
+                                    }
+
+                                }]
+                            })
+                        },
+                        onApprove: function (data, actions) {
+                            return actions.order.capture().then(function (details) {
+                                console.log(details);
+
+                                paymentStatusChange(details)
+                            })
+
+                        },
+                        onCancel: function (data) {
+                            alert("Payment Failed!!!")
+                        }
+                    }).render('#paypal-payment-button');
+
+                }
+                else {
+                    razorpayPayment(response)
+                }
+            }
+        })
+
+    })
+
+    function razorpayPayment(order) {
+        var options = {
+            "key": "rzp_test_65QtpTCsZaSsL7", // Enter the Key ID generated from the Dashboard
+            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "H K Developers ",
+            "description": "Test Transaction",
+            "image": '/images/hk brand logo.jpg',
+            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (response) {
+
+                verifyPayment(response, order)
+            },
+            "prefill": {
+                "name": "Harikrishnan U A",
+                "email": "hariua111@gmail.com",
+                "contact": "+91 9446 868 549"
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+
+    }
+    function verifyPayment(payment, order) {
+        $.ajax({
+            url: '/verify-payment',
+            data: {
+                payment,
+                order
+            },
+            method: 'post',
+            success: (response) => {
+                if (response.status) {
+                    location.href = "orderSuccess"
+
+                }
+                else {
+                    alert("Payment Failed ")
+                }
+            }
+        })
+    }
+    function paymentStatusChange(datas) {
+        $.ajax({
+            url: '/paypal-status-change',
+            data: {
+                datas
+            },
+            method: 'post',
+            success: (response) => {
+
+                if (response.status) {
+                    location.href = "orderSuccess"
+                }
+
+
+
+            }
+        })
+    }
+
+</script>

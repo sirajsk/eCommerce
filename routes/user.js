@@ -51,13 +51,18 @@ router.get('/', async function (req, res, next) {
 
   adminHelper.getAllProducts().then(async (products) => {
 
+
+    Women= await adminHelper.getWomenProduct()
+    console.log(Women,'women');
+    Men=await adminHelper.getMenProduct()
+    console.log(Men,'men');
     banner = await adminHelper.getFirstAllbanner()
     console.log(banner);
     banner2 = await adminHelper.getSecondAllbanner()
     console.log(banner2);
 
 
-    res.render('users/user-home', { user, products, Isuser: true, cartCount, banner, banner2 });
+    res.render('users/user-home', { user, products, Isuser: true, cartCount, banner, banner2 ,Women,Men});
   })
 
 
@@ -605,8 +610,8 @@ router.get('/userProfile', async (req, res) => {
 
     let addr = await userHelper.getUserAddress(id)
 
-    // let len = addr.length
-    // address = addr.slice(len - 2, len)
+    let len = addr.length
+    address = addr.slice(len - 2, len)
 
 
     res.render('users/userProfile', { Isuser: true, user, address })
@@ -786,4 +791,6 @@ router.get('/wishlist',async(req,res)=>{
 // router.get('detail-product/:id',(req,res)=>{
 
 // })
+
+
 module.exports = router;
