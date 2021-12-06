@@ -809,6 +809,44 @@ module.exports = {
             resolve(WishlistItem)
         })
 
+    },
+    couponValidate:(Cdata)=>{
+        console.log(Cdata);
+        return new Promise(async(resolve,reject)=>{
+            data={}
+            let date=new Date()
+            date=moment(date).format('DD/MM/YYYY')
+            let coupon=await db.get().collection(collection.COUPON_OFFER).findOne({coupon:Cdata.couponCode})
+            console.log(coupon);
+            if(coupon){
+                if(date<=coupon.EndDate){
+                    if(coupon.status==1){
+                        let total=parseInt(Cdata.Total)
+                        let Percentage=parseInt(coupon.Percentage)
+                        let discountVal=((total*Percentage)/100).toFixed()
+                        data.total=total-discountVal
+                        data.success=true
+                        resolve(data)
+                        db.get().collection(collection.COUPON_OFFER).updateOne({coupon:Cdata.couponCode},{
+                            $set:{
+                                status:0
+                            }
+                        })
+                    }else{
+                        data.couponUsed=true
+                        resolve(data)
+                    }
+                }else{
+                    data.couponExpired=true
+                    resolve(data)
+
+                }
+            }else{
+                data.invalidCoupon=true
+                resolve(data)
+            }
+
+        })
     }
 
 

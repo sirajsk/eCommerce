@@ -117,12 +117,6 @@
 
             <input type="text" list="browsers" class="form-control" id="proSelect" name="CouponCode"
                 style="padding: 0% !important; height: 36px;" autocomplete = "off" >
-            {{!-- <datalist id="browsers"  name="Name"   >
-                <option value="">Choose</option>
-                {{#each Products}}
-                <option value="">
-                    {{/each}}
-            </datalist> --}}
         </div>
 
         <div class="col-6">
@@ -169,11 +163,7 @@
 
 <script>
     $(document).ready(function () {
-
-        $('#str').blur(function () {
-
-            let date = document.getElementById('str').value
-            console.log(date)
+ 
             let today = new Date()
             minDate = Date()
             var dd = today.getDate();
@@ -188,41 +178,14 @@
             }
             today = yyyy + '-' + mm + '-' + dd;
             console.log(today)
-            if (date < today) {
-                $('#prosub').hide()
-                Swal.fire('Choose a valid Date')
-            } else {
-                $('#prosub').show()
-            }
-        })
-        $('#exp').blur(function () {
-            let date = document.getElementById('exp').value
-            let strDate = document.getElementById('str').value
+              $('#str').attr('min',today)
+           
+        $('#str').change(function () {
 
-            console.log(date)
-            let today = new Date()
-            var dd = today.getDate();
-            var mm = today.getMonth() + 1;
-
-            var yyyy = today.getFullYear();
-            if (dd < 10) {
-                dd = '0' + dd;
-            }
-            if (mm < 10) {
-                mm = '0' + mm;
-            }
-            today = yyyy + '-' + mm + '-' + dd;
-            console.log(today)
-            if (date < today) {
-                $('#prosub').hide()
-                Swal.fire('Choose a valid Date')
-            } else if (strDate > date) {
-                $('#prosub').hide()
-                Swal.fire('Choose a valid Date')
-            }
-            else {
-                $('#prosub').show()
-            }
+           let date = document.getElementById('str').value
+          
+             $('#exp').attr('min',date)
         })
+       
     })
 </script>

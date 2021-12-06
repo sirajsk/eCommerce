@@ -445,7 +445,7 @@ router.post('/addNewAddress', (req, res) => {
 
     res.redirect('/checkout')
   })
-
+                            
 })
 router.post('/place-order', async (req, res) => {
   let id = req.session.user._id
@@ -791,6 +791,31 @@ router.get('/wishlist',async(req,res)=>{
 // router.get('detail-product/:id',(req,res)=>{
 
 // })
+// coupen start
+router.post('/couponSubmit',(req,res)=>{
+  console.log('fdfdfdfdfdfdf');
+  userHelper.couponValidate(req.body).then((response)=>{
 
+    req.session.Ctotal=response.total
+    if(response.success){
+      console.log(response);
+      res.json({couponSuccess:true,total:response.total})
+    }
+    else if(response.couponUsed){
+      console.log(response);
+      res.json({couponUsed:true})
+    }else if(response.couponExpired){
+      console.log(response);
+      res.json({couponExpired:true})
+    }else if(response.invalidCoupon){
+      console.log(response);
+      res.json({invalidCoupon:true})
+    }
+
+  })
+
+})
+
+// coupen end
 
 module.exports = router;

@@ -432,6 +432,7 @@ router.post('/product-offer',(req,res)=>{
   adminHelper.ProductOffer(req.body)
   res.redirect('/admin/product-offer')
 })
+
 router.get('/product-report',async(req,res)=>{
   let Products=await adminHelper.getAllProducts()
   res.render('admin/product-report',{admin:true,Products})
@@ -483,3 +484,11 @@ router.post('/edit-category/:id',(req,res)=>{
     res.redirect('/admin/view-category')
   })
 })
+router.get('/coupon-offer',async(req,res)=>{
+  Coupon= await  adminHelper.getAllCoupons()
+   res.render('admin/coupon_offer',{admin:true,Coupon})
+ })
+ router.post('/coupon-offer',(req,res)=>{
+   adminHelper.addCoupon(req.body)
+   res.redirect('/admin/coupon-offer')
+ })

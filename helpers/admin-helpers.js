@@ -708,6 +708,30 @@ module.exports = {
             })
         })
     },
+    addCoupon:(Cdata)=>{
+        return new Promise((resolve,reject)=>{
+            let date=Cdata.StartDate
+            let Expiry=Cdata.EndDate
+            let data={
+                coupon:Cdata.CouponCode,
+                Percentage:Cdata.Percentage,
+                status:1,
+                date:date,
+                EndDate:Expiry
+
+            }
+            db.get().collection(collection.COUPON_OFFER).insertOne(data).then((response)=>{
+                resolve()
+
+            })
+        })
+    },
+    getAllCoupons:()=>{
+        return new Promise(async(resolve,reject)=>{
+           Coupons= await  db.get().collection(collection.COUPON_OFFER).find().toArray()
+            resolve(Coupons)
+        })
+    },
     
 
 }

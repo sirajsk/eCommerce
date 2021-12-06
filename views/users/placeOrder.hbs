@@ -186,7 +186,38 @@
 					</div>
 				</div>
 				<hr class="mb-4">
+				{{!-- ------ --}}
 
+				<div class="input-group">
+					<input type="text" id="couponTotal" name="Total" value="{{total}}" hidden>
+
+					<input type="text" class="form-control" name="Coupon" id="couponInput" placeholder="Apply Coupon">
+					<div class="input-group-append">
+						<a type="submit" id="couponBtn" onclick="couponApply()" class="btn btn-secondary">Apply
+							Coupon</a>
+						<p class="text-center text-danger" style="display: none;" id="couponUsed">This Coupon has
+							been Used</p>
+						<p class="text-center text-danger" style="display: none;" id="couponInvalid">This Coupon is
+							invalid</p>
+						<p class="text-center text-success" style="display: none;" id="couponSuccess">Coupon Applied
+							Successfully</p>
+						<p class="text-center text-warning" style="display: none;" id="couponExpired">Sorry!!! Your
+							Coupon has been Expired</p>
+					</div>
+				</div>
+				<div class="your-order-total">
+					<ul>
+						<li class="order-total">Total : Rs.<span id="totalOriginal">{{total}}</span></li>
+						{{!-- <li>Rs.<span id="totalOriginal">{{total}}</span></li> --}}
+					</ul>
+					<ul>
+						<li class="order-middle-left" id="discountLabel" style="display: none;">Coupon Applied</li>
+						<li class="order-price"><input type="text" name="Discount" style="display: none;" readonly
+								id="discount"></li>
+					</ul>
+				</div>
+
+				{{!-- ===== --}}
 				<hr class="mb-4">
 				<button id="submit" class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
 			</form>
@@ -306,11 +337,12 @@
 
 		$.ajax({
 			url: '/verify-Payment',
+			method: 'post',
 			data: {
 				payment,
 				order
 			},
-			method: 'post',
+			
 			success: (response) => {
 				if (response.status) {
 					location.href = "/order-success"
@@ -322,6 +354,67 @@
 	}
 </script>
 
+{{!-- coupen start --}}
+<script>
+	function couponApply() {
+		alert('fffffff')
+		let couponCode = document.getElementById('couponInput').value
+		alert(couponCode)
+		let couponTotal = document.getElementById('couponTotal').value
+		alert(couponTotal)
+		$.ajax({
+			
+			url: '/couponSubmit',
+			data: {
+				couponCode,
+				Total: couponTotal
+			},
+			method: 'post',
+			success: (response) => {
+				if (response.couponSuccess) {
+					let oldTotal = parseInt(document.getElementById('totalOriginal').innerHTML)
+					let discount = oldTotal - parseInt(response.total)
+					document.getElementById('couponInput').readOnly = true
+					document.getElementById('discount').value = discount
+					$('#discount').show()
+					$('#discountLabel').show()
+					document.getElementById('totalOriginal').innerHTML = response.total
+					$('#couponSuccess').show()
+					$('#couponUsed').hide()
+					$('#couponInvalid').hide()
+					$('#couponExpired').hide()
+				}
+
+				if (response.couponUsed) {
+					$('#couponUsed').show()
+					$('#couponSuccess').hide()
+					$('#couponInvalid').hide()
+					$('#couponExpired').hide()
+					$('#discount').hide()
+					$('#discountLabel').hide()
+				}
+				if (response.invalidCoupon) {
+					$('#couponInvalid').show()
+					$('#couponSuccess').hide()
+					$('#couponUsed').hide()
+					$('#couponExpired').hide()
+					$('#discount').hide()
+					$('#discountLabel').hide()
+				}
+				if (response.couponExpired) {
+					$('#couponExpired').show()
+					$('#couponSuccess').hide()
+					$('#couponInvalid').hide()
+					$('#couponUsed').hide()
+					$('#discount').hide()
+					$('#discountLabel').hide()
+
+				}
+			}
+		})
+	}
+</script>
+{{!-- coupen end --}}
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
