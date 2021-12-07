@@ -687,6 +687,20 @@ module.exports = {
 
         })
     },
+    deleteCategoryoffer:(offerId)=>{
+        return new Promise((resolve,reject)=>{
+             db.get().collection(collection.CATEGORY_OFFER).deleteOne({_id:objectId(offerId)})
+            // let cname=catOffer.Name
+            resolve()
+            
+        })
+    },
+    deleteCouponOffer:(offerId)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.CATEGORY_OFFER).deleteOne({_id:objectId(offerId)})
+            resolve()
+        })
+    },
     getCategory: (cId) => {
         return new Promise((resolve, reject) => {
             db.get().collection(collection.CATEGORY_COLLECTION).findOne({ _id: objectId(cId) }).then((Category) => {
@@ -732,6 +746,13 @@ module.exports = {
             resolve(Coupons)
         })
     },
+    editProOffer:(offerId)=>{
+        return new Promise(async(resolve,reject)=>{
+            OfferDetails=await db.get().collection(collection.PRODUCT_OFFER).findOne({_id:objectId(offerId)})
+            resolve(OfferDetails)
+            
+        })
+    }
     
 
 }

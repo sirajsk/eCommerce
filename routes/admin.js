@@ -472,6 +472,14 @@ router.get('/delete-offer/:id',(req,res)=>{
     res.redirect('/admin/product-offer')
   })
 })
+
+router.get('/deleteCoupon-offer/:id',(req,res)=>{
+  offerId=req.params.id
+  adminHelper.deleteCouponOffer(offerId).then((response)=>{
+    res.redirect('/admin/product-offer')
+  })
+})
+
 router.get('/edit-category/:id',async(req,res)=>{
   cId=req.params.id
  let SingleCategory=await adminHelper.getCategory(cId)
@@ -491,4 +499,22 @@ router.get('/coupon-offer',async(req,res)=>{
  router.post('/coupon-offer',(req,res)=>{
    adminHelper.addCoupon(req.body)
    res.redirect('/admin/coupon-offer')
+ })
+ router.get('/deleteC-offer/:id',(req,res)=>{
+   let offerId = req.params.id
+   adminHelper.deleteCategoryoffer(offerId).then((response)=>{
+    res.redirect('/admin/category-offer')
+  })
+ })
+ router.get('/edit-proOffer/:id',async(req,res)=>{
+   let id =req.params.id
+ let   offerDetails=await adminHelper.editProOffer(id)
+   console.log(offerDetails)
+
+   res.render('admin/edit-product-offer',{admin:true,offerDetails})
+ })
+ router.post('/edit-product-offer/:id',(req,res)=>{
+   let id =req.params.id
+   res.redirect('/admin/product-offer')
+   
  })

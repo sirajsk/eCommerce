@@ -847,6 +847,20 @@ module.exports = {
             }
 
         })
+    },
+
+    deletewishProduct: (deatailes) => {
+
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.WISH_LIST).updateOne(
+                { _id: objectId(deatailes.wishId) },
+                {
+                    $pull: { product: { item: objectId(deatailes.proId) } }
+                }).then((response) => {
+
+                    resolve({ removeProduct: true })
+                })
+        })
     }
 
 

@@ -817,5 +817,16 @@ router.post('/couponSubmit',(req,res)=>{
 })
 
 // coupen end
+router.post('/delete-wish-item', (req, res) => {
+  let wishId = req.body.wish
+  let proId = req.body.product
+
+  userHelper.deletewishProduct(req.body).then((response) => {
+
+    res.json(response)
+  })
+})
+
+
 
 module.exports = router;

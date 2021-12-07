@@ -262,13 +262,13 @@
                             <div class="block2-txt-child2 flex-r pt-4 mt-3">
                                 <button onclick="addTocart('{{this.product._id}}')"
                                     class=" btn btn-primary stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 mt-2 mr-2">
-                                    Add to Cart
+                                   <i class="fa fa-shopping-cart"  style="color: blanchedalmond;"></i>
                                 </button>
                                 
-                                {{!-- <button onclick="addTowish('{{this._id}}')"
-                                    class=" btn btn-primary stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 mt-2">
-                                    Add to wishlist
-                                </button> --}}
+                                <button onclick="delWish('{{this._id}}','{{this.product._id}}')"
+                                    class=" btn btn-danger stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 mt-2">
+                                   <i class="fa fa-trash-o " style="color: blanchedalmond;"></i>
+                                </button>
                             </div>
 
                         </div>
@@ -309,3 +309,67 @@
 
 
 
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+	function delWish(wish, prodId, proId) {
+
+
+
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					url: '/delete-wish-item',
+					data: {
+						wishId: wish,
+						proId: prodId
+
+					},
+					method: 'post',
+					success: (response) => {
+						if (response.removeProduct) {
+
+
+
+							location.reload()
+							document.getElementById(proId + 'row').hidden = true
+
+
+						}
+						if (response.cartEmpty) {
+							alert("The item has been removed")
+							location.reload()
+						}
+					}
+				})
+				Swal.fire(
+					'Deleted!',
+					'Your file has been deleted.',
+					'success'
+				)
+			}
+		})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	}
+</script>
