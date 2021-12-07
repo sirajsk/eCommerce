@@ -34,16 +34,11 @@
     </div>
 
 </div>
-
-
-
 <div class="row">
 
     <div class="col-12">
         <div class="card">
-            {{!-- <div class="card-header">
-                <h4 class="card-title">Datatable</h4>
-            </div> --}}
+         
             <div class="card-body shadow">
                 <div class="table-responsive">
                     <table id="example2" class="display" style="width:100%;color: black;">
@@ -100,10 +95,6 @@
 </div>
 
 
-{{!-- <div class="text-center">
-    <h2>Brand Management</h2>
-</div> --}}
-
 
 <form action="/admin/product-offer " method="post" class="shadow" enctype="multipart/form-data" id="addBanner">
 
@@ -111,14 +102,7 @@
     <div class="row form-group col-md-12 mb-4">
         <div class="col-6">
             <label for="inputEmail4"> Name</label>
-            {{!-- <select type="text" class="form-control" id="proSelect" name="Name"
-                style="padding: 0% !important; height: 36px;">
-                <option value="">Choose</option>
-                {{#each Products}}
-                <option>{{this.Name}}</option>
-                {{/each}}
-
-            </select> --}}
+           
 
             <input type="text" list="browsers" class="form-control" id="proSelect" name="Name"
                 style="padding: 0% !important; height: 36px;" autocomplete = "off" >
@@ -141,7 +125,7 @@
         <div class="col-6 mt-3">
             <label for="inputEmail4">Percentage</label>
             <img src="" alt="" style="width: 100px; height:auto" id="Percentage">
-            <input type="number" class="form-control" id="imgview1" name="Percentage" max="99">
+            <input type="number" class="form-control" id="imgview1" name="Percentage" min="1" max="99">
         </div>
 
 
@@ -165,51 +149,13 @@
 <script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
 <script src="/js/plugins-init/datatables.init.js"></script>
 
-{{!--
-<script>
-    function viewBrandImage(event) {
-
-        document.getElementById('imgview1').src = URL.createObjectURL(event.target.files[0])
-        let file = event.target.files[0].name
-        let extension = file.split('.').pop()
-        if (extension == 'jpeg' || extension == 'png' || extension == 'jpg') {
-            $('#imgview1').show()
-            $('#sub').show()
-            $('#errMsg').hide()
-
-        }
-        else {
-            $('#sub').hide()
-            $('#errMsg').show()
-        }
-    }
-</script> --}}
-{{!--
-<script src="/javascripts/crop.js"></script> --}}
-<style>
-    .error {
-        color: red;
-    }
-</style>
-{{!--
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-<script language="javascript">
-    $(document).ready(function () {
-        $("#str").datepicker({
-            minDate: 0
-        });
-    });
-</script> --}}
-
 <script>
     $("#proSelect").select2({
         placeholder: "Select A Product",
         allowClear: true
     });
 </script>
-{{!--
-<script type="text/javascript">$('#str').datepicker({ minDate: 0 });</script> --}}
+
 <script>
     $(document).ready(function () {
        

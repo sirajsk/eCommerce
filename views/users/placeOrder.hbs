@@ -268,7 +268,7 @@
 
 <script>
 	$('#checkout-form').submit((e) => {
-		alert('sk on checkout')
+		
 
 		e.preventDefault()
 
@@ -286,7 +286,7 @@
 					location.href = "/order-success"
 				} else if (response.razorpay) {
 
-					alert(response)
+					
 					razorpayPayment(response.resp)
 
 
@@ -302,7 +302,7 @@
 	})
                      
 	function razorpayPayment(order) {
-		console.log(order)
+		
 		var options = {
 
 			"key": 'rzp_test_zWnKlXAtmeUJqs', // Enter the Key ID generated from the Dashboard
@@ -357,11 +357,11 @@
 {{!-- coupen start --}}
 <script>
 	function couponApply() {
-		alert('fffffff')
+		
 		let couponCode = document.getElementById('couponInput').value
-		alert(couponCode)
+		
 		let couponTotal = document.getElementById('couponTotal').value
-		alert(couponTotal)
+		
 		$.ajax({
 			
 			url: '/couponSubmit',
@@ -414,7 +414,7 @@
 		})
 	}
 </script>
-{{!-- coupen end --}}
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

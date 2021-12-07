@@ -1,0 +1,60 @@
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css">
+
+
+
+
+
+<div class="row col-12 page-titles mx-0 mt-3 mb-4 shadow text-center">
+    <div class="col-sm-12 p-md-0">
+        <div class="welcome-text">
+            <h4>SALES REPORT</h4>
+
+        </div>
+    </div>
+
+</div>
+
+
+<form action="/admin/sales-report" method="post">
+<div class="row col-12">
+    <div class="col-6 mb-5 ">
+        <label for="inputEmail4">Start Date</label>
+        <input type="date" class="form-control" id="str" name="StartDate">
+    </div>
+    <div class="col-6">
+        <label for="inputEmail4">End Date</label>
+        <input type="date" class="form-control" id="exp" name="EndDate">
+    </div>
+    <div class="text-center col-12   mb-5">
+        <button id="prosub" type="submit" class="btn btn-primary">Report</button>
+    </div>
+</div>
+</form>
+
+<table id="datatable" class="display nowrap" style="width:100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Stock</th>
+            <th>Brand</th>
+            <th>Mcategory</th>
+            <th>Size</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each sales}}
+        <tr>
+            <td>{{this.Date}}</td>
+            <td>{{this.Time}}</td>
+            <td>{{this.deliveryDetails.FirstName}}</td>
+            <td>{{this.Status}}</td>
+            <td>{{this.PaymentMethod}}</td>
+            <td>{{this.Total}}</td>
+        </tr>
+        {{/each}}
+
+    </tbody>
+
+</table>

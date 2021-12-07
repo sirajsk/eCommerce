@@ -752,8 +752,51 @@ module.exports = {
             resolve(OfferDetails)
             
         })
-    }
-    
+    },
+    getSales:(data)=>{
+        let StartDate=moment(data.StartDate).format('YYYY/MM/DD')
+        let EndDate=moment(data.EndDate).format('YYYY/MM/DD')
+        return new Promise(async(resolve,reject)=>{
+           SaleData=await db.get().collection(collection.ORDER_COLLECTION).find({Date:{$gte:StartDate,$lte:EndDate}}).toArray()
+           resolve(SaleData)
+        })
+    },
+    // updateProOffer:(data,id)=>{
+
+    // }
+    updateProOffer: ((data,id) => {
+        console.log(data);
+        return new Promise(async (resolve, reject) => {
+            let product = await db.get().collection(collection.PRODUCT_COLLECTION).findOne({ Name: data.Name })
+            console.log(product);
+            data.Percentage = parseInt(data.Percentage)
+            let ActualPrice = product.Price
+            let newPrice = (((product.Price) * (data.Percentage)) / 100)
+            newPrice = newPrice.toFixed()
+
+            db.get().collection(collection.PRODUCT_OFFER).updateOne({Name:data.Name},{
+                $set:{
+                    Name:data.Name,
+                    StartDate:data.StartDate,
+                    EndDate:data.EndDate,
+                    Percentage:data.Percentage
+                }
+            }).then((response) => {
+                db.get().collection(collection.PRODUCT_COLLECTION).updateOne({ Name: data.Name },
+                    {
+                        $set: {
+                            proOffer: true,
+                            Percentage: data.Percentage,
+                            Price: (ActualPrice - newPrice),
+                            ActualPrice: ActualPrice
+                        }
+                    }).then(() => {
+                        resolve()
+                    })
+            })
+
+        })
+    }),
 
 }
 

@@ -52,17 +52,17 @@ router.get('/', async function (req, res, next) {
   adminHelper.getAllProducts().then(async (products) => {
 
 
-    Women= await adminHelper.getWomenProduct()
-    console.log(Women,'women');
-    Men=await adminHelper.getMenProduct()
-    console.log(Men,'men');
+    Women = await adminHelper.getWomenProduct()
+    console.log(Women, 'women');
+    Men = await adminHelper.getMenProduct()
+    console.log(Men, 'men');
     banner = await adminHelper.getFirstAllbanner()
     console.log(banner);
     banner2 = await adminHelper.getSecondAllbanner()
     console.log(banner2);
 
 
-    res.render('users/user-home', { user, products, Isuser: true, cartCount, banner, banner2 ,Women,Men});
+    res.render('users/user-home', { user, products, Isuser: true, cartCount, banner, banner2, Women, Men });
   })
 
 
@@ -222,7 +222,7 @@ router.post('/verifyMobile', (req, res) => {
 
 // mobile otp end
 
-                              
+
 
 
 
@@ -240,13 +240,13 @@ router.get('/cart', async function (req, res) {
     cartCount = await userHelper.getCartCount(id)
 
     let products = await userHelper.getCartProducts(req.session.user._id)
-    if(cartCount==0){
-      res.render('users/cart-emptyPage',{user, Isuser: true, products, cart: true, totals, cartCount })
+    if (cartCount == 0) {
+      res.render('users/cart-emptyPage', { user, Isuser: true, products, cart: true, totals, cartCount })
     }
-    else{
+    else {
       res.render('users/cart', { user, Isuser: true, products, cart: true, totals, cartCount });
     }
-    
+
 
   } else {
     res.redirect('/login')
@@ -382,20 +382,20 @@ router.post('/change-product-quantity', (req, res) => {
 // product detail page
 router.get('/product-detail/:id', async (req, res) => {
   id = req.params.id
- 
+
   user = req.session.user
   let cartCount = null
   let product = await userHelper.singleProduct(id)
   let AllProducts = await adminHelper.getAllProducts()
-  if(user){
+  if (user) {
     userId = req.session.user._id
     cartCount = await userHelper.getCartCount(userId)
   }
-  
 
 
 
-  res.render('users/product-detailes', { Isuser: true, product, AllProducts, user,  cartCount })
+
+  res.render('users/product-detailes', { Isuser: true, product, AllProducts, user, cartCount })
 })
 
 
@@ -445,12 +445,18 @@ router.post('/addNewAddress', (req, res) => {
 
     res.redirect('/checkout')
   })
-                            
+
 })
 router.post('/place-order', async (req, res) => {
   let id = req.session.user._id
   let products = await userHelper.getCartProductList(id)
-  let total = await userHelper.getTotalAmount(id)
+  let total = 0
+  if (req.session.Ctotal) {
+    total = req.session.Ctotal
+  } else {
+    total = await userHelper.getTotalAmount(id)
+  }
+
 
   console.log(req.session.total, 'session');
   userHelper.placeOrder(req.body, products, total).then((orderId) => {
@@ -541,13 +547,13 @@ router.get('/success', (req, res) => {
 router.get('/order-success', (req, res) => {
 
   let user = req.session.user
-  let userId=req.session.user._id
+  let userId = req.session.user._id
   userHelper.clearCart(userId)
   res.render('users/order-success', { Isuser: true, user })
 })
 
-router.get('/cancelled',(req,res)=>{
-  res.render('users/cancelled',{Isuser:true})
+router.get('/cancelled', (req, res) => {
+  res.render('users/cancelled', { Isuser: true })
 })
 router.get('/orders', async (req, res) => {
   let user = req.session.user
@@ -679,23 +685,23 @@ router.get('/cancelled/:id', (req, res) => {
   })
 })
 router.get('/SingleCheckout/:id', async (req, res) => {
-  let user=req.session.user
-  let uId=req.session.user._id
+  let user = req.session.user
+  let uId = req.session.user._id
   let id = req.params.id
   let PRODUCT = await userHelper.getSingleProduct(id)
   console.log(PRODUCT);
   let address = await userHelper.getUserAddress(uId)
-  res.render('users/Single-checkout', { Isuser: true, PRODUCT ,user,address})
+  res.render('users/Single-checkout', { Isuser: true, PRODUCT, user, address })
 })
 
 router.post('/placeSingle-order', async (req, res) => {
   // console.log('hi iam siraj');
-  let pId=req.body.pId
+  let pId = req.body.pId
   console.log(req.body.User);
   let id = req.session.user._id
   let products = await userHelper.getSingleProduct(pId)
-  console.log(products,'products');
-  console.log(products.Price,'price');
+  console.log(products, 'products');
+  console.log(products.Price, 'price');
   // console.log(req.session.total, 'session');
   userHelper.SingleOrderPlace(req.body, products, products.Price).then((orderId) => {
     if (req.body['Payment'] == 'COD') {
@@ -780,36 +786,36 @@ router.get('/success', (req, res) => {
   })
 
 })
-router.get('/wishlist',async(req,res)=>{
-  user=req.session.user
-  userId=req.session.user._id
-  products=await userHelper.getWishListPro(userId)
+router.get('/wishlist', async (req, res) => {
+  user = req.session.user
+  userId = req.session.user._id
+  products = await userHelper.getWishListPro(userId)
   console.log(products);
-  res.render('users/wish-list',{Isuser:true,user,products})
+  res.render('users/wish-list', { Isuser: true, user, products })
 })
 
 // router.get('detail-product/:id',(req,res)=>{
 
 // })
 // coupen start
-router.post('/couponSubmit',(req,res)=>{
+router.post('/couponSubmit', (req, res) => {
   console.log('fdfdfdfdfdfdf');
-  userHelper.couponValidate(req.body).then((response)=>{
+  userHelper.couponValidate(req.body).then((response) => {
 
-    req.session.Ctotal=response.total
-    if(response.success){
+    req.session.Ctotal = response.total
+    if (response.success) {
       console.log(response);
-      res.json({couponSuccess:true,total:response.total})
+      res.json({ couponSuccess: true, total: response.total })
     }
-    else if(response.couponUsed){
+    else if (response.couponUsed) {
       console.log(response);
-      res.json({couponUsed:true})
-    }else if(response.couponExpired){
+      res.json({ couponUsed: true })
+    } else if (response.couponExpired) {
       console.log(response);
-      res.json({couponExpired:true})
-    }else if(response.invalidCoupon){
+      res.json({ couponExpired: true })
+    } else if (response.invalidCoupon) {
       console.log(response);
-      res.json({invalidCoupon:true})
+      res.json({ invalidCoupon: true })
     }
 
   })

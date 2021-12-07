@@ -17,23 +17,23 @@ const verifyAdminLogin = (req, res, next) => {
 router.get('/', async function (req, res, next) {
   if (req.session.adminloggedIn) {
 
-   let userCount= await adminHelper.getUserCount()
-   let productCount=await adminHelper.getProductCount()
-   let Profite=await adminHelper.getProfite()
-   let latestProduct=await adminHelper.latestProduct()
-   let latestOrders=await adminHelper.latestOrders()
+    let userCount = await adminHelper.getUserCount()
+    let productCount = await adminHelper.getProductCount()
+    let Profite = await adminHelper.getProfite()
+    let latestProduct = await adminHelper.latestProduct()
+    let latestOrders = await adminHelper.latestOrders()
 
-  let AllMethods=await adminHelper.AllMethods()
-  let OrderStatus=await adminHelper.OrderStatus()
+    let AllMethods = await adminHelper.AllMethods()
+    let OrderStatus = await adminHelper.OrderStatus()
 
-  console.log(AllMethods);
+    console.log(AllMethods);
 
-  console.log(OrderStatus);
+    console.log(OrderStatus);
 
 
 
-   
-    res.render('admin/dashboard', { admin: true ,userCount,productCount,Profite,latestProduct,latestOrders,AllMethods,OrderStatus})
+
+    res.render('admin/dashboard', { admin: true, userCount, productCount, Profite, latestProduct, latestOrders, AllMethods, OrderStatus })
 
   } else {
     res.redirect('/admin/login')
@@ -48,7 +48,7 @@ router.get('/login', function (req, res, next) {
     res.redirect('/admin')
   }
   else {
-    res.render('admin/admin-login', { admin: true, login: true, "loginErr": req.session.loggedInErr})
+    res.render('admin/admin-login', { admin: true, login: true, "loginErr": req.session.loggedInErr })
     req.session.loggedInErr = false
   }
 
@@ -369,19 +369,19 @@ router.get('/cancelled/:id', (req, res) => {
     res.redirect('/admin/orders')
   })
 })
-router.get('/banner-management',async (req,res)=>{
-  banner=await adminHelper.getAllbanner()
-  res.render('admin/banner-management',{admin:true,banner})
+router.get('/banner-management', async (req, res) => {
+  banner = await adminHelper.getAllbanner()
+  res.render('admin/banner-management', { admin: true, banner })
 })
-router.get('/add-Banner', (req,res)=>{
-  
-  res.render('admin/add-banner',{admin:true})
+router.get('/add-Banner', (req, res) => {
+
+  res.render('admin/add-banner', { admin: true })
 
 })
-router.post('/add-banner',(req,res)=>{
-  adminHelper.addBanner(req.body).then((id)=>{
+router.post('/add-banner', (req, res) => {
+  adminHelper.addBanner(req.body).then((id) => {
     console.log(req.files);
-    let image=req.files.Image1
+    let image = req.files.Image1
     image.mv('public/banner/' + id + '.jpg', (err, done) => {
       if (!err) {
         res.redirect('/admin/banner-management')
@@ -391,16 +391,16 @@ router.post('/add-banner',(req,res)=>{
       }
     })
   })
-  
-})
-router.get('/add-Second-Banner',(req,res)=>{
 
-  res.render('admin/add-second-banner',{admin:true})
 })
-router.post('/add-second-banner',(req,res)=>{
-  adminHelper.addSecondBanner(req.body).then((id)=>{
+router.get('/add-Second-Banner', (req, res) => {
+
+  res.render('admin/add-second-banner', { admin: true })
+})
+router.post('/add-second-banner', (req, res) => {
+  adminHelper.addSecondBanner(req.body).then((id) => {
     console.log(req.files);
-    let image=req.files.Image1
+    let image = req.files.Image1
     image.mv('public/banner/' + id + '.jpg', (err, done) => {
       if (!err) {
         res.redirect('/admin/banner-management')
@@ -410,48 +410,58 @@ router.post('/add-second-banner',(req,res)=>{
       }
     })
   })
- 
+
 })
-router.get('/category-offer',async(req,res)=>{
- let  CategoryOffer=await adminHelper.getCategoryOffer()
+router.get('/category-offer', async (req, res) => {
+  let CategoryOffer = await adminHelper.getCategoryOffer()
   let categories = await adminHelper.categoryDetailes()
-  res.render('admin/category-offer',{admin:true,categories,CategoryOffer})
+  res.render('admin/category-offer', { admin: true, categories, CategoryOffer })
 })
 
-router.post('/category-offer',(req,res)=>{
+router.post('/category-offer', (req, res) => {
   adminHelper.CategoryOffer(req.body)
   // console.log(req.body);
   res.redirect('/admin/category-offer')
 })
-router.get('/product-offer',async(req,res)=>{
-  let getProductOffer=await adminHelper.getProductOffer()
-  let Products=await adminHelper.getAllProducts()
-  res.render('admin/product-offer',{admin:true,getProductOffer,Products})
+router.get('/product-offer', async (req, res) => {
+  let getProductOffer = await adminHelper.getProductOffer()
+  let Products = await adminHelper.getAllProducts()
+  res.render('admin/product-offer', { admin: true, getProductOffer, Products })
 })
-router.post('/product-offer',(req,res)=>{
+router.post('/product-offer', (req, res) => {
   adminHelper.ProductOffer(req.body)
   res.redirect('/admin/product-offer')
 })
 
-router.get('/product-report',async(req,res)=>{
-  let Products=await adminHelper.getAllProducts()
-  res.render('admin/product-report',{admin:true,Products})
+router.get('/product-report', async (req, res) => {
+  let Products = await adminHelper.getAllProducts()
+  res.render('admin/product-report', { admin: true, Products })
 })
-router.get('/order-report',async(req,res)=>{
-  Orders=await adminHelper.getAllOrders()
-  res.render('admin/Order-report',{admin:true,Orders})
+router.get('/order-report', async (req, res) => {
+  Orders = await adminHelper.getAllOrders()
+  res.render('admin/Order-report', { admin: true, Orders })
 })
-router.get('/edit-banner/:id',async(req,res)=>{
-  let id=req.params.id
-  let SingleBanner= await adminHelper.getSingleBanner(id)
+router.get('/sales-report', (req, res) => {
+  // Sales=await adminHelper.getSales()
+  res.render('admin/sales-report', { admin: true })
+})
+router.post('/sales-report', async (req, res) => {
+  console.log(req.body);
+  sales = await adminHelper.getSales(req.body)
+  console.log(sales);
+  res.render('admin/sales-report', { admin: true, sales })
+})
+router.get('/edit-banner/:id', async (req, res) => {
+  let id = req.params.id
+  let SingleBanner = await adminHelper.getSingleBanner(id)
   console.log(SingleBanner);
-  res.render('admin/edit-banner',{admin:true,SingleBanner})
+  res.render('admin/edit-banner', { admin: true, SingleBanner })
 
 })
-router.post('/edit-banner/:id',(req,res)=>{
-  let id =req.params.id
-  let imageA=req.files.Image1
-  adminHelper.updateBanner(id,req.body).then((response)=>{
+router.post('/edit-banner/:id', (req, res) => {
+  let id = req.params.id
+  let imageA = req.files.Image1
+  adminHelper.updateBanner(id, req.body).then((response) => {
 
     if (req.files.Image1) {
       imageA.mv('public/banner/' + id + '.jpg')
@@ -459,62 +469,64 @@ router.post('/edit-banner/:id',(req,res)=>{
     res.redirect('/admin/banner-management')
 
   })
- 
+
 })
-router.get('/delete-banner/:id',(req,res)=>{
-  let id =req.params.id
+router.get('/delete-banner/:id', (req, res) => {
+  let id = req.params.id
   adminHelper.deleteBanner(id)
   res.redirect('/admin/banner-management')
 })
-router.get('/delete-offer/:id',(req,res)=>{
-  offerId=req.params.id
-  adminHelper.deleteoffer(offerId).then((response)=>{
+router.get('/delete-offer/:id', (req, res) => {
+  offerId = req.params.id
+  adminHelper.deleteoffer(offerId).then((response) => {
     res.redirect('/admin/product-offer')
   })
 })
 
-router.get('/deleteCoupon-offer/:id',(req,res)=>{
-  offerId=req.params.id
-  adminHelper.deleteCouponOffer(offerId).then((response)=>{
+router.get('/deleteCoupon-offer/:id', (req, res) => {
+  offerId = req.params.id
+  adminHelper.deleteCouponOffer(offerId).then((response) => {
     res.redirect('/admin/product-offer')
   })
 })
 
-router.get('/edit-category/:id',async(req,res)=>{
-  cId=req.params.id
- let SingleCategory=await adminHelper.getCategory(cId)
- console.log(SingleCategory);
- res.render('admin/edit-catogory',{admin:true,SingleCategory})
+router.get('/edit-category/:id', async (req, res) => {
+  cId = req.params.id
+  let SingleCategory = await adminHelper.getCategory(cId)
+  console.log(SingleCategory);
+  res.render('admin/edit-catogory', { admin: true, SingleCategory })
 })
-router.post('/edit-category/:id',(req,res)=>{
-  Cid=req.params.id
-  adminHelper.updateCategory(Cid,req.body).then((response)=>{
+router.post('/edit-category/:id', (req, res) => {
+  Cid = req.params.id
+  adminHelper.updateCategory(Cid, req.body).then((response) => {
     res.redirect('/admin/view-category')
   })
 })
-router.get('/coupon-offer',async(req,res)=>{
-  Coupon= await  adminHelper.getAllCoupons()
-   res.render('admin/coupon_offer',{admin:true,Coupon})
- })
- router.post('/coupon-offer',(req,res)=>{
-   adminHelper.addCoupon(req.body)
-   res.redirect('/admin/coupon-offer')
- })
- router.get('/deleteC-offer/:id',(req,res)=>{
-   let offerId = req.params.id
-   adminHelper.deleteCategoryoffer(offerId).then((response)=>{
+router.get('/coupon-offer', async (req, res) => {
+  Coupon = await adminHelper.getAllCoupons()
+  res.render('admin/coupon_offer', { admin: true, Coupon })
+})
+router.post('/coupon-offer', (req, res) => {
+  adminHelper.addCoupon(req.body)
+  res.redirect('/admin/coupon-offer')
+})
+router.get('/deleteC-offer/:id', (req, res) => {
+  let offerId = req.params.id
+  adminHelper.deleteCategoryoffer(offerId).then((response) => {
     res.redirect('/admin/category-offer')
   })
- })
- router.get('/edit-proOffer/:id',async(req,res)=>{
-   let id =req.params.id
- let   offerDetails=await adminHelper.editProOffer(id)
-   console.log(offerDetails)
+})
+router.get('/edit-proOffer/:id', async (req, res) => {
+  let id = req.params.id
+  let offerDetails = await adminHelper.editProOffer(id)
+  console.log(offerDetails)
 
-   res.render('admin/edit-product-offer',{admin:true,offerDetails})
- })
- router.post('/edit-product-offer/:id',(req,res)=>{
-   let id =req.params.id
-   res.redirect('/admin/product-offer')
-   
- })
+  res.render('admin/edit-product-offer', { admin: true, offerDetails })
+})
+router.post('/edit-product-offer/:id', (req, res) => {
+  let id = req.params.id
+  console.log(req.body);
+  adminHelper.updateProOffer(req.body,id)
+  res.redirect('/admin/product-offer')
+
+})
