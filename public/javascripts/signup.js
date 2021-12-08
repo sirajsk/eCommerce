@@ -92,6 +92,7 @@ $(document).ready(function(){
 })
 $(document).ready(function(){
     $("#addproduct").validate({
+        // hi:alert('0000000000'),
        rules:{
         Name:{
             required:true,
@@ -107,6 +108,9 @@ $(document).ready(function(){
         },
         
         Scategory:{
+            required:true 
+        },
+        Mcategory:{
             required:true
         },
         Size:{

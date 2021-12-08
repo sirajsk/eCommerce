@@ -261,9 +261,15 @@
 											onclick="ChangeQty('{{this._id}}','{{this.product._id}}','{{../user._id}}',1)">+</button>
 									</div>
 								</td>
-
-								<td class="price">{{this.product.Price}}</td>
-								<td></td>
+									
+								<td class="price mt-4">{{this.product.Price}}</td>
+								<td>
+									 <div class="">
+                                        <span class=" text-center" id="subTotals{{this.product._id}}">
+                                            {{this.subtotal}}
+                                        </span>
+                                    </div>
+								</td>
 								<td class="text-center  ">
 									<button onclick="deleteProCart('{{this._id}}','{{this.product._id}}')"
 										class="remove_cart 	" rel="2">
@@ -366,6 +372,8 @@
 
 					document.getElementById(proId).innerHTML = qty + count
 					document.getElementById('total').innerHTML = response.total
+					document.getElementById('subTotals'+proId).innerHTML = response.subTotal
+
 
 
 				}

@@ -1,7 +1,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <!-- Favicon icon -->
 <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
 <!-- Datatable -->
@@ -52,30 +52,31 @@
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Percentage</th>
-                               
+
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {{#each Coupon}}
                             <tr>
-                                 <td>
+                                <td>
                                     {{this.coupon}}
                                 </td>
                                 <td>
                                     {{this.date}}
                                 </td>
                                 <td>
-                                     {{this.EndDate}}
+                                    {{this.EndDate}}
                                 </td>
                                 <td>
                                     {{this.Percentage}}
                                 </td>
-                                
+
                                 <td>
                                     {{!-- <a type="button" class="btn btn-primary"><i class="fas fa-edit"></i></a> --}}
                                     <a type="button" href="/admin/deleteCoupon-offer/{{this._id}}"
-                                        class="btn btn-danger"><i class="fa fa-trash-o " style="color: blanchedalmond;"></i></a>
+                                        class="btn btn-danger"><i class="fa fa-trash-o "
+                                            style="color: blanchedalmond;"></i></a>
                                 </td>
                             </tr>
 
@@ -116,7 +117,7 @@
             <label for="inputEmail4"> Name</label>
 
             <input type="text" list="browsers" class="form-control" id="proSelect" name="CouponCode"
-                style="padding: 0% !important; height: 36px;" autocomplete = "off" >
+                style="padding: 0% !important; height: 36px;" autocomplete="off">
         </div>
 
         <div class="col-6">
@@ -135,7 +136,7 @@
 
 
         <div class="col-12 text-center mt-5">
-            <button id="prosub" type="submit" class="btn btn-primary">CREATE COUPON  </button>
+            <button id="prosub" type="submit" class="btn btn-primary">CREATE COUPON </button>
         </div>
 
     </div>

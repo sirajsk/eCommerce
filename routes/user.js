@@ -240,6 +240,7 @@ router.get('/cart', async function (req, res) {
     cartCount = await userHelper.getCartCount(id)
 
     let products = await userHelper.getCartProducts(req.session.user._id)
+    console.log(products);
     if (cartCount == 0) {
       res.render('users/cart-emptyPage', { user, Isuser: true, products, cart: true, totals, cartCount })
     }
@@ -372,9 +373,16 @@ router.post('/forgotSubmit', (req, res) => {
 // change product quantity
 
 router.post('/change-product-quantity', (req, res) => {
+  console.log(req.body);
   userHelper.changeProductCount(req.body).then(async (response) => {
     id = req.session.user._id
+
+    proId=req.body.product
+
     response.total = await userHelper.getTotalAmount(id)
+    response.subTotal = await userHelper.getSubTotal(id, proId)
+
+    console.log(response.subTotal,'res.res');
 
     res.json(response)
   })
@@ -832,7 +840,9 @@ router.post('/delete-wish-item', (req, res) => {
     res.json(response)
   })
 })
-
+router.get('/test',(req,res)=>{
+  res.render('users/checkout',{Isuser: true})
+})
 
 
 module.exports = router;

@@ -1,8 +1,31 @@
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+<!-- Datatable -->
+<link href="/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+<!-- Custom Stylesheet -->
+<link href="/css/style.css" rel="stylesheet">
+<link href="/css/crop.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css">
 
 
 
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://foliotek.github.io/Croppie/croppie.css">
+<link rel="stylesheet" href="https://maxccroppie.cssdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
+
+<link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="Stylesheet" type="text/css" />
 
 
 <div class="row col-12 page-titles mx-0 mt-3 mb-4 shadow text-center">
@@ -35,11 +58,11 @@
 <table id="datatable" class="display nowrap" style="width:100%">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Stock</th>
-            <th>Brand</th>
-            <th>Mcategory</th>
-            <th>Size</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>FirstName</th>
+            <th>Status</th>
+            <th>PaymentMethod</th>
             <th>Price</th>
         </tr>
     </thead>
@@ -58,3 +81,56 @@
     </tbody>
 
 </table>
+
+
+
+
+<script src="/vendor/global/global.min.js"></script>
+<script src="/js/quixnav-init.js"></script>
+<script src="/js/custom.min.js"></script>
+
+
+
+
+<!-- Datatable -->
+<script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/js/plugins-init/datatables.init.js"></script>
+
+<script>
+    $("#proSelect").select2({
+        placeholder: "Select A Product",
+        allowClear: true
+    });
+</script>
+
+
+
+<script>
+    $("#str").datepicker(
+
+        {
+            maxDate: '0',
+            beforeShow: function () {
+                jQuery(this).datepicker('option', 'maxDate', jQuery('#exp').val());
+            },
+            altFormat: "dd/mm/yy",
+            dateFormat: 'dd/mm/yy'
+
+        }
+
+    );
+
+    $("#exp").datepicker(
+
+        {
+            maxDate: '0',
+            beforeShow: function () {
+                jQuery(this).datepicker('option', 'minDate', jQuery('#st').val());
+            },
+            altFormat: "dd/mm/yy",
+            dateFormat: 'dd/mm/yy'
+
+        }
+
+    );
+</script>

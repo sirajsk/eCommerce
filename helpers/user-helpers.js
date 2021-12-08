@@ -201,6 +201,7 @@ module.exports = {
                         item: 1,
                         qty: 1,
                         product: { $arrayElemAt: ['$product', 0] },
+                        subtotal: { $multiply: [{ $arrayElemAt: ["$product.Price", 0] }, "$qty"] }
 
                     }
                 }
@@ -209,7 +210,7 @@ module.exports = {
 
 
             ]).toArray()
-            // console.log(cartItems[0].product);
+            // console.log(cartItems,'cartitems');
 
             resolve(cartItems)
         })
@@ -272,7 +273,9 @@ module.exports = {
                 })
         })
     },
+
     getSubTotal: (userId, proId) => {
+        console.log(proId,'PROID');
         return new Promise(async (resolve, reject) => {
             let subtotal = await db.get().collection(collection.CART_COLLECTIONS).aggregate([
                 {
@@ -339,6 +342,7 @@ module.exports = {
 
         })
     },
+    
     getTotalAmount: (userId) => {
         return new Promise(async (resolve, reject) => {
             let totals = await db.get().collection(collection.CART_COLLECTIONS).aggregate([
