@@ -54,7 +54,7 @@
     </div>
 </div>
 </form>
-
+{{#if sales}}
 <table id="datatable" class="display nowrap" style="width:100%">
     <thead>
         <tr>
@@ -81,7 +81,7 @@
     </tbody>
 
 </table>
-
+{{/if}}
 
 
 
@@ -95,42 +95,40 @@
 <!-- Datatable -->
 <script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
 <script src="/js/plugins-init/datatables.init.js"></script>
-
+{{!-- 
 <script>
     $("#proSelect").select2({
         placeholder: "Select A Product",
         allowClear: true
     });
 </script>
-
+ --}}
 
 
 <script>
-    $("#str").datepicker(
+    $(document).ready(function () {
+       
+            let today = new Date()
+           
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
 
-        {
-            maxDate: '0',
-            beforeShow: function () {
-                jQuery(this).datepicker('option', 'maxDate', jQuery('#exp').val());
-            },
-            altFormat: "dd/mm/yy",
-            dateFormat: 'dd/mm/yy'
-
-        }
-
-    );
-
-    $("#exp").datepicker(
-
-        {
-            maxDate: '0',
-            beforeShow: function () {
-                jQuery(this).datepicker('option', 'minDate', jQuery('#st').val());
-            },
-            altFormat: "dd/mm/yy",
-            dateFormat: 'dd/mm/yy'
-
-        }
-
-    );
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            maxDate = yyyy + '-' + mm + '-' + dd;
+           $('#str').attr('max',maxDate)
+           
+        $('#str').change(function () {
+             let date = document.getElementById('str').value
+           
+            $('#exp').attr('max',maxDate)
+            
+        })
+       
+    })
 </script>

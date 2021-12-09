@@ -7,8 +7,10 @@
                 <h6>Please enter the one time password <br> to verify your account</h6>
                 {{!-- <div> <span>A code has been sent to</span> <small>*******9897</small> </div> --}}
                 <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2"> <input
-                        class="m-2 text-center form-control rounded" type="number" name="otp" id="first" maxlength="1" />
-                    <input class="m-2 text-center form-control rounded" type="number" name="otp" id="otp" maxlength="1" />
+                        class="m-2 text-center form-control rounded" type="number" name="otp" id="first"
+                        maxlength="1" />
+                    <input class="m-2 text-center form-control rounded" type="number" name="otp" id="otp"
+                        maxlength="1" />
                     <input class="m-2 text-center form-control rounded" type="number" id="third" name="otp"
                         maxlength="1" /> <input class="m-2 text-center form-control rounded" type="number" id="fourth"
                         name="otp" maxlength="1" /> <input class="m-2 text-center form-control rounded" type="number"
@@ -21,7 +23,7 @@
                 <div class="text-center mt-3">
                     <a href="/resend-otp">
                         <span class="d-block mobile-text" id="resend1"></span>
-                        </a>
+                    </a>
 
                 </div>
                 {{#if invalidOtp}}
@@ -40,39 +42,39 @@
 
 <script src="/javascripts/otp.js"></script>
 <script>
-    
-let timerOn = true;
-function timer(remaining) {
-var m = Math.floor(remaining / 60);
-var s = remaining % 60;
-m = m < 10 ? "0" + m : m;
-s = s < 10 ? "0" + s : s;
-document.getElementById("countdown1").innerHTML = `Time left: ${m} : ${s}`;
-remaining -= 1;
-if (remaining >= 0 && timerOn) {
-setTimeout(function () {
-timer(remaining);
-}, 1000);
-document.getElementById("resend1").innerHTML = `
+
+    let timerOn = true;
+    function timer(remaining) {
+        var m = Math.floor(remaining / 60);
+        var s = remaining % 60;
+        m = m < 10 ? "0" + m : m;
+        s = s < 10 ? "0" + s : s;
+        document.getElementById("countdown1").innerHTML = `Time left: ${m} : ${s}`;
+        remaining -= 1;
+        if (remaining >= 0 && timerOn) {
+            setTimeout(function () {
+                timer(remaining);
+            }, 1000);
+            document.getElementById("resend1").innerHTML = `
 `;
-return;
-}
-if (!timerOn) {
-return;
-}
-document.getElementById("resend1").innerHTML = `Don't receive the code? 
+            return;
+        }
+        if (!timerOn) {
+            return;
+        }
+        document.getElementById("resend1").innerHTML = `Don't receive the code? 
 <span class="font-weight-bold text-color cursor" onclick="timer(59)">Resend
 </span>`;
-}
-timer(59);
+    }
+    timer(59);
 
 
-  document.addEventListener("DOMContentLoaded", function (event) {
+    document.addEventListener("DOMContentLoaded", function (event) {
 
-    function OTPInput() {
-      const inputs = document.querySelectorAll('#otp > *[id]');
-      for (let i = 0; i < inputs.length; i++) { inputs[i].addEventListener('keydown', function (event) { if (event.key === "Backspace") { inputs[i].value = ''; if (i !== 0) inputs[i - 1].focus(); } else { if (i === inputs.length - 1 && inputs[i].value !== '') { return true; } else if (event.keyCode > 47 && event.keyCode < 58) { inputs[i].value = event.key; if (i !== inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); } else if (event.keyCode > 64 && event.keyCode < 91) { inputs[i].value = String.fromCharCode(event.keyCode); if (i !== inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); } } }); }
-    } OTPInput();
-  });
+        function OTPInput() {
+            const inputs = document.querySelectorAll('#otp > *[id]');
+            for (let i = 0; i < inputs.length; i++) { inputs[i].addEventListener('keydown', function (event) { if (event.key === "Backspace") { inputs[i].value = ''; if (i !== 0) inputs[i - 1].focus(); } else { if (i === inputs.length - 1 && inputs[i].value !== '') { return true; } else if (event.keyCode > 47 && event.keyCode < 58) { inputs[i].value = event.key; if (i !== inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); } else if (event.keyCode > 64 && event.keyCode < 91) { inputs[i].value = String.fromCharCode(event.keyCode); if (i !== inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); } } }); }
+        } OTPInput();
+    });
 
 </script>

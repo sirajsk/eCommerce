@@ -53,16 +53,16 @@ router.get('/', async function (req, res, next) {
 
 
     Women = await adminHelper.getWomenProduct()
-    console.log(Women, 'women');
+    // console.log(Women, 'women');
     Men = await adminHelper.getMenProduct()
-    console.log(Men, 'men');
+    // console.log(Men, 'men');
     banner = await adminHelper.getFirstAllbanner()
-    console.log(banner);
+    // console.log(banner);
     banner2 = await adminHelper.getSecondAllbanner()
-    console.log(banner2);
+    // console.log(banner2);   
 
 
-    res.render('users/user-home', { user, products, Isuser: true, cartCount, banner, banner2, Women, Men });
+    res.render('users/user-home', {  user, products, Isuser: true, cartCount, banner, banner2, Women, Men });
   })
 
 
@@ -137,13 +137,49 @@ router.post('/signup', function (req, res) {
 
 
 router.get('/otp', (req, res) => {
-
+  // console.log('on otp');
+  // res.redirect('/')
   if (req.session.loggedIn) {
     res.redirect('/')
   } else {
+  
     res.render('users/otp', { login: true, "invalidOtp": req.session.invalidOtp, Isuser: true })
     req.session.invalidOtp = false
   }
+
+
+})
+router.post('/otp', (req, res) => {
+  let Lotp = Object.values(req.body.otp)
+  let a = Lotp.join('')
+  console.log(a);
+  let number = req.session.number
+  console.log(number);
+  client.verify
+    .services(serviceSID)
+    .verificationChecks.create({
+      to: number,
+      code: a
+    }).then(async (resp) => {
+      if (resp.valid) {
+        let user = await userHelper.getUserdetails(number)
+       
+        req.session.loggedIn = true
+        req.session.user = user
+        res.redirect('/')
+        
+
+      } else {
+
+        req.session.inavlidloginOtp = true
+        res.redirect('/otp')
+      }
+
+    }).catch((err) => {
+
+      req.session.inavlidloginOtp = true
+      res.redirect('/otp')
+    })
 
 
 })
@@ -170,6 +206,7 @@ router.post('/otpM', (req, res) => {
     }).then(async (resp) => {
       if (resp.valid) {
         let user = await userHelper.getUserdetails(number)
+        console.log(user,'user----------------------------------------');
         req.session.loggedIn = true
         res.redirect('/')
         req.session.user = user
@@ -841,8 +878,8 @@ router.post('/delete-wish-item', (req, res) => {
   })
 })
 router.get('/test',(req,res)=>{
-  res.render('users/checkout',{Isuser: true})
+  res.render('users/test1',{Isuser:true,login: true})
 })
-
+    
 
 module.exports = router;

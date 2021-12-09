@@ -20,7 +20,7 @@ module.exports = {
             user = {
                 name: userData.name,
                 email: userData.email,
-                mobile: userData.mobile,
+                mobile: `+91${userData.mobile}`,
                 password: userData.password,
                 status: true
             }
@@ -33,8 +33,9 @@ module.exports = {
     dologin: (userData) => {
         return new Promise(async (resolve, reject) => {
             let loginStatus = true
+            Umobile=`+91${userData.mobile}`
             let response = {}
-            let user = await db.get().collection(collection.USER_COLLECTION).findOne({ mobile: userData.mobile })
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({ mobile: Umobile })
             if (user) {
                 // console.log('test');
                 bcrypt.compare(userData.password, user.password).then((status) => {
@@ -55,9 +56,10 @@ module.exports = {
             }
         })
     },
-    getUserdetails: (mobile) => {
+    getUserdetails: (mobile1) => {
+        
         return new Promise(async (resolve, reject) => {
-            let user = await db.get().collection(collection.USER_COLLECTION).findOne({ mobile: mobile })
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({ mobile: mobile1 })
             resolve(user)
         })
     },

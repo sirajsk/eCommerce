@@ -1,109 +1,130 @@
-<section class="vh-100">
-    <div class="container-fluid h-custom">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-md-9 col-lg-6 col-xl-5">
-                <img src="https://mdbootstrap.com/img/Photos/new-templates/bootstrap-login-form/draw2.png"
-                    class="img-fluid" alt="Sample image">
-            </div>
-            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                <form action="/login" method="post" id="login">
-                    {{!-- <div
-                        class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-                        <p class="lead fw-normal mb-0 me-3">Sign in with</p>
-                        <button type="button" class="btn btn-primary btn-floating mx-1">
-                            <i class="fab fa-facebook-f"></i>
-                        </button>
 
-                        <button type="button" class="btn btn-primary btn-floating mx-1">
-                            <i class="fab fa-twitter"></i>
-                        </button>
 
-                        <button type="button" class="btn btn-primary btn-floating mx-1">
-                            <i class="fab fa-linkedin-in"></i>
-                        </button>
-                    </div> --}}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
 
-                    {{!-- <div class="divider d-flex align-items-center my-4">
-                        <p class="text-center fw-bold mx-3 mb-0">Or</p>
-                    </div> --}}
+<link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js">   </script>
 
-                    <!-- Email input -->
-                    <div class="form-outline mb-4">
-                        <input type="number" id="" class="form-control form-control-lg"
-                            placeholder="Enter your Mobile" name="mobile"  onkeydown="return event.keyCode !==69"/>
-                        {{!-- <label class="form-label" for="form3Example3">Email address</label> --}}
-                    </div>
+<style>
+     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
-                    <!-- Password input -->
-                    <div class="form-outline mb-3">
-                        <input type="password" id="" class="form-control form-control-lg" placeholder="Enter password"
-                            name="password" />
-                        {{!-- <label class="form-label" for="form3Example4">Password</label> --}}
-                    </div>
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     font-family: 'Poppins', sans-serif
+ }
 
-                    <div class="d-flex justify-content-between align-items-center">
-                        <!-- Checkbox -->
-                        {{!-- <div class="form-check mb-0">
-                            <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
-                            <label class="form-check-label" for="form2Example3">
-                                Remember me
-                            </label>
-                        </div> --}}
-                        <a href="/forgot" class="text-body">Forgot password?</a>
-                    </div>
-                    {{#if loginErr}}
+ body {
+     background: #ffffff
+ }
+
+ .wrapper {
+     max-width: 350px;
+     min-height: 500px;
+     margin: 80px auto;
+     padding: 40px 30px 30px 30px;
+     background-color: #ecf0f3;
+     border-radius: 15px;
+     box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #fff
+ }
+
+ .logo {
+     width: 80px;
+     margin: auto
+ }
+
+ .logo img {
+     width: 100%;
+     height: 80px;
+     object-fit: cover;
+     border-radius: 50%;
+     box-shadow: 0px 0px 3px #5f5f5f, 0px 0px 0px 5px #ecf0f3, 8px 8px 15px #a7aaa7, -8px -8px 15px #fff
+ }
+
+ .wrapper .name {
+     font-weight: 600;
+     font-size: 1.4rem;
+     letter-spacing: 1.3px;
+     padding-left: 10px;
+     color: #555
+ }
+
+ .wrapper .form-field input {
+     width: 100%;
+     display: block;
+     border: none;
+     outline: none;
+     background: none;
+     font-size: 1.2rem;
+     color: #666;
+     padding: 10px 15px 10px 10px
+ }
+
+ .wrapper .form-field {
+     padding-left: 10px;
+     margin-bottom: 20px;
+     border-radius: 20px;
+     box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #fff
+ }
+
+ .wrapper .form-field .fas {
+     color: #555
+ }
+
+ .wrapper .btn {
+     box-shadow: none;
+     width: 100%;
+     height: 40px;
+     background-color: #03A9F4;
+     color: #fff;
+     border-radius: 25px;
+     box-shadow: 3px 3px 3px #b1b1b1, -3px -3px 3px #fff;
+     letter-spacing: 1.3px
+ }
+
+ .wrapper .btn:hover {
+     background-color: #039BE5
+ }
+
+ .wrapper a {
+     text-decoration: none;
+     font-size: 0.8rem;
+     color: #03A9F4
+ }
+
+ .wrapper a:hover {
+     color: #039BE5
+ }
+
+ @media(max-width: 380px) {
+     .wrapper {
+         margin: 30px 20px;
+         padding: 40px 15px 15px 15px
+     }
+ }
+</style>
+
+
+
+
+
+<div class="wrapper">
+    <div class="logo"> <img src="https://conceptdraw.com/a155c4/p78/preview/640/pict--e-commerce-cloud-round-icons-vector-stencils-library" alt=""> </div>
+    <div class="text-center mt-4 name"> E-BUY </div>
+    <form class="p-3 mt-3" action="/login" method="post" id="login">
+        <div class="form-field d-flex align-items-center"> <span class="far fa-user"></span> <input type="number" name="mobile" id="userName" placeholder="Mobile" onkeydown="return event.keyCode !==69"> </div>
+        <div class="form-field d-flex align-items-center"> <span class="fas fa-key"></span> <input type="password" name="password" id="pwd" placeholder="Password"> </div>
+         {{#if loginErr}}
                     <p class="text-danger text-center pt-4">
                         Invailed Email or password
                     </p>
 
                     {{/if}}
-                    {{!-- {{#if blockerr}}
-                     <p class="text-danger text-center pt-4">
-                       User blocked By Admin
-                    </p>
-                    {{/if}} --}}
-
-
-
-                    <div class="text-center text-lg-start mt-4 pt-2">
-                        <button type="submit" class="btn btn-primary btn-lg"
-                            style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
-                        <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/signup" class="link-danger">Register</a></p>
-
-                        <p class="small fw-bold mt-2 pt-1 mb-0">?<a href="/verifyMobile" class="link-danger">Login with OTP</a></p>
-                        
-                         </div>
-
-                </form>
-            </div>
-        </div>
-    </div>
-    {{!-- <div
-        class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
-        <!-- Copyright -->
-        <div class="text-white mb-3 mb-md-0">
-            Copyright © 2020. All rights reserved.
-        </div>
-        <!-- Copyright -->
-
-        <!-- Right -->
-        <div>
-            <a href="#!" class="text-white me-4">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="#!" class="text-white me-4">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#!" class="text-white me-4">
-                <i class="fab fa-google"></i>
-            </a>
-            <a href="#!" class="text-white">
-                <i class="fab fa-linkedin-in"></i>
-            </a>
-        </div>
-        <!-- Right -->
-    </div> --}}
-</section>
+         <button class="btn mt-3">Login</button>
+    </form>
+    <div class="text-center fs-6"> <a href="/verifyMobile">Login with OTP</a> or <a href="/signup">Sign up</a> </div>
+</div>
 
 <style>
 .error{
