@@ -28,6 +28,12 @@
 			font-size: 3.5rem;
 		}
 	}
+
+	@media(max-width: 600px) {
+		.row {
+			margin-top: 2rem !important;
+		}
+	}
 </style>
 <!-- Custom styles for this template -->
 <link href="form-validation.css" rel="stylesheet">
@@ -56,7 +62,7 @@
 					<strong>Rs:{{total}}</strong>
 				</li>
 			</ul>
-		
+
 		</div>
 		{{#each address}}
 		<div class="col-sm-6 mb-3">
@@ -88,14 +94,16 @@
 				<div class="row">
 					<div class="col-sm-6 mb-3">
 						<label for="firstName">First name</label>
-						<input type="text" class="form-control" id="firstName" name="FirstName" placeholder="" value="" required>
+						<input type="text" class="form-control" id="firstName" name="FirstName" placeholder="" value=""
+							required>
 						<div class="invalid-feedback">
 							Valid first name is required.
 						</div>
 					</div>
 					<div class="col-sm-6 mb-3">
 						<label for="lastName">Last name</label>
-						<input type="text" class="form-control" id="LastName" name="LastName" placeholder="" value="" required>
+						<input type="text" class="form-control" id="LastName" name="LastName" placeholder="" value=""
+							required>
 						<div class="invalid-feedback">
 							Valid last name is required.
 						</div>
@@ -259,7 +267,7 @@
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-	crossorigin="anonymous"></script> 
+	crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
 
 
@@ -268,7 +276,7 @@
 
 <script>
 	$('#checkout-form').submit((e) => {
-		
+
 
 		e.preventDefault()
 
@@ -286,7 +294,7 @@
 					location.href = "/order-success"
 				} else if (response.razorpay) {
 
-					
+
 					razorpayPayment(response.resp)
 
 
@@ -300,9 +308,9 @@
 
 
 	})
-                     
+
 	function razorpayPayment(order) {
-		
+
 		var options = {
 
 			"key": 'rzp_test_zWnKlXAtmeUJqs', // Enter the Key ID generated from the Dashboard
@@ -310,26 +318,26 @@
 			"currency": "INR",
 			"name": "E-BUY",
 			"description": "Test Transaction",
-			
-		"order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+
+			"order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
 			"handler": function (response) {
 				verifyPayment(response, order)
 
 			},
-		"prefill": {
-			"name": "Gaurav Kumar",
+			"prefill": {
+				"name": "Gaurav Kumar",
 				"email": "gaurav.kumar@example.com",
-					"contact": "9999999999"
-		},
-		"notes": {
-			"address": "Razorpay Corporate Office"
-		},
-		"theme": {
-			"color": "#3399cc"
-		}
-	};
-	var rzp1 = new Razorpay(options)
-	rzp1.open();
+				"contact": "9999999999"
+			},
+			"notes": {
+				"address": "Razorpay Corporate Office"
+			},
+			"theme": {
+				"color": "#3399cc"
+			}
+		};
+		var rzp1 = new Razorpay(options)
+		rzp1.open();
 
 	}
 	function verifyPayment(payment, order) {
@@ -342,7 +350,7 @@
 				payment,
 				order
 			},
-			
+
 			success: (response) => {
 				if (response.status) {
 					location.href = "/order-success"
@@ -357,13 +365,13 @@
 {{!-- coupen start --}}
 <script>
 	function couponApply() {
-		
+
 		let couponCode = document.getElementById('couponInput').value
-		
+
 		let couponTotal = document.getElementById('couponTotal').value
-		
+
 		$.ajax({
-			
+
 			url: '/couponSubmit',
 			data: {
 				couponCode,

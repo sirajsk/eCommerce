@@ -201,153 +201,240 @@
 		color: #a75d54;
 	}
 </style>
-<div class="container bootdey" style="margin-top: 10rem;">
-	<div class="row bootstrap snippets">
-		<!-- Cart -->
-		<div class="col-lg-9 col-md-9 col-sm-12">
-			<div class="col-lg-12 col-sm-12 mb-3">
-				<h3 class="title">SHOPPING CART</h3>
-			</div>
-
-			{{!-- {{#if cartCount===0}} --}}
-
-
-			{{!-- NO item --}}
 
 
 
+{{!-- =---------------- --}}
+<style>
+	.title {
+		margin-bottom: 5vh
+	}
 
-			{{!-- {{else}} --}}
-			<div class="col-lg-12 col-sm-12 hero-feature">
-				<div class="table-responsive shadow-sm">
-					<table class="table table-bordered tbl-cart">
-						<thead>
-							<tr>
-								<th class="hidden-xs">Image</th>
-								<th>Product Name</th>
+	.card {
+		margin: auto;
+		max-width: 950px;
+		width: 90%;
+		box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		border-radius: 1rem;
+		border: transparent
+	}
 
-								<th class="td-qty">Quantity</th>
-								<th> Price</th>
-								<th>Sub Total</th>
-								<th>Remove</th>
+	@media(max-width:767px) {
+		.card {
+			margin: 3vh auto
+		}
+	}
 
-							</tr>
-						</thead>
-						<tbody>
+	.cart {
+		background-color: #fff;
+		padding: 4vh 5vh;
+		border-bottom-left-radius: 1rem;
+		border-top-left-radius: 1rem
+	}
 
-							{{#each products}}
-							<tr>
-								<td class="hidden-xs">
-									<a href="/product-detail/{{this._id}}">
-										<img src="/product-images/{{this.product._id}}a.jpg"
-											alt="Age Of Wisdom Tan Graphic Tee" title="" width="47" height="47">
-									</a>
-								</td>
-								<td>
-									<a><href=" /product-detail/{{this._id}}">{{this.product.Name}}</a>
-								</td>
+	@media(max-width:767px) {
+		.cart {
+			padding: 4vh;
+			border-bottom-left-radius: unset;
+			border-top-right-radius: 1rem
+		}
+	}
+
+	.summary {
+		background-color: #ddd;
+		border-top-right-radius: 1rem;
+		border-bottom-right-radius: 1rem;
+		padding: 4vh;
+		color: rgb(65, 65, 65)
+	}
+
+	@media(max-width:767px) {
+		.summary {
+			border-top-right-radius: unset;
+			border-bottom-left-radius: 1rem
+		}
+	}
+
+	@media(max-width: 600px) {
+		.card {
+			margin-top: 2rem !important;
+		}
+	}
+
+	.summary .col-2 {
+		padding: 0
+	}
+
+	.summary .col-10 {
+		padding: 0
+	}
+
+	.row {
+		margin: 0
+	}
+
+	.title b {
+		font-size: 1.5rem
+	}
+
+	.main {
+		margin: 0;
+		padding: 2vh 0;
+		width: 100%
+	}
+
+	.col-2,
+	.col {
+		padding: 0 1vh
+	}
+
+	a {
+		padding: 0 1vh
+	}
+
+	.close {
+		margin-left: auto;
+		font-size: 0.7rem
+	}
+
+	img {
+		width: 3.5rem
+	}
+
+	.back-to-shop {
+		margin-top: 4.5rem
+	}
+
+	h5 {
+		margin-top: 4vh
+	}
+
+	hr {
+		margin-top: 1.25rem
+	}
+
+	form {
+		padding: 2vh 0
+	}
+
+	select {
+		border: 1px solid rgba(0, 0, 0, 0.137);
+		padding: 1.5vh 1vh;
+		margin-bottom: 4vh;
+		outline: none;
+		width: 100%;
+		background-color: rgb(247, 247, 247)
+	}
+
+	input {
+		border: 1px solid rgba(0, 0, 0, 0.137);
+		padding: 1vh;
+		margin-bottom: 4vh;
+		outline: none;
+		width: 100%;
+		background-color: rgb(247, 247, 247)
+	}
+
+	input:focus::-webkit-input-placeholder {
+		color: transparent
+	}
 
 
-								<td>
-									<div class="input-group bootstrap-touchspin">
-										<button class="btn btn-default bootstrap-touchspin-down" type="button"
-											style="border-radius: 10px; border: solid #dddd;" id="{{this._id}}a"
-											onclick="ChangeQty('{{this._id}}','{{this.product._id}}','{{../user._id}}',-1)">-</button>
+	a {
+		color: black
+	}
 
-										<span class="text-center pt-2" id="{{this.product._id}}"
-											style="border-radius: 10px; border: solid #dddd; width: 2rem;">{{this.qty}}</span>
-										<button class="btn btn-default bootstrap-touchspin-up" type="button"
-											style="border-radius: 10px; border: solid #dddd;"
-											onclick="ChangeQty('{{this._id}}','{{this.product._id}}','{{../user._id}}',1)">+</button>
-									</div>
-								</td>
-									
-								<td class="price mt-4">{{this.product.Price}}</td>
-								<td>
-									 <div class="">
-                                        <span class=" text-center" id="subTotals{{this.product._id}}">
-                                            {{this.subtotal}}
-                                        </span>
-                                    </div>
-								</td>
-								<td class="text-center  ">
-									<button onclick="deleteProCart('{{this._id}}','{{this.product._id}}')"
-										class="remove_cart 	" rel="2">
-										<i class="fa fa-trash-o "></i>
-									</button>
-								</td>
+	a:hover {
+		color: black;
+		text-decoration: none
+	}
 
-							</tr>
+	#code {
+		background-image: linear-gradient(to left, rgba(255, 255, 255, 0.253), rgba(255, 255, 255, 0.185)), url("https://img.icons8.com/small/16/000000/long-arrow-right.png");
+		background-repeat: no-repeat;
+		background-position-x: 95%;
+		background-position-y: center
+	}
 
-							{{/each}}
-
-
-
-						</tbody>
-					</table>
-				</div>
-				<div class="btn-group btns-cart mt-4 ">
-					<a href="/" type="button" class="btn btn-primary"><i class="fa fa-arrow-circle-left"></i>
-						Continue Shopping</a>
-
-					<a href="/checkout" type="button" class="btn btn-primary ml-3">Checkout <i
-							class="fa fa-arrow-circle-right"></i></a>
-				</div>
-
-			</div>
-		</div>
-		<!-- End Cart -->
-
-		{{!-- {{/if}} --}}
-
-		<div class="col-lg-3 col-md-3 col-sm-12 ">
-			<!-- Best Seller -->
-			<div class="col-lg-12 col-md-12 col-sm-12 hidden-xs shadow-lg"
-				style="background-color: seashell !important;">
-				<div class="no-padding">
-					<h3 class="title pt-3 pb-5">CART TOTAL</h3>
-				</div>
-				<div class="thumbnail col-lg-12 col-md-12 col-sm-6 text-center">
-
-					<div class="caption prod-caption" style="text-align: left;">
-						{{#each products}}
-						<p><strong href="#">{{product.Name}} </strong> : Rs: {{product.Price}}</p>
-						<p></p>
-						{{/each}}
-						<div class="btn-group pb-5">
-							<a href="#" class="btn btn-default">
-								<h4>Total:<span id="total">{{totals}}</span></h4>
-							</a>
-						</div>
-						<p></p>
+	,
+</style>
+<div class="card" style="margin-top: 7rem;">
+	<div class="row">
+		<div class="col-md-8 cart">
+			<div class="title">
+				<div class="row">
+					<div class="col">
+						<h4><b>Shopping Cart</b></h4>
 					</div>
+					<div class="col align-self-center text-right text-muted">3 items</div>
 				</div>
-
 			</div>
-			<!-- End Best Seller -->
+			{{#each products}}
+			<div class="row border-top border-bottom">
+				<div class="row main align-items-center">
+					<div class="col-2"><img class="img-fluid" src="/product-images/{{this.product._id}}a.jpg"></div>
+					<div class="col">
+						<div class="row text-muted pb-3">Name</div>
+						<div class="row pb-3">{{this.product.Name}}</div>
+						<div class="row">Rs: {{this.product.Price}}</div>
+					</div>
+					<div class="d-flex flex-col ">
+						
+							<button class="btn btn-default bootstrap-touchspin-down" type="button"
+								style="border-radius: 10px; border: solid #dddd;" id="{{this._id}}a"
+								onclick="ChangeQty('{{this._id}}','{{this.product._id}}','{{../user._id}}',-1)">-</button>
+							
+							<span class="text-center pt-2" id="{{this.product._id}}"
+								style="border-radius: 10px; border: solid #dddd; width: 2.5rem;">{{this.qty}}</span>
+
+						
+							<button class="btn btn-default bootstrap-touchspin-up" type="button"
+								style="border-radius: 10px; border: solid #dddd;"
+								onclick="ChangeQty('{{this._id}}','{{this.product._id}}','{{../user._id}}',1)">+</button>
+
+
+					</div>
+
+					<div class="col pl-5"> <span class=" text-center" id="subTotals{{this.product._id}}">
+							{{this.subtotal}}
+						</span></div>
+					<button onclick="deleteProCart('{{this._id}}','{{this.product._id}}')" class="remove_cart 	"
+						rel="2">
+						<i class="fa fa-trash-o "></i>
+					</button>
+				</div>
+			</div>
+			{{/each}}
+	
+		</div>
+		<div class="col-md-4 summary">
+			<div>
+				<h5><b>Summary</b></h5>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col pb-3" style="padding-left:0;">ITEMS {{cartCount}}</div>
+				{{!-- <div class="col text-rightpb-3">&euro; 132.00</div> --}}
+			</div>
+			{{!-- <form> --}}
+				<p class="pb-3">SHIPPING</p>
+				{{#each products}}
+				<p class="pb-3"><strong href="#">{{product.Name}} </strong> : Rs: {{product.Price}}</p>
+				<p></p>
+				{{/each}}
+				{{!--
+			</form> --}}
+			<div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+				<div class="col">TOTAL PRICE</div>
+				<div class="col text-right"><span id="total">Rs:{{totals}}</span></div>
+			</div> <a href="/checkout" type="button" class="btn btn-dark">CHECKOUT</a>
 		</div>
 	</div>
 </div>
-
-
-
-
-<!-- Back to top -->
-<div class="btn-back-to-top" id="myBtn">
-	<span class="symbol-btn-back-to-top">
-		<i class="zmdi zmdi-chevron-up"></i>
-	</span>
-</div>
-
-
-
-</div>
-
-
-
+{{!-- =------ --}}
 <script>
 	function ChangeQty(cartId, proId, userId, count) {
-		
+
 		let qty = parseInt(document.getElementById(proId).innerHTML)
 
 		count = parseInt(count)
@@ -365,14 +452,14 @@
 			method: 'post',
 			success: (response) => {
 				if (response.removeProduct) {
-					document.getElementById(proId+'a').disabled = true;
-					
+					document.getElementById(proId + 'a').disabled = true;
+
 				} else {
 
 
 					document.getElementById(proId).innerHTML = qty + count
 					document.getElementById('total').innerHTML = response.total
-					document.getElementById('subTotals'+proId).innerHTML = response.subTotal
+					document.getElementById('subTotals' + proId).innerHTML = response.subTotal
 
 
 

@@ -3,9 +3,10 @@
 <!DOCTYPE html>
 <html>
 
+  
+
+
 <head>
-
-
 
   <title>{{title}}</title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
@@ -57,9 +58,7 @@
   <link rel="stylesheet" type="text/css" href="/stylesheets/util.css">
   <link rel="stylesheet" type="text/css" href="/stylesheets/home.css">
 
-
-
-  {{#if login}}
+{{#if login}}
   {{>login-header}}
   {{else}}
   {{#if signup}}
@@ -68,6 +67,7 @@
   {{>user-header}}
   {{/if}}
   {{/if}}
+</head>
 
   {{{body}}}
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
