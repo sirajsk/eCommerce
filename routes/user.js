@@ -878,7 +878,7 @@ router.post('/delete-wish-item', (req, res) => {
   })
 })
 router.get('/test',(req,res)=>{
-  res.render('users/test1',{Isuser:true,login: true})
+  res.render('users/test444',{Isuser:true,login: true})
 })
     
 

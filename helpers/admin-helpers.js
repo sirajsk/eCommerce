@@ -443,7 +443,6 @@ module.exports = {
             ]).toArray()
             let Pendinglen = Pending.length
             status.push(Pendinglen)
-
             let Placed = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
                 {
                     $match: {
@@ -484,15 +483,8 @@ module.exports = {
             ]).toArray()
             let Cancelledlen = Cancelled.length
             status.push(Cancelledlen)
-
             resolve(status)
-
-
-
-
-
         })
-
     },
     CategoryOffer: ((data) => {
         console.log(data);
