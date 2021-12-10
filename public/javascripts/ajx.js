@@ -16,21 +16,24 @@ function addTocart(proId) {
 
   $.ajax({
 
-    // console.log(pro);
+   
     url: "/add-to-cart/" + proId,
     method: 'get',
     success: (response) => {
 
-      Toast.fire({
-        icon: 'success',
-        title: 'Added to cart'
-      })
+     
       if (response.status) {
         let count = $('#cart-count').html()
         count = parseInt(count) + 1
         $('#cart-count').html(count)
         $('#cart-countMobile').html(count)
+        Toast.fire({
+          icon: 'success',
+          title: 'Added to cart'
+        })
        
+      }else{
+        location.replace('/login')
       }
 
     }
@@ -43,13 +46,15 @@ function addTowish(proId) {
     url: "/add-to-Wish/" + proId,
     method: 'get',
     success: (response) => {
-      Toast.fire({
-        icon: 'success',
-        title: 'Added to Wishlist'
-      })
+     
       if (response.status) {
-        
+        Toast.fire({
+          icon: 'success',
+          title: 'Added to Wishlist'
+        })
         console.log('hhhhh');
+      }else{
+        location.replace('/login')
       }
 
     }

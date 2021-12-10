@@ -184,9 +184,11 @@ router.post('/otp', (req, res) => {
 
 })
 // otp end
+
 // mobile otp starts
 
 router.get('/otpM', (req, res) => {
+
   res.render('users/otpMobile', { login: true, "logininvalid": req.session.inavlidloginOtp, Isuser: true })
 })
 router.post('/otpM', (req, res) => {
@@ -230,8 +232,9 @@ router.get('/verifyMobile', (req, res) => {
 })
 router.post('/verifyMobile', (req, res) => {
   No = req.body.mobile
-
-  userHelper.getUserdetails(No).then((user) => {
+  console.log(No);
+  Num=`+91${No}`
+  userHelper.getUserdetails(Num).then((user) => {
     if (user) {
 
       req.session.user = user
@@ -258,10 +261,6 @@ router.post('/verifyMobile', (req, res) => {
 })
 
 // mobile otp end
-
-
-
-
 
 // cart start 
 router.get('/cart', async function (req, res) {
@@ -295,24 +294,33 @@ router.get('/cart', async function (req, res) {
 
 });
 router.get('/add-to-cart/:id', (req, res) => {
-  console.log('on add to cart')
- 
-  userHelper.addToCart(req.params.id, req.session.user._id).then(() => {
+  if(req.session.user){
+    userHelper.addToCart(req.params.id, req.session.user._id).then(() => {
 
-    res.json({ status: true })
-  }).catch((err) => {
-    console.log(err);
-  })
+      res.json({ status: true })
+    }).catch((err) => {
+      console.log(err);
+    })
+  }else{
+    res.json({status:false})
+  }
+ 
+ 
 
 })
 router.get('/add-to-Wish/:id', (req, res) => {
-  // console.log('hiiiiiiii');
-  userHelper.addToWish(req.params.id, req.session.user._id).then(() => {
+  if(req.session.user){
+    userHelper.addToWish(req.params.id, req.session.user._id).then(() => {
 
-    res.json({ status: true })
-  }).catch((err) => {
-    console.log(err);
-  })
+      res.json({ status: true })
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+  else{
+    res.json({status:false})
+  }
+ 
 
 })
 
@@ -662,7 +670,7 @@ router.post('/verify-payment', (req, res) => {
 })
 router.get('/userProfile', async (req, res) => {
   id = req.session.user._id
-
+ 
   user = await userHelper.userProfile(id)
   let status = await userHelper.addressChecker(id)
   var address = null
@@ -674,11 +682,12 @@ router.get('/userProfile', async (req, res) => {
     let len = addr.length
     address = addr.slice(len - 2, len)
 
-
-    res.render('users/userProfile', { Isuser: true, user, address })
+    cartCount = await userHelper.getCartCount(id)
+    res.render('users/userProfile', { Isuser: true,cartCount, user, address })
 
   } else {
-    res.render('users/userProfile', { Isuser: true, user })
+    cartCount = await userHelper.getCartCount(id)
+    res.render('users/userProfile', { Isuser: true,cartCount, user })
   }
 
 
@@ -741,12 +750,17 @@ router.get('/cancelled/:id', (req, res) => {
 })
 router.get('/SingleCheckout/:id', async (req, res) => {
   let user = req.session.user
-  let uId = req.session.user._id
-  let id = req.params.id
-  let PRODUCT = await userHelper.getSingleProduct(id)
-  console.log(PRODUCT);
-  let address = await userHelper.getUserAddress(uId)
-  res.render('users/Single-checkout', { Isuser: true, PRODUCT, user, address })
+  if(user){
+    let uId = req.session.user._id
+    let id = req.params.id
+    let PRODUCT = await userHelper.getSingleProduct(id)
+    console.log(PRODUCT);
+    let address = await userHelper.getUserAddress(uId)
+    res.render('users/Single-checkout', { Isuser: true, PRODUCT, user, address })
+  }else{
+    res.redirect('/login')
+  }
+ 
 })
 
 router.post('/placeSingle-order', async (req, res) => {
@@ -842,15 +856,26 @@ router.get('/success', (req, res) => {
 
 })
 router.get('/wishlist', async (req, res) => {
+
   user = req.session.user
-  userId = req.session.user._id
-  products = await userHelper.getWishListPro(userId)
-  WishCount = await userHelper.getWislistCount(userId)
-  if(WishCount<=0){
-    res.render('users/emptyWish',{ Isuser: true, user })
+  if(user){
+    userId = req.session.user._id
+
+    products = await userHelper.getWishListPro(userId)
+    WishCount = await userHelper.getWislistCount(userId)
+    if(WishCount<=0){
+      cartCount = await userHelper.getCartCount(userId)
+      res.render('users/emptyWish',{ Isuser: true,cartCount, user })
+    }else{
+     
+      cartCount = await userHelper.getCartCount(userId)
+      res.render('users/wish-list', { Isuser: true, user,cartCount, products })
+    }
+   
+  }else{
+    res.redirect('/login')
   }
-  console.log(products);
-  res.render('users/wish-list', { Isuser: true, user, products })
+ 
 })
 
 // router.get('detail-product/:id',(req,res)=>{
@@ -858,7 +883,7 @@ router.get('/wishlist', async (req, res) => {
 // })
 // coupen start
 router.post('/couponSubmit', (req, res) => {
-  console.log('fdfdfdfdfdfdf');
+
   userHelper.couponValidate(req.body).then((response) => {
 
     req.session.Ctotal = response.total
