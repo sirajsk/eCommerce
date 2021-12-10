@@ -235,6 +235,23 @@ module.exports = {
         })
 
     },
+    getWislistCount:(userId)=>{
+        return new Promise(async (resolve, reject) => {
+
+            let count = 0
+            let Wish = await db.get().collection(collection.WISH_LIST).findOne({ user: objectId(userId) })
+            if (Wish) {
+
+                count = Wish.product.length
+                console.log(count);
+            } else {
+                console.log('test');
+            }
+
+            resolve(count)
+        })
+
+    },
     changeProductCount: (detailes) => {
         count = parseInt(detailes.count)
         qty = parseInt(detailes.qty)
@@ -518,6 +535,26 @@ module.exports = {
             resolve(orders)
         })
     },
+    // getOrderstatus:(Id)=>{
+    //     return new Promise(async(resolve,reject)=>{
+    //         let Status=await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+    //             {
+    //                 $match:{
+    //                     User:Id
+    //                 }
+    //             },
+    //             {
+    //                 $project:{
+    //                     _id:null,
+    //                     Status:'$Status'
+    //                 }
+    //             }
+    //         ]).toArray()
+    //         console.log(Status,'status---------')
+    //         resolve(Status)
+    //     })
+
+    // },
     // stockChanger: (orderId) => {
     //     return new Promise(async (resolve, reject) => {
     //         let prod = await db.get().collection(collection.ORDER_COLLECTION).aggregate([

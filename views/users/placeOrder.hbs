@@ -72,7 +72,7 @@
 					<p class="card-text">{{this.House}},{{this.Town}} -
 						{{this.PIN}},',{{this.House}},{{this.Street}},{{this.Town}}<br></p>
 					<button class="btn btn-success"
-						onclick="autoFill('{{this.FirstName}}','{{this.LastName}}','{{this.House}}','{{this.Street}}','{{this.Town}}','{{this.PIN}}')">Auto
+						onclick="autoFill('{{this.FirstName}}','{{this.LastName}}','{{this.House}}','{{this.Street}}','{{this.Town}}','{{this.Mobile}}','{{this.PIN}}')">Auto
 						Fill</button>
 				</div>
 			</div>
@@ -245,19 +245,30 @@
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-	function autoFill(fname, lname, house, street, town, pin) {
-		Swal.fire({
-			position: 'top-end',
+	const Toast = Swal.mixin({
+		toast: true,
+		position: 'bottom-start',
+		showConfirmButton: false,
+		timer: 3000,
+		timerProgressBar: true,
+		didOpen: (toast) => {
+			toast.addEventListener('mouseenter', Swal.stopTimer)
+			toast.addEventListener('mouseleave', Swal.resumeTimer)
+		}
+	})
+
+	function autoFill(fname, lname, house, street, town,Mobile, pin) {
+
+		Toast.fire({
 			icon: 'success',
-			title: 'Form auto filled',
-			showConfirmButton: false,
-			timer: 1500
+			title: 'Auto filled successfully'
 		})
 		document.getElementById('firstName').value = fname
 		document.getElementById('LastName').value = lname
 		document.getElementById('House').value = house
 		document.getElementById('Street').value = street
 		document.getElementById('Town').value = town
+		document.getElementById('Mobile').value = Mobile
 		document.getElementById('PIN').value = pin
 
 	}

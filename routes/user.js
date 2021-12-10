@@ -269,12 +269,15 @@ router.get('/cart', async function (req, res) {
   if (req.session.user) {
     let id = req.session.user._id
     let user = req.session.user
-    // let Subtotal=await userHelper.getSubTotal(id)
+   
     let totals = await userHelper.getTotalAmount(id)
 
 
 
     cartCount = await userHelper.getCartCount(id)
+    
+    
+
 
     let products = await userHelper.getCartProducts(req.session.user._id)
     console.log(products);
@@ -292,7 +295,8 @@ router.get('/cart', async function (req, res) {
 
 });
 router.get('/add-to-cart/:id', (req, res) => {
-
+  console.log('on add to cart')
+ 
   userHelper.addToCart(req.params.id, req.session.user._id).then(() => {
 
     res.json({ status: true })
@@ -609,15 +613,20 @@ router.get('/orders', async (req, res) => {
     let Id = req.session.user._id
     cartCount = await userHelper.getCartCount(Id)
   }
-  userHelper.getUserOrders(id).then((orders) => {
-    let Deliverd = false
-    console.log(orders);
+  userHelper.getUserOrders(id).then(async(orders) => {
+    // let id = req.session.user._id
     let len = orders.length
-    if (orders.Status === "Delivered") {
-      Deliverd = true
+  //  let  Status=await userHelper.getOrderstatus(id)
+  //  console.log(Status);
+    if (orders.Status =='Delivered') {
+     let Delivered = true
+      res.render('users/user-orders', { Isuser: true, orders, cartCount, user, Delivered })
+    }else{
+      let Delivered = false
+      res.render('users/user-orders', { Isuser: true, orders, cartCount, user, Delivered })
     }
 
-    res.render('users/user-orders', { Isuser: true, orders, cartCount, user, Deliverd })
+    
   })
 
 
@@ -632,6 +641,7 @@ router.get('/singleOrder/:id', async (req, res) => {
     cartCount = await userHelper.getCartCount(Id)
   }
   adminHelpers.getOrderProducts(oId).then((products) => {
+    console.log(products);
     res.render('users/single-orders', { Isuser: true, products, user, cartCount })
   })
 })
@@ -835,6 +845,10 @@ router.get('/wishlist', async (req, res) => {
   user = req.session.user
   userId = req.session.user._id
   products = await userHelper.getWishListPro(userId)
+  WishCount = await userHelper.getWislistCount(userId)
+  if(WishCount<=0){
+    res.render('users/emptyWish',{ Isuser: true, user })
+  }
   console.log(products);
   res.render('users/wish-list', { Isuser: true, user, products })
 })

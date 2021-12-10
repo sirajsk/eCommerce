@@ -364,6 +364,7 @@ router.get('/delivered/:id', (req, res) => {
   })
 })
 router.get('/cancelled/:id', (req, res) => {
+  
   status = 'Cancelled'
   adminHelper.changeOrderStatus(req.params.id, status).then(() => {
     res.redirect('/admin/orders')

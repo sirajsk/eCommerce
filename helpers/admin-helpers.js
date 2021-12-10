@@ -291,6 +291,7 @@ module.exports = {
             resolve(orders)
         })
     },
+    
     changeOrderStatus: (orderId, stat) => {
         return new Promise((resolve, reject) => {
             db.get().collection(collection.ORDER_COLLECTION).updateOne({ _id: objectId(orderId) }, {

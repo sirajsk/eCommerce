@@ -366,7 +366,7 @@
 					<div class="col">
 						<h4><b>Shopping Cart</b></h4>
 					</div>
-					<div class="col align-self-center text-right text-muted">3 items</div>
+					<div class="col align-self-center text-right text-muted">{{cartCount}}</div>
 				</div>
 			</div>
 			{{#each products}}
@@ -417,7 +417,7 @@
 				{{!-- <div class="col text-rightpb-3">&euro; 132.00</div> --}}
 			</div>
 			{{!-- <form> --}}
-				<p class="pb-3">SHIPPING</p>
+				<p class="pb-3">PRODUCTS</p>
 				{{#each products}}
 				<p class="pb-3"><strong href="#">{{product.Name}} </strong> : Rs: {{product.Price}}</p>
 				<p></p>
@@ -511,11 +511,7 @@
 						}
 					}
 				})
-				Swal.fire(
-					'Deleted!',
-					'Your file has been deleted.',
-					'success'
-				)
+				
 			}
 		})
 

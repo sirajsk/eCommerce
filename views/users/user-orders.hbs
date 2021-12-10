@@ -19,8 +19,9 @@
           <a class="btn btn-primary mt-2" href="/singleOrder/{{this._id}}">View products</a>
 
 
-          {{#if Deliverd}}
-          <a class="btn btn-primary mt-2">Cancel</a>
+          {{#if ../Delivered}}
+         
+          Deliverd
           {{else}}
           <a class="btn btn-primary mt-2" href="/cancelled/{{this._id}}">Cancel</a>
           {{/if}}
