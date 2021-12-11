@@ -495,6 +495,7 @@ router.get('/add-new-add', (req, res) => {
   let user = req.session.user
   res.render('users/add-new-add', { Isuser: true, user })
 })
+
 router.post('/addNewAddress', (req, res) => {
 
 
@@ -504,6 +505,21 @@ router.post('/addNewAddress', (req, res) => {
   })
 
 })
+router.get('/add-new-profile-add', (req, res) => {
+
+  let user = req.session.user
+  res.render('users/addProfileAddress', { Isuser: true, user })
+})
+router.post('/add-new-profile-add', (req, res) => {
+
+
+  userHelper.addNewAddress(req.body).then((response) => {
+
+    res.redirect('/userProfile')
+  })
+
+})
+
 router.post('/place-order', async (req, res) => {
   let id = req.session.user._id
   let products = await userHelper.getCartProductList(id)

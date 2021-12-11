@@ -57,7 +57,13 @@
   <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
   <link rel="stylesheet" type="text/css" href="/stylesheets/util.css">
   <link rel="stylesheet" type="text/css" href="/stylesheets/home.css">
-
+  <style>
+    @media(max-width: 600px) {
+		.mediaq {
+			margin-top: 2rem !important;
+		}
+	}
+  </style>
 {{#if login}}
   {{>login-header}}
   {{else}}
