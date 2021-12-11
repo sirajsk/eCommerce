@@ -807,7 +807,7 @@ router.post('/placeSingle-order', async (req, res) => {
         },
         "redirect_urls": {
           "return_url": "https://ebuy-store.online/success",
-          "cancel_url": "https://ebuy-store.online/cancelled"
+          "cancel_url": "https://ebuy-store.online/cancelled"   
         },
         "transactions": [{
           "item_list": {
