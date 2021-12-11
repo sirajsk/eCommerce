@@ -359,6 +359,7 @@ module.exports = {
     },
     getProfite: () => {
         return new Promise(async (resolve, reject) => {
+            let newTotal=0
             let total = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
                 {
                     $match: {
@@ -372,8 +373,16 @@ module.exports = {
                     }
                 }
             ]).toArray()
+           
 
-            resolve(total[0].total)
+            if(total[0]){
+                console.log(total)
+                resolve(total[0].total)
+              
+            }else{
+                resolve(newTotal)
+            }
+             
         })
     },
     latestProduct: () => {
