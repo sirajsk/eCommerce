@@ -806,8 +806,8 @@ router.post('/placeSingle-order', async (req, res) => {
           "payment_method": "paypal"
         },
         "redirect_urls": {
-          "return_url": "https://ebuy-store.online/success",
-          "cancel_url": "https://ebuy-store.online/cancelled"   
+          "return_url": "https://localhost:3000/success",
+          "cancel_url": "https://localhost:3000/cancelled"   
         },
         "transactions": [{
           "item_list": {
