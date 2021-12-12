@@ -119,9 +119,9 @@ module.exports = {
                         $pull:{
                             product:{item:objectId(proId)}
                         }
-                    }).then(()=>{
-                        console.log(response,'delete');
-                        resolve()
+                    }).then((response)=>{
+                        response.pulled=true
+                        resolve(response)
                     })
                    
                 }else{
@@ -130,33 +130,11 @@ module.exports = {
                     {
                         $push:{product:proObj}
                     }).then((response)=>{
-                        resolve()
+                        resolve(response)
                     })
                    
                 }
             
-
-
-
-
-
-
-
-
-                // proexist=await db.get().collection(collection.WISH_LIST).findOne({item:objectId(proId)})
-                // console.log(proexist,'proexist  ');
-                // if(proexist){
-
-                //     db.get().collection(collection.WISH_LIST).deleteOne({item:objectId(proId)}).then((response)=>{
-                //         console.log(response,'delete');
-                //         resolve()
-                //     })
-
-                // }else{
-                //     db.get().collection(collection.WISH_LIST).insertOne(proObj).then((response)=>{
-                //         resolve()
-                //     })
-                // } 
             }else{
 
                 let wishobj={
@@ -168,7 +146,7 @@ module.exports = {
 
 
                 db.get().collection(collection.WISH_LIST).insertOne(wishobj).then((response)=>{
-                    resolve()
+                    resolve(response)
                 })
             }
         })

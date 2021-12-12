@@ -53,6 +53,12 @@ function addTowish(proId) {
           title: 'Added to Wishlist'
         })
         console.log('hhhhh');
+      }else if(response.pulled){
+        Toast.fire({
+          icon: 'error',
+          title: 'removed from Wishlist'
+        })
+       
       }else{
         location.replace('/login')
       }

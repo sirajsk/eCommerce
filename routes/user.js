@@ -321,9 +321,14 @@ router.get('/add-to-cart/:id', (req, res) => {
 })
 router.get('/add-to-Wish/:id', (req, res) => {
   if(req.session.user){
-    userHelper.addToWish(req.params.id, req.session.user._id).then(() => {
-
-      res.json({ status: true })
+    userHelper.addToWish(req.params.id, req.session.user._id).then((response) => {
+      if(response.pulled){
+        console.log('pulled');
+        res.json({ pulled: true })
+      }else{
+        res.json({ status: true })
+      }
+     
     }).catch((err) => {
       console.log(err);
     })
