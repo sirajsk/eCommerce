@@ -150,9 +150,12 @@ router.get('/otp', (req, res) => {
 
 })
 router.post('/otp', (req, res) => {
-  let Lotp = Object.values(req.body.otp)
-  let a = Lotp.join('')
-  console.log(a);
+
+  // let Lotp = Object.values(req.body.otp)
+  // let a = Lotp.join('')
+  // console.log(a);
+  let a =req.body.otp
+
   let number = req.session.number
   console.log(number);
   client.verify
@@ -195,8 +198,8 @@ router.post('/otpM', (req, res) => {
 
 
 
-  let Lotp = Object.values(req.body.otp)
-  let a = Lotp.join('')
+  // let Lotp = Object.values(req.body.otp)
+  let a =req.body.otp
 
   let number = req.session.number
 
