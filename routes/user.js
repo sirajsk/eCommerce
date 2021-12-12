@@ -106,39 +106,50 @@ router.get('/signup', function (req, res) {
     res.redirect('/')
   }
   else {
-    res.render('users/user-signup', { signup: true, Isuser: true });
+    res.render('users/user-signup', { signup: true, Isuser: true ,"mobileExist":req.session.userExist});
+    req.session.userExist=false
   }
 
 });
 // otp start
 // signup post
 router.post('/signup', function (req, res) {
-  userHelper.dosignup(req.body).then((user) => {
+
+  let No=req.body.mobile
+  let Mobile=`+91${No}`
+  userHelper.getUserdetails(Mobile).then((user)=>{
+    if(user){
+      req.session.userExist=true
+      res.redirect('/signup')
+    }else{
+      userHelper.dosignup(req.body).then((user) => {
 
 
-    client.verify
-
-      .services(serviceSID)
-      .verifications.create({
-        to: `+91${req.body.mobile}`,
-        channel: "sms"
-      }).then((resp) => {
-        req.session.number = resp.to
-
-        // req.session.halflogIn=true
-        res.redirect('/otp');
-      }).catch((err) => {
-        console.log(err);
+        client.verify
+    
+          .services(serviceSID)
+          .verifications.create({
+            to: `+91${req.body.mobile}`,
+            channel: "sms"
+          }).then((resp) => {
+            req.session.number = resp.to
+    
+           
+            res.redirect('/otp');
+          }).catch((err) => {
+            console.log(err);
+          })
+    
       })
-
+    }
   })
+ 
 
 });
 
 
 router.get('/otp', (req, res) => {
-  // console.log('on otp');
-  // res.redirect('/')
+ 
   if (req.session.loggedIn) {
     res.redirect('/')
   } else {
@@ -151,11 +162,8 @@ router.get('/otp', (req, res) => {
 })
 router.post('/otp', (req, res) => {
 
-  // let Lotp = Object.values(req.body.otp)
-  // let a = Lotp.join('')
-  // console.log(a);
-  let a =req.body.otp
 
+  let a =req.body.otp
   let number = req.session.number
   console.log(number);
   client.verify
