@@ -904,7 +904,24 @@ module.exports = {
                     resolve({ removeProduct: true })
                 })
         })
-    }
+    },
+    setPassword: (number, firstPw) => {
+        console.log(number,firstPw);
+        return new Promise(async(resolve, reject) => {
+            firstPw = await bcrypt.hash(firstPw, 10)
+            db.get().collection(collection.USER_COLLECTION).updateOne({ mobile:number }, {
+
+                $set: {
+                    password:firstPw
+                }
+
+
+            }).then((response) => {
+                console.log(response);
+                resolve(response)
+            })
+        })
+    },
 
 
 

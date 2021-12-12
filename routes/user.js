@@ -402,31 +402,58 @@ router.get('/resendlogin-otp', (req, res) => {
 })
 
 // forgot start
-router.get('/forgotOTP', (req, res) => {
-  res.render('users/forgotOTP', { login: true, Isuser: true })
+router.get('/forgotPw', (req, res) => {
+
+  res.render('users/forgotmobile', { login: true, Isuser: true,"Nouser": req.session.NoUser })
+  req.session.NoUser=false
 })
+
 router.post('/forgotOTP', (req, res) => {
 
-  res.redirect('/forgotOTP')
+  res.redirect('/resetP')
 
 })
 router.get('/resetP', (req, res) => {
-  res.render('users/resetPassword', { login: true, Isuser: true })
 
-})
-router.get('/forgot', (req, res) => {
+  res.render('users/resetPassword', { login: true, Isuser: true,"NotSame":req.session.Password })
+  req.session.Password=false
 
-  res.render('users/forgotP', { login: true, Isuser: true })
 })
 router.post('/resetP', (req, res) => {
-  res.redirect('/resetP')
+  let No=`+91${req.body.mobile}`
+  req.session.mobileNumber=No
+  userHelper.getUserdetails(No).then((user)=>{
+    if(user){
+      res.redirect('/resetP')
+    }else{
+      req.session.NoUser=true
+      res.redirect('/forgotPw')
+    }
+   
+  })
+ 
 
 })
 
 router.post('/forgotSubmit', (req, res) => {
-  res.redirect('/')
-})
+  console.log('onhere');
+  let number=req.session.mobileNumber
+  let firstPw=req.body.first
+  let  reEnterPw=req.body.second
+  if (firstPw===reEnterPw){
+    userHelper.setPassword(number,firstPw).then((response)=>{
+      console.log('on function');
+      res.redirect('/login')
+    })
 
+   
+  }
+  else{
+    req.session.Password=true
+    res.redirect('/resetP')
+  }
+ 
+})
 
 // forgot end
 
