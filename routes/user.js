@@ -541,7 +541,7 @@ router.post('/place-order', async (req, res) => {
       })
     } else {
       val = total / 74
-      total = val.toFixed(2)
+      total = val.toFixed(2) 
       req.session.total = total
       console.log(total);
       var create_payment_json = {
