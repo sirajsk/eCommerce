@@ -32,9 +32,15 @@ function addTocart(proId) {
           title: 'Added to cart'
         })
        
+      }else if(response.exist){
+        Toast.fire({
+          icon: 'success',
+          title: 'Already exist'
+        }) 
       }else{
         location.replace('/login')
       }
+      
 
     }
   })

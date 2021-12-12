@@ -22,7 +22,7 @@
             <label for="House">Mobile</label>
             <div class="input-group">
 
-                <input type="number" class="form-control" id="Mobile" name="mobile"  value="{{detailes.mobile}}" placeholder="Mobile" required>
+                <input type="text" class="form-control" id="Mobile" name="mobile"  onkeypress="return isNumber(event)"  value="{{detailes.mobile}}" placeholder="Mobile" required>
                 <div class="invalid-feedback" style="width: 100%;">
                     Your Mobile No is required.
                 </div>
@@ -55,3 +55,14 @@
 
     {{!-- {{/each}} --}}
 </div>
+
+<script>
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+</script>

@@ -306,9 +306,16 @@ router.get('/cart', async function (req, res) {
 });
 router.get('/add-to-cart/:id', (req, res) => {
   if(req.session.user){
-    userHelper.addToCart(req.params.id, req.session.user._id).then(() => {
+    userHelper.addToCart(req.params.id, req.session.user._id).then((response) => {
+      if(response.exist){
+        console.log('hi');
+        res.json({ exist: true })
+      }else{
+        console.log('jjjsdsds');
+        res.json({ status: true })
+      }
 
-      res.json({ status: true })
+     
     }).catch((err) => {
       console.log(err);
     })
@@ -777,14 +784,15 @@ router.get('/change-address', async (req, res) => {
 
   userId = req.session.user._id
   detailes = await userHelper.changeAddress(userId)
-  console.log(detailes);
+  
+  
 
   res.render('users/change-Address', { Isuser: true, detailes })
-})
+})  
 router.post('/change-address/:id', (req, res) => {
 
   id = req.params.id
-  adminHelper.updateUAddress(id, req.body).then((response) => {
+  adminHelper.updateUAddress(id, req.body).then((response) => {  
     res.redirect('/userProfile')
   })
 

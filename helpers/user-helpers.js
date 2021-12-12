@@ -77,15 +77,16 @@ module.exports = {
                     db.get().collection(collection.CART_COLLECTIONS).updateOne({ user: objectId(userId), 'product.item': objectId(proId) },
                         {
                             $inc: { 'product.$.qty': 1 }
-                        }).then(() => {
-                            resolve()
+                        }).then((response) => {
+                            response.exist=true
+                            resolve(response)
                         })
                 } else {
                     db.get().collection(collection.CART_COLLECTIONS).updateOne({ user: objectId(userId) },
                         {
                             $push: { product: proObj }
                         }).then((response) => {
-                            resolve()
+                            resolve(response)
                         })
                 }
 
@@ -95,7 +96,7 @@ module.exports = {
                     product: [proObj]
                 }
                 db.get().collection(collection.CART_COLLECTIONS).insertOne(cartObj).then((response) => {
-                    resolve()
+                    resolve(response)
                 })
             }
         })
