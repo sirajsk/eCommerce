@@ -62,7 +62,7 @@ router.get('/', async function (req, res, next) {
     // console.log(banner2);   
 
 
-    res.render('users/user-home', {  user, products, Isuser: true, cartCount, banner, banner2, Women, Men });
+    res.render('users/user-home', { user, products, Isuser: true, cartCount, banner, banner2, Women, Men });
   })
 
 
@@ -106,8 +106,8 @@ router.get('/signup', function (req, res) {
     res.redirect('/')
   }
   else {
-    res.render('users/user-signup', { signup: true, Isuser: true ,"mobileExist":req.session.userExist});
-    req.session.userExist=false
+    res.render('users/user-signup', { signup: true, Isuser: true, "mobileExist": req.session.userExist });
+    req.session.userExist = false
   }
 
 });
@@ -115,45 +115,45 @@ router.get('/signup', function (req, res) {
 // signup post
 router.post('/signup', function (req, res) {
 
-  let No=req.body.mobile
-  let Mobile=`+91${No}`
-  userHelper.getUserdetails(Mobile).then((user)=>{
-    if(user){
-      req.session.userExist=true
+  let No = req.body.mobile
+  let Mobile = `+91${No}`
+  userHelper.getUserdetails(Mobile).then((user) => {
+    if (user) {
+      req.session.userExist = true
       res.redirect('/signup')
-    }else{
+    } else {
       userHelper.dosignup(req.body).then((user) => {
 
 
         client.verify
-    
+
           .services(serviceSID)
           .verifications.create({
             to: `+91${req.body.mobile}`,
             channel: "sms"
           }).then((resp) => {
             req.session.number = resp.to
-    
-           
+
+
             res.redirect('/otp');
           }).catch((err) => {
             console.log(err);
           })
-    
+
       })
     }
   })
- 
+
 
 });
 
 
 router.get('/otp', (req, res) => {
- 
+
   if (req.session.loggedIn) {
     res.redirect('/')
   } else {
-  
+
     res.render('users/otp', { login: true, "invalidOtp": req.session.invalidOtp, Isuser: true })
     req.session.invalidOtp = false
   }
@@ -163,7 +163,7 @@ router.get('/otp', (req, res) => {
 router.post('/otp', (req, res) => {
 
 
-  let a =req.body.otp
+  let a = req.body.otp
   let number = req.session.number
   console.log(number);
   client.verify
@@ -174,11 +174,11 @@ router.post('/otp', (req, res) => {
     }).then(async (resp) => {
       if (resp.valid) {
         let user = await userHelper.getUserdetails(number)
-       
+
         req.session.loggedIn = true
         req.session.user = user
         res.redirect('/')
-        
+
 
       } else {
 
@@ -207,7 +207,7 @@ router.post('/otpM', (req, res) => {
 
 
   // let Lotp = Object.values(req.body.otp)
-  let a =req.body.otp
+  let a = req.body.otp
 
   let number = req.session.number
 
@@ -219,7 +219,7 @@ router.post('/otpM', (req, res) => {
     }).then(async (resp) => {
       if (resp.valid) {
         let user = await userHelper.getUserdetails(number)
-        console.log(user,'user----------------------------------------');
+        console.log(user, 'user----------------------------------------');
         req.session.loggedIn = true
         res.redirect('/')
         req.session.user = user
@@ -244,7 +244,7 @@ router.get('/verifyMobile', (req, res) => {
 router.post('/verifyMobile', (req, res) => {
   No = req.body.mobile
   console.log(No);
-  Num=`+91${No}`
+  Num = `+91${No}`
   userHelper.getUserdetails(Num).then((user) => {
     if (user) {
 
@@ -279,14 +279,14 @@ router.get('/cart', async function (req, res) {
   if (req.session.user) {
     let id = req.session.user._id
     let user = req.session.user
-   
+
     let totals = await userHelper.getTotalAmount(id)
 
 
 
     cartCount = await userHelper.getCartCount(id)
-    
-    
+
+
 
 
     let products = await userHelper.getCartProducts(req.session.user._id)
@@ -305,45 +305,45 @@ router.get('/cart', async function (req, res) {
 
 });
 router.get('/add-to-cart/:id', (req, res) => {
-  if(req.session.user){
+  if (req.session.user) {
     userHelper.addToCart(req.params.id, req.session.user._id).then((response) => {
-      if(response.exist){
+      if (response.exist) {
         console.log('hi');
         res.json({ exist: true })
-      }else{
+      } else {
         console.log('jjjsdsds');
         res.json({ status: true })
       }
 
-     
+
     }).catch((err) => {
       console.log(err);
     })
-  }else{
-    res.json({status:false})
+  } else {
+    res.json({ status: false })
   }
- 
- 
+
+
 
 })
 router.get('/add-to-Wish/:id', (req, res) => {
-  if(req.session.user){
+  if (req.session.user) {
     userHelper.addToWish(req.params.id, req.session.user._id).then((response) => {
-      if(response.pulled){
+      if (response.pulled) {
         console.log('pulled');
         res.json({ pulled: true })
-      }else{
+      } else {
         res.json({ status: true })
       }
-     
+
     }).catch((err) => {
       console.log(err);
     })
   }
-  else{
-    res.json({status:false})
+  else {
+    res.json({ status: false })
   }
- 
+
 
 })
 
@@ -416,8 +416,8 @@ router.get('/resendlogin-otp', (req, res) => {
 // forgot start
 router.get('/forgotPw', (req, res) => {
 
-  res.render('users/forgotmobile', { login: true, Isuser: true,"Nouser": req.session.NoUser })
-  req.session.NoUser=false
+  res.render('users/forgotmobile', { login: true, Isuser: true, "Nouser": req.session.NoUser })
+  req.session.NoUser = false
 })
 
 router.post('/forgotOTP', (req, res) => {
@@ -427,44 +427,44 @@ router.post('/forgotOTP', (req, res) => {
 })
 router.get('/resetP', (req, res) => {
 
-  res.render('users/resetPassword', { login: true, Isuser: true,"NotSame":req.session.Password })
-  req.session.Password=false
+  res.render('users/resetPassword', { login: true, Isuser: true, "NotSame": req.session.Password })
+  req.session.Password = false
 
 })
 router.post('/resetP', (req, res) => {
-  let No=`+91${req.body.mobile}`
-  req.session.mobileNumber=No
-  userHelper.getUserdetails(No).then((user)=>{
-    if(user){
+  let No = `+91${req.body.mobile}`
+  req.session.mobileNumber = No
+  userHelper.getUserdetails(No).then((user) => {
+    if (user) {
       res.redirect('/resetP')
-    }else{
-      req.session.NoUser=true
+    } else {
+      req.session.NoUser = true
       res.redirect('/forgotPw')
     }
-   
+
   })
- 
+
 
 })
 
 router.post('/forgotSubmit', (req, res) => {
   console.log('onhere');
-  let number=req.session.mobileNumber
-  let firstPw=req.body.first
-  let  reEnterPw=req.body.second
-  if (firstPw===reEnterPw){
-    userHelper.setPassword(number,firstPw).then((response)=>{
+  let number = req.session.mobileNumber
+  let firstPw = req.body.first
+  let reEnterPw = req.body.second
+  if (firstPw === reEnterPw) {
+    userHelper.setPassword(number, firstPw).then((response) => {
       console.log('on function');
       res.redirect('/login')
     })
 
-   
+
   }
-  else{
-    req.session.Password=true
+  else {
+    req.session.Password = true
     res.redirect('/resetP')
   }
- 
+
 })
 
 // forgot end
@@ -476,12 +476,12 @@ router.post('/change-product-quantity', (req, res) => {
   userHelper.changeProductCount(req.body).then(async (response) => {
     id = req.session.user._id
 
-    proId=req.body.product
+    proId = req.body.product
 
     response.total = await userHelper.getTotalAmount(id)
     response.subTotal = await userHelper.getSubTotal(id, proId)
 
-    console.log(response.subTotal,'res.res');
+    console.log(response.subTotal, 'res.res');
 
     res.json(response)
   })
@@ -521,6 +521,7 @@ router.get('/checkout', async (req, res) => {
     let Id = req.session.user._id
     cartCount = await userHelper.getCartCount(Id)
   }
+
   var address = null
   let status = await userHelper.addressChecker(req.session.user._id)
 
@@ -537,13 +538,20 @@ router.get('/checkout', async (req, res) => {
   } else {
     req.session.noCartPro = true
     res.redirect('/cart')
+
   }
 
-})
-router.get('/add-new-add', (req, res) => {
 
+})
+router.get('/add-new-add', async (req, res) => {
+
+  let cartCount = null
+  if (req.session.user) {
+    let Id = req.session.user._id
+    cartCount = await userHelper.getCartCount(Id)
+  }
   let user = req.session.user
-  res.render('users/add-new-add', { Isuser: true, user })
+  res.render('users/add-new-add', { Isuser: true, user, cartCount })
 })
 
 router.post('/addNewAddress', (req, res) => {
@@ -555,10 +563,14 @@ router.post('/addNewAddress', (req, res) => {
   })
 
 })
-router.get('/add-new-profile-add', (req, res) => {
-
+router.get('/add-new-profile-add', async (req, res) => {
+  let cartCount = null
+  if (req.session.user) {
+    let Id = req.session.user._id
+    cartCount = await userHelper.getCartCount(Id)
+  }
   let user = req.session.user
-  res.render('users/addProfileAddress', { Isuser: true, user })
+  res.render('users/addProfileAddress', { Isuser: true, user, cartCount })
 })
 router.post('/add-new-profile-add', (req, res) => {
 
@@ -591,7 +603,7 @@ router.post('/place-order', async (req, res) => {
       })
     } else {
       val = total / 74
-      total = val.toFixed(2) 
+      total = val.toFixed(2)
       req.session.total = total
       console.log(total);
       var create_payment_json = {
@@ -667,16 +679,27 @@ router.get('/success', (req, res) => {
 })
 
 
-router.get('/order-success', (req, res) => {
+router.get('/order-success', async (req, res) => {
 
   let user = req.session.user
   let userId = req.session.user._id
   userHelper.clearCart(userId)
-  res.render('users/order-success', { Isuser: true, user })
+  let cartCount = null
+  if (req.session.user) {
+    let Id = req.session.user._id
+    cartCount = await userHelper.getCartCount(Id)
+  }
+  res.render('users/order-success', { Isuser: true, user, cartCount })
 })
 
-router.get('/cancelled', (req, res) => {
-  res.render('users/cancelled', { Isuser: true })
+router.get('/cancelled', async (req, res) => {
+  let user = req.session.user
+  let cartCount = null
+  if (req.session.user) {
+    let Id = req.session.user._id
+    cartCount = await userHelper.getCartCount(Id)
+  }
+  res.render('users/cancelled', { Isuser: true, user, cartCount })
 })
 router.get('/orders', async (req, res) => {
   let user = req.session.user
@@ -687,21 +710,28 @@ router.get('/orders', async (req, res) => {
     let Id = req.session.user._id
     cartCount = await userHelper.getCartCount(Id)
   }
-  userHelper.getUserOrders(id).then(async(orders) => {
-    // let id = req.session.user._id
-    let len = orders.length
-  //  let  Status=await userHelper.getOrderstatus(id)
-  //  console.log(Status);
-    if (orders.Status =='Delivered') {
-     let Delivered = true
-      res.render('users/user-orders', { Isuser: true, orders, cartCount, user, Delivered })
-    }else{
-      let Delivered = false
-      res.render('users/user-orders', { Isuser: true, orders, cartCount, user, Delivered })
-    }
+  let orederCount = null
+  if (req.session.user) {
+    let id = req.session.user._id
+    orederCount = await userHelper.getOrderCount(id)
+  }
+  if (orederCount <= 0) {
 
-    
-  })
+    res.render('users/emptyOrder', { Isuser: true, cartCount, user })
+
+  } else {
+    userHelper.getUserOrders(id).then(async (orders) => {
+      let len = orders.length
+      if (orders.Status == 'Delivered') {
+        let Delivered = true
+        res.render('users/user-orders', { Isuser: true, orders, cartCount, user, Delivered })
+      } else {
+        let Delivered = false
+        res.render('users/user-orders', { Isuser: true, orders, cartCount, user, Delivered })
+      }
+    })
+  }
+
 
 
 })
@@ -736,7 +766,7 @@ router.post('/verify-payment', (req, res) => {
 })
 router.get('/userProfile', async (req, res) => {
   id = req.session.user._id
- 
+
   user = await userHelper.userProfile(id)
   let status = await userHelper.addressChecker(id)
   var address = null
@@ -749,11 +779,11 @@ router.get('/userProfile', async (req, res) => {
     address = addr.slice(len - 2, len)
 
     cartCount = await userHelper.getCartCount(id)
-    res.render('users/userProfile', { Isuser: true,cartCount, user, address })
+    res.render('users/userProfile', { Isuser: true, cartCount, user, address })
 
   } else {
     cartCount = await userHelper.getCartCount(id)
-    res.render('users/userProfile', { Isuser: true,cartCount, user })
+    res.render('users/userProfile', { Isuser: true, cartCount, user })
   }
 
 
@@ -764,8 +794,12 @@ router.get('/edit-U-Add/:id', async (req, res) => {
   userId = req.session.user._id
   id = req.params.id
   address = await userHelper.singleAddress(userId, id)
-
-  res.render('users/editUserAdd', { Isuser: true, address, user })
+  let cartCount = null
+  if (req.session.user) {
+    let Id = req.session.user._id
+    cartCount = await userHelper.getCartCount(Id)
+  }
+  res.render('users/editUserAdd', { Isuser: true, address, user, cartCount })
 })
 
 router.post('/edit-U-Add/:id', async (req, res) => {
@@ -781,18 +815,22 @@ router.post('/edit-U-Add/:id', async (req, res) => {
 
 })
 router.get('/change-address', async (req, res) => {
-
+  let user = req.session.user
   userId = req.session.user._id
   detailes = await userHelper.changeAddress(userId)
-  
-  
 
-  res.render('users/change-Address', { Isuser: true, detailes })
-})  
+  let cartCount = null
+  if (req.session.user) {
+    let Id = req.session.user._id
+    cartCount = await userHelper.getCartCount(Id)
+  }
+
+  res.render('users/change-Address', { Isuser: true, detailes, cartCount, user })
+})
 router.post('/change-address/:id', (req, res) => {
 
   id = req.params.id
-  adminHelper.updateUAddress(id, req.body).then((response) => {  
+  adminHelper.updateUAddress(id, req.body).then((response) => {
     res.redirect('/userProfile')
   })
 
@@ -817,17 +855,22 @@ router.get('/cancelled/:id', (req, res) => {
 })
 router.get('/SingleCheckout/:id', async (req, res) => {
   let user = req.session.user
-  if(user){
+  if (user) {
+    let cartCount = null
+    if (req.session.user) {
+      let Id = req.session.user._id
+      cartCount = await userHelper.getCartCount(Id)
+    }
     let uId = req.session.user._id
     let id = req.params.id
     let PRODUCT = await userHelper.getSingleProduct(id)
     console.log(PRODUCT);
     let address = await userHelper.getUserAddress(uId)
-    res.render('users/Single-checkout', { Isuser: true, PRODUCT, user, address })
-  }else{
+    res.render('users/Single-checkout', { Isuser: true, PRODUCT, user, address, cartCount })
+  } else {
     res.redirect('/login')
   }
- 
+
 })
 
 router.post('/placeSingle-order', async (req, res) => {
@@ -858,7 +901,7 @@ router.post('/placeSingle-order', async (req, res) => {
         },
         "redirect_urls": {
           "return_url": "https://localhost:3000/success",
-          "cancel_url": "https://localhost:3000/cancelled"   
+          "cancel_url": "https://localhost:3000/cancelled"
         },
         "transactions": [{
           "item_list": {
@@ -925,24 +968,24 @@ router.get('/success', (req, res) => {
 router.get('/wishlist', async (req, res) => {
 
   user = req.session.user
-  if(user){
+  if (user) {
     userId = req.session.user._id
 
     products = await userHelper.getWishListPro(userId)
     WishCount = await userHelper.getWislistCount(userId)
-    if(WishCount<=0){
+    if (WishCount <= 0) {
       cartCount = await userHelper.getCartCount(userId)
-      res.render('users/emptyWish',{ Isuser: true,cartCount, user })
-    }else{
-     
+      res.render('users/emptyWish', { Isuser: true, cartCount, user })
+    } else {
+
       cartCount = await userHelper.getCartCount(userId)
-      res.render('users/wish-list', { Isuser: true, user,cartCount, products })
+      res.render('users/wish-list', { Isuser: true, user, cartCount, products })
     }
-   
-  }else{
+
+  } else {
     res.redirect('/login')
   }
- 
+
 })
 
 // router.get('detail-product/:id',(req,res)=>{
@@ -983,9 +1026,9 @@ router.post('/delete-wish-item', (req, res) => {
     res.json(response)
   })
 })
-router.get('/test',(req,res)=>{
-  res.render('users/test444',{Isuser:true,login: true})
+router.get('/test', (req, res) => {
+  res.render('users/test444', { Isuser: true, login: true })
 })
-    
+
 
 module.exports = router;

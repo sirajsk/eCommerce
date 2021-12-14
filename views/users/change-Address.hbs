@@ -1,6 +1,6 @@
 <div class="container col-6  " style="margin-top: 12rem;">
     {{!-- {{#each address}} --}}
-    <form action="/change-address/{{detailes._id}}" method="post" class="needs-validation mt-5" novalidate>
+    <form action="/change-address/{{detailes._id}}" method="post" id="EditProfile" class="needs-validation mt-5" novalidate>
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="firstName">Name</label>
@@ -66,3 +66,8 @@
         return true;
     }
 </script>
+<style>
+    .error {
+        color: red;
+    }
+</style>

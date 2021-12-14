@@ -90,6 +90,130 @@ $(document).ready(function(){
         }
     })
 })
+
+$(document).ready(function(){
+    $("#addNewAddress").validate({
+        rules:{
+            FirstName:{
+                required:true
+                // maxlength:10
+            },
+            LastName:{
+                required:true
+                // maxlength:10
+            },
+            House:{
+                required:true
+            },
+            Street:{
+                required:true
+            },
+            Town:{
+                required:true
+            },
+            Mobile:{
+                required:true,
+                maxlength:10,
+                minlength:10
+            },
+            PIN:{
+                required:true,
+                maxlength:6,
+                minlength:6
+            }
+        }
+    })
+})
+
+$(document).ready(function(){
+    $("#AddProfileAddress").validate({
+        rules:{
+            FirstName:{
+                required:true
+                // maxlength:10
+            },
+            LastName:{
+                required:true
+                // maxlength:10
+            },
+            House:{
+                required:true
+            },
+            Street:{
+                required:true
+            },
+            Town:{
+                required:true
+            },
+            Mobile:{
+                required:true,
+                maxlength:10,
+                minlength:10
+            },
+            PIN:{
+                required:true,
+                maxlength:6,
+                minlength:6
+            }
+        }
+    })
+})
+
+
+$(document).ready(function(){
+    $("#Edit_userAddress").validate({
+        rules:{
+            FirstName:{
+                required:true
+                // maxlength:10
+            },
+            LastName:{
+                required:true
+                // maxlength:10
+            },
+            House:{
+                required:true
+            },
+            Street:{
+                required:true
+            },
+            Town:{
+                required:true
+            },
+            Mobile:{
+                required:true,
+                maxlength:10,
+                minlength:10
+            },
+            PIN:{
+                required:true,
+                maxlength:6,
+                minlength:6
+            }
+        }
+    })
+})
+$(document).ready(function(){
+    $("#EditProfile").validate({
+        rules:{
+            name:{
+                required:true
+                // maxlength:10
+            },
+            email:{
+                required:true
+                // maxlength:10
+            },
+           
+            mobile:{
+                required:true,
+                // maxlength:10,
+                // minlength:10
+            }
+           
+        }
+    })
+})
 $(document).ready(function(){
     $("#addproduct").validate({
         // hi:alert('0000000000'),

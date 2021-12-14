@@ -214,6 +214,24 @@ module.exports = {
         })
 
     },
+    getOrderCount: (userId) => {
+        return new Promise(async (resolve, reject) => {
+            let count=0
+            let order=await db.get().collection(collection.ORDER_COLLECTION).findOne({User:userId})
+            if(order){
+                count=await   db.get().collection(collection.ORDER_COLLECTION).find({User:userId}).count()
+                resolve(count)
+                
+            }else{
+                resolve(count)
+                
+            }
+           
+           
+
+        })
+
+    },
     getWislistCount:(userId)=>{
         return new Promise(async (resolve, reject) => {
 
