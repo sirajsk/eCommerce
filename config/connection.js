@@ -1,7 +1,7 @@
 const mongoClient = require('mongodb').MongoClient
 const state = { db: null }
 module.exports.connect = function (done) {
-    const url = 'mongodb+srv://Siraj:<Sirajsk@12>@projuctebuy.6vcgq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+    const url = 'mongodb+srv://siraj:siraj123@projuctebuy.6vcgq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
     const dbname = 'projuctEbuy'
     mongoClient.connect(url, (err, data) => {
         if (err)
