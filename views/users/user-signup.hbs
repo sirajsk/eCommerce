@@ -118,7 +118,7 @@
         <div class="form-field d-flex align-items-center"> <span class="far fa-user"></span> <input type="email"
                 name="email" id="email" placeholder="email"> </div>
         <div class="form-field d-flex align-items-center"> <span class="fas fa-key"></span> <input type="number"
-                name="mobile" id="mobile" placeholder="mobile" onkeydown="return event.keyCode !==69"> </div>
+                name="mobile" id="mobile" placeholder="mobile" onkeypress="return isNumber(event)" minlength="10" maxlength="10"> </div>
         <div class="form-field d-flex align-items-center"> <span class="fas fa-key"></span> <input type="password"
                 name="password" id="password" placeholder="password"> </div>
         {{#if mobileExist}}
@@ -129,3 +129,14 @@
 
     <div class="text-center fs-6"> <a href="/login">Have already an account?</a> or <a href="/login">Login here</a> </div>
 </div>
+
+<script>
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+</script>

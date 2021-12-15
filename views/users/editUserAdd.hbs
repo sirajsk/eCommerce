@@ -1,6 +1,6 @@
 <div class="container " style="margin-top: 7rem;">
 {{#each address}}
-	<form action="/edit-U-Add/{{address._id}}" method="post" class="needs-validation mt-5" novalidate>
+	<form action="/edit-U-Add/{{address._id}}" method="post" id="Edit_userAddress" class="needs-validation mt-5" novalidate>
 		<div class="row">
 			<div class="col-md-6 mb-3">
 				<label for="firstName">First name</label>
@@ -81,3 +81,8 @@
 
 {{/each}}
 </div>
+<style>
+    .error {
+        color: red;
+    }
+</style>

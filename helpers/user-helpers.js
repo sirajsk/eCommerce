@@ -205,12 +205,28 @@ module.exports = {
             if (cart) {
 
                 count = cart.product.length
-                console.log(count);
-            } else {
-                console.log('test');
-            }
+                
+            } 
 
             resolve(count)
+        })
+
+    },
+    getOrderCount: (userId) => {
+        return new Promise(async (resolve, reject) => {
+            let count=0
+            let order=await db.get().collection(collection.ORDER_COLLECTION).findOne({User:userId})
+            if(order){
+                count=await   db.get().collection(collection.ORDER_COLLECTION).find({User:userId}).count()
+                resolve(count)
+                
+            }else{
+                resolve(count)
+                
+            }
+           
+           
+
         })
 
     },
@@ -392,7 +408,8 @@ module.exports = {
     },
     placeOrder: (order, products, total) => {
         return new Promise((resolve, reject) => {
-
+            
+            let Couponc=order.Coupon
             let Status = order.Payment === 'COD' ? 'Placed' : 'Pending'
             let dateIso = new Date()
             let date = moment(dateIso).format('YYYY/MM/DD')
@@ -412,11 +429,32 @@ module.exports = {
                 PaymentMethod: order.Payment,
                 Products: products,
                 Total: total,
+                Coupon:Couponc,
                 // Discount: order.Discount,
                 Date: date,
                 Time: time,
                 Status: Status
 
+            }
+            let user=order.User
+            if(Couponc){
+                db.get().collection(collection.COUPON_OFFER).updateOne({ coupon: Couponc },
+                    {
+                        $push: {
+                            Users: user
+                        }
+                    }).then(() => {
+                       
+                        db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response) => {
+                           
+                            resolve(response)
+                        })
+                    })
+            }else{
+                db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response) => {
+                           
+                    resolve(response)
+                })
             }
 
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response) => {
@@ -832,41 +870,65 @@ module.exports = {
         })
 
     },
-    couponValidate:(Cdata)=>{
+    couponValidate:(Cdata,userId)=>{
         console.log(Cdata);
         return new Promise(async(resolve,reject)=>{
             data={}
             let date=new Date()
             date=moment(date).format('DD/MM/YYYY')
             let coupon=await db.get().collection(collection.COUPON_OFFER).findOne({coupon:Cdata.couponCode})
-            console.log(coupon);
+            // console.log(coupon);
             if(coupon){
-                if(date<=coupon.EndDate){
-                    if(coupon.status==1){
+                let users = coupon.Users
+                let userChecker = users.includes(userId)
+                if(userChecker){
+                    data.couponUsed=true
+                    resolve(data)
+                }else{
+                    if(date<=coupon.EndDate){
                         let total=parseInt(Cdata.Total)
                         let Percentage=parseInt(coupon.Percentage)
                         let discountVal=((total*Percentage)/100).toFixed()
                         data.total=total-discountVal
                         data.success=true
                         resolve(data)
-                        db.get().collection(collection.COUPON_OFFER).updateOne({coupon:Cdata.couponCode},{
-                            $set:{
-                                status:0
-                            }
-                        })
                     }else{
-                        data.couponUsed=true
+                        data.couponExpired=true
                         resolve(data)
                     }
-                }else{
-                    data.couponExpired=true
-                    resolve(data)
 
                 }
             }else{
                 data.invalidCoupon=true
                 resolve(data)
             }
+
+            //     if(date<=coupon.EndDate){
+            //         if(coupon.status==1){
+            //             let total=parseInt(Cdata.Total)
+            //             let Percentage=parseInt(coupon.Percentage)
+            //             let discountVal=((total*Percentage)/100).toFixed()
+            //             data.total=total-discountVal
+            //             data.success=true
+            //             resolve(data)
+            //             db.get().collection(collection.COUPON_OFFER).updateOne({coupon:Cdata.couponCode},{
+            //                 $set:{
+            //                     status:0
+            //                 }
+            //             })
+            //         }else{
+            //             data.couponUsed=true
+            //             resolve(data)
+            //         }
+            //     }else{
+            //         data.couponExpired=true
+            //         resolve(data)
+
+            //     }
+            // }else{
+            //     data.invalidCoupon=true
+            //     resolve(data)
+            // }
 
         })
     },

@@ -107,3 +107,9 @@
 </body>
 
 </html>
+
+<script>
+    $('#example2 tbody tr').each(function(idx){
+        $(this).children("td:eq(0)").html(idx+1)
+    })
+</script>
