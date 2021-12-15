@@ -182,7 +182,7 @@ module.exports = {
                         item: 1,
                         qty: 1,
                         product: { $arrayElemAt: ['$product', 0] },
-                        subtotal: { $multiply: [{ $arrayElemAt: ["$product.Price", 0] }, "$qty"] }
+                        subtotal: { $multiply: [{ $arrayElemAt: ["$product.Price", 0] }, "$qty"] }      
 
                     }
                 }
@@ -438,7 +438,7 @@ module.exports = {
             }
             let user=order.User
             if(Couponc){
-                db.get().collection(collection.COUPON_OFFER).updateOne({ coupon: Couponc },
+                db.get().collection(collection.COUPON_OFFER).updateOne({ coupon: Couponc },      
                     {
                         $push: {
                             Users: user
