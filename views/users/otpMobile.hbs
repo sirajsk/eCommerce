@@ -3,17 +3,17 @@
 <form action="/otpM" method="post">
     <div class="container height-100 d-flex justify-content-center align-items-center">
         <div class="position-relative">
-            <div class="card p-2 text-center">
-                <h6>Please enter the one time password <br> to verify your account</h6>
+            <div class="card p-2 text-center" style="border:#03A9F4 ;">
+                <h6 class="mb-5" style="color:#03A9F4 ;">Please enter the one time password <br> to verify your account</h6>
                
                
-                <input type="text" name="otp" class="m-2 text-center form-control rounded" placeholder="Enter your otp"
+                <input type="text" name="otp" class="m-2 text-center form-control rounded" style="width: 50%;"  placeholder="Enter your otp"
                     onkeypress="return isNumber(event)" maxlength="6" minlength="6">
-                     <div class="text-center mt-3">
-                    <span class="d-block mobile-text" id="countdown2"></span>
+                     <div class="text-center mb-2">
+                    <span class="d-block mobile-text mt-3" id="countdown2"></span>
                 </div>
 
-                <div class="text-center mt-5">
+                <div class="text-center ">
                     <a href="/resendlogin-otp">
                         <span class="d-block mobile-text" id="resend2"></span>
                     </a>
@@ -23,7 +23,7 @@
                 <p class="alert alert-danger" style="color: red;">invalid OTP</p>
                 {{/if}}
 
-                <div class="mt-4"> <button class="btn btn-danger px-4 validate">Validate</button> </div>
+                <div class=""> <button class="btn  px-4 validate" style="background-color:#03A9F4 ; color: white; border: none;">Validate</button> </div>
             </div>
             <div class="card-2">
                 <div class="content d-flex justify-content-center align-items-center"> </div>

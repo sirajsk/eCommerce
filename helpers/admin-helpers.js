@@ -131,7 +131,7 @@ module.exports = {
     },
     getMenProduct:()=>{
         return new Promise(async(resolve,reject)=>{
-            let Mproducts=await db.get().collection(collection.PRODUCT_COLLECTION).find({Mcategory:"Men"}).toArray()
+            let Mproducts=await db.get().collection(collection.PRODUCT_COLLECTION).find({Mcategory:"Men"}).toArray() 
             console.log(Mproducts,'00000000');
             resolve(Mproducts)
         })
@@ -613,12 +613,15 @@ module.exports = {
     updateUAddress: (AddId, data) => {
         console.log(data);
         return new Promise((resolve, reject) => {
+            let mob=`+91${data.mobile}`
+            
+
             db.get().collection(collection.USER_COLLECTION).updateOne({ _id: objectId(AddId) }, {
 
                 $set: {
                     name: data.name,
                     email: data.email,
-                    mobile: data.mobile
+                    mobile:mob
                 }
 
 
@@ -733,7 +736,8 @@ module.exports = {
                 Percentage:Cdata.Percentage,
                 status:1,
                 date:date,
-                EndDate:Expiry
+                EndDate:Expiry,
+                Users:[]
 
             }
             db.get().collection(collection.COUPON_OFFER).insertOne(data).then((response)=>{

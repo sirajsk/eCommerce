@@ -510,36 +510,45 @@ router.get('/product-detail/:id', async (req, res) => {
 
 
 router.get('/checkout', async (req, res) => {
-  let userId = req.session.user._id
+  
   let user = req.session.user
-  let total = await userHelper.getTotalAmount(userId)
-  let products = await userHelper.getCartProducts(userId)
-
-
-  let cartCount = null
-  if (req.session.user) {
-    let Id = req.session.user._id
-    cartCount = await userHelper.getCartCount(Id)
+  if(user){
+    let userId = req.session.user._id
+    let cartCount = null
+    if (req.session.user) {
+      let Id = req.session.user._id
+      cartCount = await userHelper.getCartCount(Id)
+    }
+    let total = await userHelper.getTotalAmount(userId)
+    let products = await userHelper.getCartProducts(userId)
+  
+    let productLength=products.length
+  
+  
+   
+  
+    var address = null
+    let status = await userHelper.addressChecker(req.session.user._id) 
+  
+    if (status.address) {
+  
+      let addr = await userHelper.getUserAddress(req.session.user._id)
+  
+      let len = addr.length
+      address = addr.slice(len - 2, len)
+    }
+  
+    if (productLength > 0) {
+      res.render('users/placeOrder', { total, Isuser: true, cartCount, products, address, user })
+    } else {
+      req.session.noCartPro = true
+      res.redirect('/cart')
+  
+    }
+  }else{
+    res.redirect('/login')
   }
-
-  var address = null
-  let status = await userHelper.addressChecker(req.session.user._id)
-
-  if (status.address) {
-
-    let addr = await userHelper.getUserAddress(req.session.user._id)
-
-    let len = addr.length
-    address = addr.slice(len - 2, len)
-  }
-
-  if (cartCount > 0) {
-    res.render('users/placeOrder', { total, Isuser: true, cartCount, products, address, user })
-  } else {
-    req.session.noCartPro = true
-    res.redirect('/cart')
-
-  }
+  
 
 
 })
@@ -817,12 +826,14 @@ router.post('/edit-U-Add/:id', async (req, res) => {
 router.get('/change-address', async (req, res) => {
   let user = req.session.user
   userId = req.session.user._id
-  detailes = await userHelper.changeAddress(userId)
-
+  detailes = await userHelper.changeAddress(userId)  
+  let no=detailes.mobile
+  detailes.mobile=no.slice(3,13)
+  
   let cartCount = null
   if (req.session.user) {
     let Id = req.session.user._id
-    cartCount = await userHelper.getCartCount(Id)
+    cartCount = await userHelper.getCartCount(Id)  
   }
 
   res.render('users/change-Address', { Isuser: true, detailes, cartCount, user })
@@ -841,7 +852,7 @@ router.get('/delete-U-Add/:id', (req, res) => {
   id = req.params.id
   userId = req.session.user._id
   userHelper.deleteAddress(userId, id).then(() => {
-    console.log('dsfsdljfkdsfjdsfdskfdsfdskfjdskfdkfdksfjkdsjfkdsjfkdskfdkfdklfjksdjfldsfjd');
+    
     res.redirect('/userProfile')
   })
 
@@ -993,8 +1004,8 @@ router.get('/wishlist', async (req, res) => {
 // })
 // coupen start
 router.post('/couponSubmit', (req, res) => {
-
-  userHelper.couponValidate(req.body).then((response) => {
+let id =req.session.user._id
+  userHelper.couponValidate(req.body,id).then((response) => {
 
     req.session.Ctotal = response.total
     if (response.success) {

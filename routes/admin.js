@@ -315,17 +315,19 @@ router.get('/edit-brand/:id', verifyAdminLogin, async (req, res) => {
 })
 router.post('/edit-brand/:id', verifyAdminLogin, (req, res) => {
   let id = req.params.id
-  let imageA = req.files.Image
+  
 
-  adminHelper.updateBrand(id, req.body).then((response) => {
+  adminHelper.updateBrand(id, req.body)
+  res.redirect('/admin/view-brand')
     console.log(response);
-    // alert('sdjhdgshfgsdhf')
+    
     if (req.files.Image) {
+      let imageA = req.files.Image
       imageA.mv('public/brand-images/' + id + '.jpg')
     }
 
-    res.redirect('/admin/view-brand')
-  })
+   
+  
 
   // }
 })
@@ -461,15 +463,17 @@ router.get('/edit-banner/:id', async (req, res) => {
 })
 router.post('/edit-banner/:id', (req, res) => {
   let id = req.params.id
-  let imageA = req.files.Image1
-  adminHelper.updateBanner(id, req.body).then((response) => {
+  
+  adminHelper.updateBanner(id, req.body)
+  res.redirect('/admin/banner-management')
 
     if (req.files.Image1) {
+      let imageA = req.files.Image1
       imageA.mv('public/banner/' + id + '.jpg')
     }
-    res.redirect('/admin/banner-management')
+   
 
-  })
+
 
 })
 router.get('/delete-banner/:id', (req, res) => {
