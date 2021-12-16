@@ -321,6 +321,7 @@ router.get('/forgotPw', (req, res) => {
   res.render('users/forgotmobile', { login: true, Isuser: true, "Nouser": req.session.NoUser })
   req.session.NoUser = false
 })
+
 router.post('/forgotOTP', (req, res) => {
   res.redirect('/resetP')
 })
@@ -482,8 +483,8 @@ router.post('/place-order', async (req, res) => {
           "payment_method": "paypal"
         },
         "redirect_urls": {
-          "return_url": "https://ebuy-store.online/success",
-          "cancel_url": "https://ebuy-store.online/cancelled"
+          "return_url": "https://skebuy.ml/success",
+          "cancel_url": "https://skebuy.ml/cancelled"
         },
         "transactions": [{
           "item_list": {
@@ -607,7 +608,7 @@ router.get('/singleOrder/:id', async (req, res) => {
     cartCount = await userHelper.getCartCount(Id)
   }
   adminHelpers.getOrderProducts(oId).then((products) => {
-    console.log(products);
+    console.log(products,'products');
     res.render('users/single-orders', { Isuser: true, products, user, cartCount })
   })
 })
@@ -740,8 +741,8 @@ router.post('/placeSingle-order', async (req, res) => {
           "payment_method": "paypal"
         },
         "redirect_urls": {
-          "return_url": "https://localhost:3000/success",
-          "cancel_url": "https://localhost:3000/cancelled"
+          "return_url": "https://skebuy.ml/success",
+          "cancel_url": "https://skebuy.ml/cancelled"
         },
         "transactions": [{
           "item_list": {
