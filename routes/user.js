@@ -275,7 +275,7 @@ router.post('/verifyMobile', (req, res) => {
 
 // cart start 
 router.get('/cart', async function (req, res) {
-
+  res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
   if (req.session.user) {
     let id = req.session.user._id
     let user = req.session.user
@@ -510,7 +510,7 @@ router.get('/product-detail/:id', async (req, res) => {
 
 
 router.get('/checkout', async (req, res) => {
-  
+  res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
   let user = req.session.user
   if(user){
     let userId = req.session.user._id
@@ -553,7 +553,7 @@ router.get('/checkout', async (req, res) => {
 
 })
 router.get('/add-new-add', async (req, res) => {
-
+  res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
   let cartCount = null
   if (req.session.user) {
     let Id = req.session.user._id
@@ -564,7 +564,7 @@ router.get('/add-new-add', async (req, res) => {
 })
 
 router.post('/addNewAddress', (req, res) => {
-
+  res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
 
   userHelper.addNewAddress(req.body).then((response) => {
 
@@ -573,6 +573,7 @@ router.post('/addNewAddress', (req, res) => {
 
 })
 router.get('/add-new-profile-add', async (req, res) => {
+  res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
   let cartCount = null
   if (req.session.user) {
     let Id = req.session.user._id
