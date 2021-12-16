@@ -693,7 +693,7 @@ router.post('/change-address/:id', (req, res) => {
 router.get('/delete-U-Add/:id', (req, res) => {
   id = req.params.id
   userId = req.session.user._id
-  userHelper.deleteAddress(userId, id).then(() => {
+  userHelper.deleteAddress(userId, id).then(() => { 
     res.redirect('/userProfile')
   })
 })
@@ -729,7 +729,7 @@ router.post('/placeSingle-order', async (req, res) => {
   let pId = req.body.pId
   console.log(req.body.User);
   let id = req.session.user._id
-  let products = await userHelper.getSingleProduct(pId)
+  let products = await userHelper.getbuyNowProduct(pId)
   console.log(products, 'products');
   console.log(products.Price, 'price');
   userHelper.SingleOrderPlace(req.body, products, products.Price).then((orderId) => {
