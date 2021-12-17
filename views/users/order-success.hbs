@@ -1,50 +1,71 @@
-<html>
-  <head>
-    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
-  </head>
-    <style>
-      body {
-          margin-top: 6rem;
-        text-align: center;
-        padding: 40px 0;
-        background: #EBF0F5;
-      }
-        h1 {
-          color: #88B04B;
-          font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
-          font-weight: 900;
-          font-size: 40px;
-          margin-bottom: 10px;
-        }
-        p {
-          color: #404F5E;
-          font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
-          font-size:20px;
-          margin: 0;
-        }
-      i {
-        color: #9ABC66;
-        font-size: 100px;
-        line-height: 200px;
-        margin-left:-15px;
-      }
-      .card {
-        background: white;
-        padding: 60px;
-        border-radius: 4px;
-        box-shadow: 0 2px 3px #C8D0D8;
-        display: inline-block;
-        margin: 0 auto;
-      }
-    </style>
-    <body>
-      <div class="card">
-      <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
-        <i class="checkmark">✓</i>
-      </div>
-        <h1>Success</h1> 
-        <p>We received your purchase request;<br/> we'll be in touch shortly!</p>
-        <a href="/" class="btn btn-secondery">Back To Home</a>
-      </div>
-    </body>
-</html>
+
+<style>
+    @import url(http://fonts.googleapis.com/css?family=Calibri:400,300,700);
+
+body {
+    background-color: #eee;
+    font-family: 'Calibri', sans-serif !important
+}
+
+.mt-100 {
+    margin-top: 100px
+}
+
+.card {
+    margin-bottom: 30px;
+    border: 0;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    letter-spacing: .5px;
+    border-radius: 8px;
+    -webkit-box-shadow: 1px 5px 24px 0 rgba(68, 102, 242, .05);
+    box-shadow: 1px 5px 24px 0 rgba(68, 102, 242, .05)
+}
+
+.card .card-header {
+    background-color: #fff;
+    border-bottom: none;
+    padding: 24px;
+    border-bottom: 1px solid #f6f7fb;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px
+}
+
+.card-header:first-child {
+    border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0
+}
+
+.card .card-body {
+    padding: 30px;
+    background-color: transparent
+}
+
+.btn-primary,
+.btn-primary.disabled,
+.btn-primary:disabled {
+    background-color: #4466f2 !important;
+    border-color: #4466f2 !important
+}
+</style>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<div class="container-fluid mt-100">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                 
+                </div>
+                <div class="card-body cart">
+                    <div class="col-sm-12 empty-cart-cls text-center"> <img src="data:image/png;base64,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" width="130" height="130" class="img-fluid mb-4 mr-3">
+                        <h3><strong>Success</strong></h3>
+                        <p>We received your purchase request;<br/> we'll be in touch shortly!</p> <a href="/" class="btn btn-primary cart-btn-transform m-3" data-abc="true">continue shopping</a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>

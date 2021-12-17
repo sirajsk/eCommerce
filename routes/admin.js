@@ -61,7 +61,7 @@ router.get('/product-management', function (req, res, next) {
   res.render('admin/product-management', { admin: true })
 });
 
-router.get('/add-product', verifyAdminLogin, async function (req, res, next) {
+router.get('/add-product', async function (req, res, next) {
   let brands = await adminHelper.getAllbrands()
   let categories = await adminHelper.categoryDetailes()
   res.render('admin/add-product', { admin: true, brands, categories, "proExist": req.session.proExist })
@@ -215,7 +215,7 @@ router.get('/logout', (req, res) => {
 // category management over
 module.exports = router;
 // update check
-router.post('/edit-product/:id', verifyAdminLogin, (req, res) => {
+router.post('/edit-product/:id', (req, res) => {
   let id = req.params.id
   adminHelper.updateProduct(id, req.body)
   console.log(req.body);
@@ -235,13 +235,13 @@ router.post('/edit-product/:id', verifyAdminLogin, (req, res) => {
   }
 })
 
-router.get('/edit-brand/:id', verifyAdminLogin, async (req, res) => {
+router.get('/edit-brand/:id', async (req, res) => {
   let brandId = req.params.id
   let brand = await adminHelper.BrandDetailes(brandId)
   res.render('admin/edit-brand', { admin: true, brand })
 })
 
-router.post('/edit-brand/:id', verifyAdminLogin, (req, res) => {
+router.post('/edit-brand/:id', (req, res) => {
   let id = req.params.id
   adminHelper.updateBrand(id, req.body)
   res.redirect('/admin/view-brand')
@@ -252,7 +252,7 @@ router.post('/edit-brand/:id', verifyAdminLogin, (req, res) => {
     }
 })
 
-router.get('/orders', verifyAdminLogin, async (req, res) => {
+router.get('/orders', async (req, res) => {
   let ordersList = await adminHelper.getAllOrders()
   console.log(ordersList);
   res.render('admin/all-orders', { admin: true, ordersList })
