@@ -206,53 +206,35 @@
 <!-- Product -->
 <section class="bg0 p-t-23 p-b-140" style="margin-top: 7rem;">
     <div class="container">
-       
-
-
         <div class="row isotope-grid">
-
-
             {{#each products}}
-
             <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
                 <!-- Block2 -->
                 <div class="block2">
                     <div class="block2-pic hov-img0">
-                        <img src="/product-images/{{this.product._id}}a.jpg" alt="invalid" />
+                        <img src="https://skebuy.ml/product-images/{{this.product._id}}a.jpg" alt="invalid" />
 
                         <a href="/product-detail/{{this.product._id}}"
                             class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
                             Quick View
                         </a>
-
-
-
                     </div>
-
                     <div class="block2-txt flex-w flex-t p-t-14">
                         <div class="block2-txt-child1 flex-col-l">
                             <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
                                 {{this.product.Name}}
                             </a>
-
                             <span class="stext-105 cl3">
                                 RS: {{this.product.Price}}
                             </span>
-
                             {{#if this.product.proOffer}}
-
                             <span class="stext-105 cl3" style="color: brown;"><s>
                                    Rs:  {{this.product.ActualPrice}}
-                            </s>
-                                
+                            </s>                               
                             </span>
-
                             {{/if}}
-
                         </div>
-
-                        <div class="block2-txt-child2 flex-r p-t-3">
-                           
+                        <div class="block2-txt-child2 flex-r p-t-3">                          
                             <div class="block2-txt-child2 flex-r pt-4 mt-3">
                                 <button onclick="addTocart('{{this.product._id}}')"
                                     class=" btn btn-primary stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 mt-2 mr-2">

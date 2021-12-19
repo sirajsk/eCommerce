@@ -12,6 +12,8 @@ var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
 var hbs=require('express-handlebars')
 var db=require('./config/connection')
+const Mongostore=require('connect-mongo')
+
 db.connect((err)=>{
   if(err){
     console.log('connection error'+err);
@@ -36,7 +38,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload())
 
 //user  session start
-app.use(session({secret:"Key",cookie:{maxAge:600000}})) 
+app.use(session({
+  secret:"Key",
+  resave:false,
+  saveUninitialized:true,
+  store:Mongostore.create({
+    mongoUrl:`mongodb+srv://siraj:siraj123@projuctebuy.6vcgq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
+    ttl:2*24*60*60,
+    autoRemove:'native'
+
+  }),
+  cookie:{maxAge:600000}
+})) 
 // user session end
 app.use('/', userRouter);
 app.use('/admin', adminRouter);

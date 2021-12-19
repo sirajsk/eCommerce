@@ -6,7 +6,9 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "audit": "0.0.6",
     "bcrypt": "^5.0.1",
+    "connect-mongo": "^4.6.0",
     "cookie-parser": "~1.4.4",
     "crypto-js": "^4.1.1",
     "debug": "~2.6.9",
@@ -15,6 +17,7 @@
     "express-fileupload": "^1.2.1",
     "express-handlebars": "^5.3.4",
     "express-session": "^1.17.2",
+    "fix": "0.0.6",
     "fs": "0.0.1-security",
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
